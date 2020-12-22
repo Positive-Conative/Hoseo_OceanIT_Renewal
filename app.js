@@ -19,10 +19,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(helmet());
-app.disable('x-powered-by'); //HELMET으로 X-powerde-by 안보이게 수정
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -43,5 +42,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
+app.use(helmet());
+app.disable('x-powered-by'); //HELMET으로 X-powerde-by 안보이게 수정
 module.exports = app;

@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var researchDAO = require('../model/bus/researchDAO');
+var researchDAO = require('../model/research/researchDAO');
 
 //router.get('/stop', researchDAO.getDBFunction.selectAll);
 // router.get('/stop', function(req, res, next) {
