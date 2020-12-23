@@ -36,7 +36,10 @@
           <h5 class="card-title">송준하</h5>
           <p class="card-text">행동대장</p>
         </div>
-        <button type="button" class="btn btn-secondary">Detail</button>
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#memberModal" 
+        data-name="@q" data-stunum="@w" data-content="@es" data-whatever="@mdo"
+        data-img_src="https://raw.githubusercontent.com/UIT-LAB/Uit_Homepage/master/public/images/members/%EC%86%A1%EC%A4%80%ED%95%98.jpg"
+        >Detail</button>
       </div>
       <div class="card m-1 border border-1">
         <img
@@ -47,79 +50,114 @@
           <p class="card-text">동물의 왕국장</p>
         </div>
 
-        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#memberModal" data-asdf="@asdf" data-whatever="@mdo">Detail</button>
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#memberModal" 
+        data-name="@myname" data-stunum="@MYstuNUM" data-content="@world" data-whatever="@mdo"
+        data-img_src="https://raw.githubusercontent.com/UIT-LAB/Uit_Homepage/master/public/images/members/%EA%B6%8C%EC%88%9C%EC%98%81.jpg"
+        >Detail</button>
       </div>
     </div>
-/////
 <!-- MODAL -->
-<div class="modal fade" id="memberModal" tabindex="-1" aria-labelledby="memberModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="memberModalLabel">New message</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient-name">
-          </div>
-          <div class="form-group">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
+  <div class="modal fade" id="memberModal" tabindex="-1" aria-labelledby="memberModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="memberModalLabel">New message</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <img id="img_modal"
+            src="https://raw.githubusercontent.com/UIT-LAB/Uit_Homepage/master/public/images/members/%EA%B6%8C%EC%88%9C%EC%98%81.jpg"
+            class="rounded mx-auto d-block" alt="..." style="width:50%;">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">/</th>
+                <th scope="row">/</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">이름</th>
+                <td id="name_modaltable">@mdo</td>
+              </tr>
+              <tr>
+                <th scope="row">학번</th>
+                <td id="stunum_modaltable">Jacob</td>
+              </tr>
+              <tr>
+                <th scope="row">내용</th>
+                <td id="content_modaltable">Larry the Bird</td>
+              </tr>
+            </tbody>
+          </table>
+          <form>
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Recipient:</label>
+              <input type="text" class="form-control" id="recipient-name">
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Message:</label>
+              <textarea class="form-control" id="message-text"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Send message</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
+<%- include('include/footer.ejs') %>
+
+<style>
+  #indexbg {
+    position: relative;
+    background-size: contain;
+    height: 380px;
+    background: url(images/indexbg1.jpg) no-repeat center center fixed;
+  }
+
+  #indexbg_text {
+    color: white;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  #indexbg_text h1 {
+    font-size: calc(1.5rem + .9vw);
+  }
+
+  .card>img {
+    height: 20vw;
+    border-radius: 90%;
+  }
+</style>
+
 <script>
   $('#memberModal').on('show.bs.modal', function (event) {
-  var button = $(event.relatedTarget) // Button that triggered the modal
-  var recipient = button.data('whatever') // Extract info from data-* attributes
-  var recipient = button.data('asdf') 
-  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-  var modal = $(this)
-  modal.find('.modal-title').text('New message to ' + recipient)
-  modal.find('.modal-body input').val(recipient)
-})
+    var button = $(event.relatedTarget) // Button that triggered the modal
+    var recipient = button.data('whatever') // Extract info from data-* attributes
+    var recipient = button.data('asdf') 
+    var name = button.data('name') 
+    var stunum = button.data('stunum') 
+    var content = button.data('content')
+    var img_src = button.data('img_src')
+    // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+    // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+    var modal = $(this)
+    modal.find('.modal-title').text('New message to ' + recipient)
+    modal.find('.modal-body table #name_modaltable ').text('New message to ' + name)
+    modal.find('.modal-body table #stunum_modaltable ').text('New message to ' + stunum)
+    modal.find('.modal-body table #content_modaltable ').text('New message to ' + content)
+    document.getElementById('img_modal').src=img_src;
+    modal.find('.modal-body input').val(recipient)
+  })
 </script>
-    /////
-  </section>
-  <%- include('include/footer.ejs') %>
-
-    <style>
-      #indexbg {
-        position: relative;
-        background-size: contain;
-        height: 380px;
-        background: url(images/indexbg1.jpg) no-repeat center center fixed;
-      }
-
-      #indexbg_text {
-        color: white;
-        width: 100%;
-        text-align: center;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-      }
-
-      #indexbg_text h1 {
-        font-size: calc(1.5rem + .9vw);
-      }
-
-      .card>img {
-        height: 20vw;
-        border-radius: 90%;
-      }
-    </style>
