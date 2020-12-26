@@ -1,0 +1,41 @@
+@media (max-width: 575.98px) {
+    .card {
+      margin: 0;
+      margin: auto;
+      width: auto;
+    }
+
+    .card img {
+      display: none;
+    }
+
+    .card-group {
+      text-align: center;
+    }
+  }
+
+  #indexbg {
+    position: relative;
+    background-size: contain;
+    height: 380px;
+    background: url("/images/indexbg1.jpg") no-repeat center center fixed;
+  }
+
+  #indexbg_text {
+    color: white;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  #indexbg_text h1 {
+    font-size: calc(1.5rem + .9vw);
+  }
+
+  .card>img {
+    height: 20vw;
+    border-radius: 90%;
+  }
