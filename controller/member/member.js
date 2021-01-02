@@ -7,7 +7,7 @@ function memberMain(req, res, next) {
     memberDAO.memberDBFunc.Member_selectAll(parameters).then(
         (db_data) => {
             //console.log(db_data);
-            res.send(db_data)
+            res.render('member/memberMain', { db_data });
         }
     ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
 }
