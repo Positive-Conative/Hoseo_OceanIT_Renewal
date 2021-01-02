@@ -9,16 +9,16 @@
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                     <li class="nav-item">
-                        <a id="navlink1" class="nav-link" aria-current="true" href="?data=1">MAIN</a>
+                        <a id="navlink1" class="nav-link active" aria-current="true" href="#" onclick="changeActive(this)">MAIN</a>
                     </li>
                     <li class="nav-item">
-                        <a id="navlink2" class="nav-link" href="?data=2">Abcd</a>
+                        <a id="navlink2" class="nav-link" href="#two" onclick="changeActive(this)">Abcd</a>
                     </li>
                     <li class="nav-item">
-                        <a id="navlink3" class="nav-link" href="?data=3">Efgh</a>
+                        <a id="navlink3" class="nav-link" href="#three" onclick="changeActive(this)">Efgh</a>
                     </li>
                     <li class="nav-item">
-                        <a id="navlink4" class="nav-link" href="?data=4">Ijkl</a>
+                        <a id="navlink4" class="nav-link" href="#four" onclick="changeActive(this)">Ijkl</a>
                     </li>
                 </ul>
             </div>
@@ -44,6 +44,7 @@
             </div> -->
     </section>
     <%- include('../include/footer.ejs') %>
+    <script src="/javascripts/introduction.js"></script>
         <style>
             #indexbg {
                 position: relative;
@@ -79,27 +80,11 @@
                     margin-right: auto;
                 }
             }
+            
         </style>
-
         <script>
-            window.onload = () => {
-                var query = new URLSearchParams(location.search).get('data')
-                $('#navlink' + query).addClass('active')
-            }
-            switch (new URLSearchParams(location.search).get('data')) {
-                case '1':
-                    $("#intro_card_body").html(`<%- include('./introduction1.ejs') %>`);
-                    break;
-                case '2':
-                    console.log("fc");
-                    break;
-                case '3':
-                    console.log("fc");
-                    break;
-                case '4':
-                    console.log("fc");
-                    break;
-                default:
-                    window.location.href = '?data=1';
-            }
+        function changeActive(e){
+            $('.nav-link').removeClass('active')
+            e.classList.add('active');
+        }
         </script>
