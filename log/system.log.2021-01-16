@@ -1,0 +1,15 @@
+2021-01-16 15:53:43 [ERROR] - DB error [Research_Fields]
+ 	SELECT DISTINCT * FROM  Member left JOIN Member_Career ON Member.mid = Member_Career.mid;
+ 	Error: connect ECONNREFUSED 221.141.86.238:32773
+2021-01-16 15:53:55 [ERROR] - DB error [Research_Fields]
+ 	SELECT DISTINCT * FROM  Member left JOIN Member_Career ON Member.mid = Member_Career.mid;
+ 	Error: connect ECONNREFUSED 221.141.86.238:32773
+2021-01-16 15:54:08 [ERROR] - DB error [Research_Fields]
+ 	SELECT DISTINCT * FROM  Member left JOIN Member_Career ON Member.mid = Member_Career.mid;
+ 	Error: Cannot enqueue Query after fatal error.
+2021-01-16 15:54:22 [ERROR] - DB error [Research_Fields]
+ 	SELECT DISTINCT * FROM  Member left JOIN Member_Career ON Member.mid = Member_Career.mid;
+ 	Error: connect ECONNREFUSED 221.141.86.238:32773
+2021-01-16 15:54:43 [ERROR] - DB error [Research_Fields]
+ 	SELECT DISTINCT * FROM  Member left JOIN Member_Career ON Member.mid = Member_Career.mid;
+ 	Error: Cannot enqueue Query after fatal error.

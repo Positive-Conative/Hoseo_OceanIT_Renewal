@@ -1,4 +1,6 @@
-var db = require("../../config/kyjdb");
+var db = require("../config/kyjdb");
+var logger = require('../config/logger');
+
 
 function researchFields_selectAll(parameters) {
     return new Promise(function (resolve, rejcet) {

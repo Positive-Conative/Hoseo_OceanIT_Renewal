@@ -1,4 +1,4 @@
-var memberDAO = require('../../model/member/memberDAO');
+var memberDAO = require('../model/memberDAO');
 
 function memberMain(req, res, next) {
     //req.session.userid = req.body.id;

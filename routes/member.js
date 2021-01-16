@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-var member = require('../controller/member/member');
+var memberController = require('../controller/memberController');
 
 //researchFields
-router.get('/', member.memberFunc.memberMain);
+router.get('/', memberController.memberFunc.memberMain);
 
 module.exports = router;

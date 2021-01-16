@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-var introductionMain = require('../controller/introduction/introductionMain');
+var introductionController = require('../controller/introductionController');
 
 //researchFields
-router.get('/', introductionMain.introductionMainFunc.introductionMain);
+router.get('/', introductionController.introductionMainFunc.introductionMain);
 
 module.exports = router;

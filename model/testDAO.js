@@ -1,5 +1,5 @@
 var db = require("../config/kyjDB");
-
+var logger = require('../config/logger');
 // function selectAll(req, res, next) {
 //     db.query(`SELECT * FROM test`, function (error, db_data) {
 //         if (error) {

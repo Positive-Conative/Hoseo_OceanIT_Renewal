@@ -1,4 +1,5 @@
-var db = require("../../config/kyjdb");
+var db = require("../config/kyjdb");
+var logger = require('../config/logger');
 
 function Member_selectAll(parameters) {
     return new Promise(function (resolve, rejcet) {
@@ -12,7 +13,7 @@ function Member_selectAll(parameters) {
                 rejcet('DB ERR');
                 //throw error;
             }
-            if(db_data[0] === undefined)
+            if(db_data === undefined)
                 resolve("<script>" +
                 "alert('No Data');" +
                 "window.history.go(-1);"+

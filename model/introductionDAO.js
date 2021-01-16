@@ -1,4 +1,5 @@
-var db = require("../../config/kyjdb");
+var db = require("../config/kyjdb");
+var logger = require('../config/logger');
 
 function introduction_selectAll(parameters) {
     return new Promise(function (resolve, rejcet) {

@@ -1,4 +1,4 @@
-var introductionDAO = require('../../model/introduction/introductionDAO');
+var introductionDAO = require('../model/introductionDAO');
 
 function introductionMain(req, res, next) {
     //req.session.userid = req.body.id;
