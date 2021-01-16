@@ -8,7 +8,7 @@ var helmet = require('helmet')
 var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
 var introductionRouter = require('./routes/introduction');
-var researchFieldsRouter = require('./routes/researchFields');
+var researchRouter = require('./routes/research');
 var memberRouter = require('./routes/member');
 
 var app = express();
@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'views'))); //USE HASH
 app.use('/', indexRouter);
 // app.use('/users', usersRouter);
 app.use('/introduction', introductionRouter);
-app.use('/research', researchFieldsRouter);
+app.use('/research', researchRouter);
 app.use('/members', memberRouter);
 
 // catch 404 and forward to error handler

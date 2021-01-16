@@ -1,7 +1,6 @@
 var db = require("../config/kyjdb");
 var logger = require('../config/logger');
 
-
 function researchFields_selectAll(parameters) {
     return new Promise(function (resolve, rejcet) {
         db.query(`SELECT * FROM Research_Fields`, function (error, db_data) {
@@ -23,6 +22,6 @@ function researchFields_selectAll(parameters) {
         });
     })
 }
-module.exports.adminDBFunc = {
+module.exports.researchFieldsFunc = {
     researchFields_selectAll
 }

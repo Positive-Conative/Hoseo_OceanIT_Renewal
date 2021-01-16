@@ -1,6 +1,15 @@
 <table id="researchFieldNav" class="table table-hover">
     <tbody align=center>
-        <tr>
+        <tr onclick="addquery('all')">
+            <th>전체</th>
+        </tr>
+        <tr onclick="addquery('progress')">
+            <th>진행 과제</th>
+        </tr>
+        <tr onclick="addquery('finish')">
+            <th>완료 과제</th>
+        </tr>
+        <!-- <tr>
             <th>논문</th>
         </tr>
         <tr>
@@ -8,7 +17,7 @@
         </tr>
         <tr>
             <th>발표</th>
-        </tr>
+        </tr> -->
     </tbody>
 </table>
 
@@ -36,4 +45,10 @@
             $('#researchContent').removeClass("col-10");
         }
     });
+    function addquery(type){
+        var pageQuery = location.search;
+        var queryParams = new URLSearchParams(pageQuery);
+        queryParams.set('type', type);
+        location.search = queryParams.toString();
+    }
 </script>

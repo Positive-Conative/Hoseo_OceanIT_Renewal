@@ -2,35 +2,43 @@
     <section>
         <div id="indexbg" class="mb-5"></div>
         <div id="indexbg_text">
-            <h1 class="fs-1">연구 분야</h1>
-            <div>연구 분야에 대한 설명입니다..!</div>
+            <h1 class="fs-1">연구 성과</h1>
+            <div>연구 성과에 대한 설명입니다..!</div>
         </div>
-        <div class="container-fluidp-3 p-5">
+        <div class="container-fluidp-3 p-3">
             <div class="row">
                 <div class="col-2">
                     <%- include('../include/researchFieldsNav.ejs') %>
                 </div>
                 <div id="researchContent" class="col-10">
-                    <h3 class="mb-5" align=center>연구 분야(ㄹㅇㅁㄴ)</h3>
-                    <table class="table table-responsive-xl table-hover text-center">
+                    <h3 class="mb-5" align=center>연구 성과</h3>
+                    <table class="table table-hover">
                         <thead>
                           <tr>
-                            <th scope="col" width="10%">순번</th>
-                            <th scope="col" width="40%">과제명</th>
-                            <th scope="col" width="40%">사업명</th>
-                            <th scope="col" width="20%">종료날짜</th>
+                            <th scope="col">#</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Handle</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <%for(var key in db_data){%>
-                            <tr onclick="location.href='/research/fields/detail?num=1'">
-                                <th scope="row"><%=db_data[key].rfid%></th>
-                                <td><%=db_data[key].research_name_ko%></td>
-                                <td><%=db_data[key].business_name_ko%></td>
-                                <td><%=dayjs(db_data[key].date_end).format('YYYY-MM-DD');%></td>
-                            </tr>
-                            
-                          <%}%>
+                          <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                          </tr>
+                          <tr>
+                            <th scope="row">3</th>
+                            <td colspan="2">Larry the Bird</td>
+                            <td>@twitter</td>
+                          </tr>
                         </tbody>
                       </table>
                 </div>
@@ -68,7 +76,9 @@
     #introduction_txtArea {
         text-align: left;
     }
-
+    #researchContent tbody tr{
+        cursor: pointer;
+    }
     @media(max-width: 768px) {
         #introduction_imgArea {
             display: none;
@@ -78,8 +88,5 @@
             margin-left: auto;
             margin-right: auto;
         }
-    }
-    #researchContent tbody tr{
-        cursor: pointer;
     }
 </style>
