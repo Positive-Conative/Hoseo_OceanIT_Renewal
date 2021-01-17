@@ -4,19 +4,15 @@ var researcFieldsDAO = require('../model/researchFieldsDAO');
 function researchFields(req, res, next) {
     //req.session.userid = req.body.id;
     var queryType = req.query.type;
-    var researchType="all";
-    if(queryType=="progress"){
-        researchType = "진뢩 과줴"
-        console.log("1")
-    }else if(queryType=="finish"){
-        console.log("2")
-    }else{
-        console.log("3")
-    }
-    researcFieldsDAO.researchFieldsFunc.researchFields_selectAll().then(
+    var queryPage = req.query.page;
+    var parameters={
+        "type":queryType,
+        "page":queryPage
+    };
+    researcFieldsDAO.researchFieldsFunc.researchFields_selectAll(parameters).then(
         (db_data) => {
             //console.log(db_data);
-            res.render('research_fields/researchFieldsMain', { db_data, dayjs, researchType });
+            res.render('research_fields/researchFieldsMain', { db_data, dayjs, parameters });
         }
     ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
 }
@@ -24,7 +20,7 @@ function researchFields(req, res, next) {
 function researchFieldsDetail(req, res, next) {
     //req.session.userid = req.body.id;
 
-    researcFieldsDAO.researchFieldsFunc.researchFields_selectAll().then(
+    researcFieldsDAO.researchFieldsFunc.researchFields_selectOne().then(
         (db_data) => {
             //console.log(db_data);
             res.render('research_fields/researchFieldsDetail', { db_data });

@@ -46,9 +46,10 @@
         }
     });
     function addquery(type){
-        var pageQuery = location.search;
-        var queryParams = new URLSearchParams(pageQuery);
+        var typeQuery = location.search;
+        var queryParams = new URLSearchParams(typeQuery);
         queryParams.set('type', type);
+        queryParams.set('page', 1);
         location.search = queryParams.toString();
     }
 </script>

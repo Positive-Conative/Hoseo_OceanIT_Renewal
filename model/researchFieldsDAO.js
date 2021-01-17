@@ -2,22 +2,22 @@ var db = require("../config/kyjdb");
 var logger = require('../config/logger');
 
 function researchFields_selectAll(parameters) {
+    var queryData = `SELECT * FROM Research_Fields `;
+    if(parameters.type=="progress"){
+        queryData += `WHERE date_end > NOW()`;
+    }else if(parameters.type=="finish"){
+        queryData += `WHERE date_end < NOW()`;
+    }
     return new Promise(function (resolve, rejcet) {
-        db.query(`SELECT * FROM Research_Fields`, function (error, db_data) {
+        db.query(queryData, function (error, db_data) {
             if (error) {
                 logger.error(
                     "DB error [Research_Fields]"+
-                    "\n \t" + `SELECT * FROM Research_Fields` +
+                    "\n \t" + queryData +
                     "\n \t" + error);
                 rejcet('DB ERR');
                 //throw error;
             }
-            if(db_data[0] === undefined)
-                resolve("<script>" +
-                "alert('No Data');" +
-                "window.history.go(-1);"+
-                "</script>");
-                
             resolve(db_data);
         });
     })
