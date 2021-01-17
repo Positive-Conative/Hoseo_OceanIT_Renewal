@@ -19,13 +19,24 @@ function researchFields(req, res, next) {
 
 function researchFieldsDetail(req, res, next) {
     //req.session.userid = req.body.id;
-
-    researcFieldsDAO.researchFieldsFunc.researchFields_selectOne().then(
-        (db_data) => {
-            //console.log(db_data);
-            res.render('research_fields/researchFieldsDetail', { db_data });
-        }
+    var queryNum = req.query.num;
+    var parameters={
+        "rfid":queryNum
+    };
+    var detailData, linkData, photoData;
+    researcFieldsDAO.researchFieldsFunc.researchFields_selectDetail(parameters).then(
+        (db_data) => { detailData = db_data }
     ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
+
+    researcFieldsDAO.researchFieldsFunc.researchFields_selectDetailLinks(parameters).then(
+        (db_data) => { linkData = db_data  }
+    ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
+
+    researcFieldsDAO.researchFieldsFunc.researchFields_selectDetailPhotos(parameters).then(
+        (db_data) => { photoData = db_data  }
+    ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
+
+    res.render('research_fields/researchFieldsDetail', { dayjs, detailData, detailData, photoData });
 }
 
 module.exports.researchFunc = {

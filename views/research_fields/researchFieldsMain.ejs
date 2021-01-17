@@ -38,7 +38,7 @@
                                 var svData = db_data[((parameters.page-1) * 5)+i];
                                 if(svData==undefined) continue; 
                             %>
-                            <tr onclick="location.href='/research/fields/detail?num=1'">
+                            <tr onclick="location.href='/research/fields/detail?num=<%=svData.rfid%>'">
                                 <td><%=svData.rfid%></td>
                                 <td><%=svData.research_name_ko%></td>
                                 <td><%=svData.business_name_ko%></td>
