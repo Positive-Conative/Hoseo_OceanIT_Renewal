@@ -23,20 +23,24 @@ function researchFieldsDetail(req, res, next) {
     var parameters={
         "rfid":queryNum
     };
-    var detailData, linkData, photoData;
     researcFieldsDAO.researchFieldsFunc.researchFields_selectDetail(parameters).then(
-        (db_data) => { detailData = db_data }
+        (detailData) => { 
+            researcFieldsDAO.researchFieldsFunc.researchFields_selectDetailLinks(parameters).then(
+                (linkData) => {  
+                     researcFieldsDAO.researchFieldsFunc.researchFields_selectDetailPhotos(parameters).then(
+                        (photoData) => { 
+                            res.render('research_fields/researchFieldsDetail', { dayjs, detailData, linkData, photoData });
+                        }
+                    ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
+                }
+            ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
+        }
     ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
 
-    researcFieldsDAO.researchFieldsFunc.researchFields_selectDetailLinks(parameters).then(
-        (db_data) => { linkData = db_data  }
-    ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
+    
 
-    researcFieldsDAO.researchFieldsFunc.researchFields_selectDetailPhotos(parameters).then(
-        (db_data) => { photoData = db_data  }
-    ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
+    
 
-    res.render('research_fields/researchFieldsDetail', { dayjs, detailData, detailData, photoData });
 }
 
 module.exports.researchFunc = {

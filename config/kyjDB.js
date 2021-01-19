@@ -7,6 +7,7 @@ const db = mysql.createConnection({
   user: process.env.DBuserid,
   password: process.env.DBuserpw,
   database: process.env.DBname,
+  dateStrings: true
 })
 
 handleDisconnect(db);

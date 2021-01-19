@@ -2,6 +2,9 @@
     #researchFieldNav {
         display: none;
     }
+    #searchBOX {
+      display:none;
+    }
 }
 
 #indexbg {

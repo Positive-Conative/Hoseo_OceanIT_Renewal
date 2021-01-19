@@ -1,29 +1,6 @@
 <%- include('../include/header.ejs') %>
 <link rel="stylesheet" href="/stylesheets/research_fields/researchFieldsMain.css"/>
-<style>
-    #researchDetailContent table th, #researchDetailContent table tr, #researchDetailContent table td{
-        border:1px solid black;
-    }
-    #researchDetailContent table th{
-        width:20%;
-        background-color: lightgray;
-    }
-    #researchCarousel{
-        width:80%;
-    }
-    #researchCarousel .carousel-caption{
-        background-color: white;
-        opacity: 50%;
-        color:black;
-    }
-    #researchDetailContent img {
-        height:40vw;
-    }
-    #researchDetailContent .card-group img{
-        width:100%;
-        height:20vw;
-    }
-</style>
+<link rel="stylesheet" href="/stylesheets/research_fields/researchFieldsDetail.css"/>
     <section>
         <div id="indexbg" class="mb-5"></div>
         <div id="indexbg_text">
@@ -34,97 +11,79 @@
             <div class="row">
                 <div id="researchDetailContent" class="col-12">
                     <h3 class="mb-5" align=center>연구 분야의 제에목</h3>
-                    <table class="table table-responsive-sm text-center">
+                    <article>
+                      <table class="table table-responsive-sm text-center">
                         <tbody>
                           <tr>
                             <th>연구책임자</th>
-                            <td colspan=3>연구연구책임잔</td>
+                            <td colspan=3><%=detailData[0].research_manager_ko%></td>
                           </tr>
                           <tr>
-                            <th >소속</th>
-                            <td>ㄹUIT</td>
-                            <th>날짜</th>
-                            <td>2020202020</td>
+                            <th class="align-middle">소속</th>
+                            <td><%=detailData[0].research_belong_ko%></td>
+                            <th class="align-middle">날짜</th>
+                            <td><%=detailData[0].date_start%> ~ <%=detailData[0].date_end%></td>
                           </tr>
                           <tr>
                             <th>과제명</th>
-                            <td colspan=3>ㄹㅇㄴㅁㄴㅁㅇㄹㄴㅇㄹ</td>
+                            <td colspan=3><%=detailData[0].research_name_ko%></td>
                           </tr>
                           <tr>
                             <th>사업명</th>
-                            <td colspan=3>ㅁㄴㅇㄹㄹㅇㄴㅁ</td>
+                            <td colspan=3><%=detailData[0].business_name_ko%></td>
                           </tr>
                           <tr>
                             <th>부서</th>
-                            <td>ㄹㄹㄹ</td>
+                            <td><%=detailData[0].department_name_ko%></td>
                             <th>주관기관</th>
-                            <td>ㅂㅂㅂㅂ</td>
+                            <td><%=detailData[0].subjectivity_agency_ko%></td>
                           </tr>
                           <tr>
                             <th>지원기관</th>
-                            <td>ㄹㄹㄹ</td>
+                            <td><%=detailData[0].support_agency_ko%></td>
                             <th>참여기관</th>
-                            <td>ㅂㅂㅂㅂ</td>
+                            <td><%=detailData[0].participation_agency_ko%></td>
                           </tr>
                           <tr>
                             <th>연구 목표</th>
-                            <td colspan=3>ㅁㄻㄻㄹ</td>
+                            <td colspan=3><%=detailData[0].research_goal_ko%></td>
                           </tr>
                           <tr>
                             <th class="align-middle">연구 내용</th>
-                            <td colspan=3 class="text-break">ㅁㄴㅇㄹㄴㅇㄴㄹㅇㅁㅁㄹㄴㅇㄹㄴㅇㄹ<br>fsdasdaf<br>fdsasdf<br>dsafasdfsadfsd</td>
+                            <td colspan=3 class="text-break"><%=detailData[0].research_content_ko%></td>
                           </tr>
                           <tr>
                             <th class="align-middle">기대 성과</th>
-                            <td colspan=3 class="text-break">ㅁㄴㅇㄹㄴㅇㄴㄹㅇㅁㅁㄹㄴㅇㄹㄴㅇㄹ<br>fsdasdaf<br>fdsasdf<br>dsafasdfsadfsd</td>
+                            <td colspan=3 class="text-break"><%=detailData[0].expectation_result_ko%></td>
                           </tr>
                         </tbody>
-                      </table>
-                      <hr class="m-5">
-                      <h3 class="mb-5" align=center>Photos & Links</h3>
-                      <div class="card-group">
-                        <div class="card">
-                          <img src="/images/1.jpg" class="card-img-top" data-target="#researchCarousel" data-slide-to="0">
-                        </div>
-                        <div class="card">
-                          <img src="/images/1.jpg" class="card-img-top" data-target="#researchCarousel" data-slide-to="1">
-                        </div>
-                        <div class="card">
-                          <img src="/images/1.jpg" class="card-img-top" data-target="#researchCarousel" data-slide-to="2">
-                        </div>
-                        <div class="card">
-                          <img src="/images/1.jpg" class="card-img-top" alt="...">
-                        </div>
+                    </table>
+                    </article>
+
+                    <hr class="m-5">
+
+                    <article>
+                      <h3 class="mb-5" align=center>Photos</h3>
+                      <div align=center class="m-2">
+                        <%for(var key in photoData){%>
+                          <img src="/images/<%=photoData[key].img_src%>" class="carouselNav mr-2" data-target="#researchCarousel" data-slide-to="<%= key%>">
+                        <%}%>
                       </div>
-                      
                       <div id="researchCarousel" class="carousel slide mx-auto" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                          <li data-target="#researchCarousel" data-slide-to="0" class="active"></li>
-                          <li data-target="#researchCarousel" data-slide-to="1"></li>
-                          <li data-target="#researchCarousel" data-slide-to="2"></li>
-                        </ol>
                         <div class="carousel-inner">
-                          <div class="carousel-item active">
-                            <img src="/images/1.jpg" class="d-block w-100" alt="...">
+                          <%for(var key in photoData){%>
+                            <%if(key==0){%>
+                              <div class="carousel-item active">
+                            <%}else{%>
+                              <div class="carousel-item">
+                            <%}%>
+                            <img src="/images/<%=photoData[key].img_src%>" class="d-block w-100 carouselImg">
                             <div class="carousel-caption d-none d-md-block">
-                              <h5>First slide label</h5>
-                              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                              <h5><%=photoData[key].subtitile_ko%></h5>
+                              <p><%=photoData[key].content_ko%></p>
                             </div>
                           </div>
-                          <div class="carousel-item">
-                            <img src="/images/123.png" class="d-block w-100" alt="...">
-                            <div class="carousel-caption d-none d-md-block">
-                              <h5>Second slide label</h5>
-                              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </div>
-                          </div>
-                          <div class="carousel-item">
-                            <img src="/images/research.jpg" class="d-block w-100" alt="...">
-                            <div class="carousel-caption d-none d-md-block">
-                              <h5>Third slide label</h5>
-                              <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                            </div>
-                          </div>
+                          <%}%>
                         </div>
                         <a class="carousel-control-prev" href="#researchCarousel" role="button" data-slide="prev">
                           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -135,12 +94,24 @@
                           <span class="sr-only">Next</span>
                         </a>
                       </div>
-                      <br>
+                    </article>
 
-                      
-                      <b>◈ 제에에오목 : </b> www.naver.cm <br>
-                      <b>◈ 제에에오목 : </b> www.naver.cm <br>
-                      <b>◈ 제에에오목 : </b> www.naver.cm <br>
+                    <hr class="m-5">
+
+                    <article>
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-6 col-md-4" style=" border-right:1px solid black">
+                            <h3 class="mb-5" align=center>참고 Link</h3>
+                          </div>
+                          <div class="col-md-8">
+                            <%for(var key in linkData){%>
+                              <a href="<%=linkData[key].link_src%>">◈ <%=linkData[key].subtitle_ko%> </a> <br>
+                            <%}%>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
                 </div>
             </div>
         </div>
