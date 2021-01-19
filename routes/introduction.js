@@ -3,7 +3,7 @@ var router = express.Router();
 
 var introductionController = require('../controller/introductionController');
 
-//researchFields
+//introduction
 router.get('/', introductionController.introductionMainFunc.introductionMain);
 
 module.exports = router;

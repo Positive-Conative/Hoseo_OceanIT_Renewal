@@ -16,6 +16,7 @@
 #researchDetailContent .carouselNav {
     width:10vw;
     height:10vw;
+    cursor: pointer;
 }
 #researchDetailContent .carouselImg{
   height:40vw;

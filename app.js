@@ -6,10 +6,10 @@ var logger = require('morgan');
 var helmet = require('helmet')
 
 var indexRouter = require('./routes/index');
-// var usersRouter = require('./routes/users');
 var introductionRouter = require('./routes/introduction');
 var researchRouter = require('./routes/research');
 var memberRouter = require('./routes/member');
+var galleryRouter = require('./routes/gallery');
 
 var app = express();
 
@@ -30,6 +30,7 @@ app.use('/', indexRouter);
 app.use('/introduction', introductionRouter);
 app.use('/research', researchRouter);
 app.use('/members', memberRouter);
+app.use('/gallery', galleryRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -3,7 +3,7 @@ var router = express.Router();
 
 var memberController = require('../controller/memberController');
 
-//researchFields
+//member
 router.get('/', memberController.memberFunc.memberMain);
 
 module.exports = router;
