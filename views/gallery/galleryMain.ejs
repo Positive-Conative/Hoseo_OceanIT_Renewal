@@ -5,43 +5,19 @@
             <h1 class="fs-1">갤러리</h1>
             <div>각종 사진들입니다!</div>
         </div>
-        <div id="galleryContent" class="row row-cols-1 row-cols-md-3 g-4">
+
+        <div id="galleryContent" class="row-cols-1 row-cols-md-4 row g-4">
+          <%for(var key in db_data){%>
             <div class="col">
-              <div class="card m-1">
-                <img src="/images/1.jpg" class="card-img-top" alt="...">
+              <div class="card text-center m-1" onclick="location.href='/gallery/detail?num=<%=db_data[key].gid%>'">
+                <img src="/images/<%=JSON.parse(db_data[key].img_src).photos[0]%>" class="card-img-top">
                 <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text gallerySub">fdfdfdf인 동리릴리 입니다!</p>
+                  <h5 class="card-title gallerySub"><%= db_data[key].title_ko%></h5>
                 </div>
               </div>
             </div>
-            <div class="col">
-              <div class="card m-1">
-                <img src="/images/123.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text text-break gallerySub">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card m-1">
-                <img src="/images/introducebg2.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text gallerySub">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card m-1">
-                <img src="/images/introducebg.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                </div>
-              </div>
-            </div>
+          <%}%>
+
           </div>
     </section>
     <%- include('../include/footer.ejs') %>
@@ -55,12 +31,20 @@
      * 특정 글자수가 넘어가면 넘어가는 글자는 자르고 마지막에 대체문자 처리<br/>
      *  ex) 가나다라마바사 -> textLengthOverCut('가나다라마바사', '5', '...') : 가나다라마...<br/>
      */
-    for(var key=0; key< document.getElementsByClassName('gallerySub').length; key++){
-        var len = document.getElementsByClassName('gallerySub')[key].textContent.length
-        if (len > 20) {
-            document.getElementsByClassName('gallerySub')[key].textContent = document.getElementsByClassName('gallerySub')[key].textContent.substr(0, 20) + "...";
-        }
+    //  $(document).ready(function(){
+    //     width = window.matchMedia("screen and (max-width: 768px)")
         
+    //     if (width.matches) {
+    //         $('#researchContent').addClass("col-12");
+    //         $('#researchContent').removeClass("col-10");
+    //     }
+    // });
+    
+    for(var key=0; key< $('.gallerySub').length; key++){
+        var len = $('.gallerySub')[key].textContent.length
+        if (len > 13) {
+          $('.gallerySub')[key].textContent =$('.gallerySub')[key].textContent.substr(0, 13) + "...";
+        }
     }
 </script>
 
@@ -69,6 +53,9 @@
         #galleryContent .card>img{
             display: none;
         }
+    }
+    #galleryContent{
+      width:100%;
     }
     #galleryContent .card{
         cursor: pointer;

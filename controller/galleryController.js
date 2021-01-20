@@ -1,18 +1,25 @@
 var galleryDAO = require('../model/galleryDAO');
 
 function galleryMain(req, res, next) {
-    //req.session.userid = req.body.id;
-
-    var parameters={"adminID":1, "adminPW":2}
     galleryDAO.galleryDBFunc.gallery_selectAll().then(
         (db_data) => {
-            //console.log(db_data);
             res.render('gallery/galleryMain', { db_data });
         }
     ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
-    console.log("FF!!");
 }
 
+function galleryDetail(req, res, next) {
+    var queryNum = req.query.num;
+    var parameters={
+        "gid":queryNum
+    };
+    galleryDAO.galleryDBFunc.gallery_selectOneDetail(parameters).then(
+        (db_data) => {
+            res.render('gallery/galleryDetail', { db_data });
+        }
+    ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
+}
 module.exports.galleryFunc = {
-    galleryMain
+    galleryMain,
+    galleryDetail
 }
