@@ -4,14 +4,22 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var helmet = require('helmet')
+var session = require('express-session');
 
 var indexRouter = require('./routes/index');
 var introductionRouter = require('./routes/introduction');
 var researchRouter = require('./routes/research');
 var memberRouter = require('./routes/member');
 var galleryRouter = require('./routes/gallery');
+var authRouter = require('./routes/auth');
 
 var app = express();
+
+app.use(session({
+  secret: '~!@#$%CONATIVE)(*&^.',
+  resave: false,
+  saveUninitialized: true
+ }));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,6 +39,7 @@ app.use('/introduction', introductionRouter);
 app.use('/research', researchRouter);
 app.use('/members', memberRouter);
 app.use('/gallery', galleryRouter);
+app.use('/auth', authRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
