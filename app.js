@@ -3,9 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var helmet = require('helmet')
-var session = require('express-session');
-
+var helmet = require('helmet');
 var indexRouter = require('./routes/index');
 var introductionRouter = require('./routes/introduction');
 var researchRouter = require('./routes/research');
@@ -14,12 +12,6 @@ var galleryRouter = require('./routes/gallery');
 var authRouter = require('./routes/auth');
 
 var app = express();
-
-app.use(session({
-  secret: '~!@#$%CONATIVE)(*&^.',
-  resave: false,
-  saveUninitialized: true
- }));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
