@@ -27,16 +27,18 @@ function checkUser(req, res, next) {
         userInfoDAO.userInfoFunc.search_UserDetail(parameters).then(
             (db_data) => {
                 if(db_data[0] != undefined){
+
                     const token = jwt.sign({
                         user_id: db_data[0].user_id,
                         user_name: db_data[0].user_name,
                         user_email: db_data[0].user_email,
                     }, process.env.JWT_SECRET, {
-                        expiresIn: '1m',
+                        expiresIn: '30m',
                         issuer: 'Conative',
                     });
+
                     res.cookie("user", token);
-                    res.redirect("/")
+                     res.redirect("/")
                 }else{
                     res.send("<script>alert('JWT is wrong...');history.go(-1);</script>")
                 }
@@ -54,6 +56,32 @@ function revise_check(req, res, next) {
     ).catch(err=>res.send("<script>alert('jwt err');</script>"));    
 }
 
+function revise_check_post(req, res, next) {
+    let token = req.cookies.user;
+    jwtmiddle.jwtModule.jwtCerti(token).then(
+        (permission)=>{
+            if(permission!=false){
+                console.log(permission.user_id)
+                var parameters = {
+                    "user_id": permission.user_id,
+                    "user_pw": req.body.inputPW
+                }
+                userInfoDAO.userInfoFunc.search_UserDetail(parameters).then(
+                    (db_data) => {
+                        res.render('auth/revise', {db_data, permission});
+                    }
+                ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/auth/revise_check';</script>"))
+            }
+            else
+                res.send("<script>alert('세션이 만료되었습니다.'); location.href='/'; </script>")
+        }
+    ).catch(err=>res.send("<script>alert('jwt err');</script>"));    
+}
+
+function updateUser(req, res, next) {
+    console.log("완벽허이..")
+}
+
 function logOut(req, res, next) {
     let token = req.cookies.user;
     res.clearCookie('user');
@@ -64,5 +92,7 @@ module.exports.authFunc = {
     signIn,
     checkUser,
     revise_check,
+    revise_check_post,
+    updateUser,
     logOut
 }

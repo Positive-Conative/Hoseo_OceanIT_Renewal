@@ -10,6 +10,10 @@ router.post('/sign/in', authController.authFunc.checkUser);
 
 // update info (check)
 router.get('/revise_check', authController.authFunc.revise_check);
+router.post('/revise_check', authController.authFunc.revise_check_post);
+
+// update info
+router.post('/revise', authController.authFunc.updateUser);
 
 
 // logout

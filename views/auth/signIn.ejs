@@ -18,7 +18,7 @@
                         <b style="cursor: pointer">X</b>
                 </h3> -->
                 <h1 class="mb-5">Sign In</h1>
-                <form method="POST">
+                <form method="POST" id="loginForm">
                     <label for="inputID" class="form-label">Input ID</label>
                     <input type="text" class="form-control mb-3" id="inputID" name="inputID" placeholder="Input your id">
     
@@ -36,10 +36,26 @@
             </div>
         </div>
     </section>
+    <div id="is_unlocked">
+        <div id="unlocked">
+            <img src="/images/unlock.gif" alt="LOGO">
+        </div>
+    </div>
+
 </body>
 </html>
+<script>
+    
+    function signin(){
+        setTimeout(function() {
+            console.log("F")
+            // $('#loginForm').submit;
+        }, 2000);
+    }
+</script>
 
 <style>
+    
     html{min-height:100%;position:relative;}
     body{height:100%;}
     #image_container{
@@ -90,5 +106,13 @@
             width:100%;
             padding:0
         }
+    }
+    #unlocked{
+        display:none;
+        position: absolute;
+        top: 50%;
+        left: 45%;
+        margin:-150px 0 0 -150px;
+        background-color: rgb(255,255,255,0.8);
     }
 </style>

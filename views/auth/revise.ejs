@@ -1,0 +1,142 @@
+<%- include('../include/header.ejs') %>
+    <section>
+        <link href="/stylesheets/index.css" rel="stylesheet" />
+        <h1 id="info_Header" class="mt-5 text-center">회원 정보 수정</h1>
+        <h6 id="info_Header" class="mb-5 text-center">(*)은 필수 사항입니다.</h6>
+        <div class="container-fluid">
+            <form method="POST" action="/auth/revise">
+                <div class="row">
+                    <div class="col-6 col-md-4 mx-auto mb-5">
+                      <img id="img_area" src="/images/revise.jpg"/>
+                      <input class="form-control" type="file" id="formFile">
+                    </div>
+                    <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="disable_id" class="form-label">ID<sup>*</sup></label>
+                                <input type="text" class="form-control" id="disable_id" value="<%= db_data[0].user_id%>" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="input_email" class="form-label">Email<sup>*</sup></label>
+                                <input type="email" class="form-control" id="input_email" name="input_input_emailpassword" value="<%= db_data[0].user_email%>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="input_pw" class="form-label">PW<sup>*</sup></label>
+                                <input type="password" class="form-control" id="input_pw" name="input_password" >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="input_repw" class="form-label">PW 재입력<sup>*</sup></label>
+                                <input type="password" class="form-control" id="input_repw" name="input_repassword">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="input_name_ko" class="form-label">이름(KO)<sup>*</sup></label>
+                                <input type="text" class="form-control" id="input_name_ko" name="input_name_ko" value="<%= db_data[0].user_name_ko%>">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="input_name_en" class="form-label">이름(EN)<sup>*</sup></label>
+                                <input type="text" class="form-control" id="input_name_en" name="input_name_en" value="<%= db_data[0].user_name_en%>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="input_phone" class="form-label">전화번호</label>
+                                <input type="phone" class="form-control" id="input_phone" name="input_phone" value="<%= db_data[0].user_phone%>">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="input_name" class="form-label">주소</label>
+                                <input type="text" class="form-control" id="input_name" name="input_name" value="<%= db_data[0].user_addr%>">
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align:right">
+                        <input class="btn btn-primary" id="submit_btn" type="submit" value="변경하기">
+                    </div>
+
+                    </div>
+                  </div>
+            </form>
+            <!-- <div id="blur_area"></div>
+            <div >
+                <img id="blur_area_img" src="/images/lock.png"/>
+            </div>
+            <div id="blur_area_back"></div> -->
+        </div>
+
+    </section>
+    <%- include('../include/footer.ejs') %>
+<style>
+    #blur_area_img{
+        position: absolute;
+        top:0;
+        left:40%;
+        width:25vw;
+        height:25vw;
+        z-index:5;
+    }
+    section {
+        background-color: rgb(227, 227, 241);
+        padding-top: 50px;
+        text-align: center;
+    }
+    #img_area{
+        width: 100%;
+        height: 30vw;
+    }
+    #blur_area{
+        position: absolute;
+        top:3%;
+        bottom:3%;
+        left:3%;
+        right:3%;
+        z-index: 3;
+        background-color: white;
+        filter:blur(6px);
+        opacity: 60%;
+        
+        animation-duration: 1s;
+        animation-name: slidein;
+    }
+    #blur_area_back{
+        position: absolute;
+        top:0;
+        bottom:0;
+        left:0;
+        right:0; 
+        z-index: 2;
+    }
+    @keyframes slidein {
+        from {
+            top:0;
+            bottom:0;
+            left:0;
+            right:0; 
+        }
+
+        to {
+            top:3%;
+            bottom:3%;
+            left:3%;
+            right:3%;
+        }
+    }
+</style>
