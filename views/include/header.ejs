@@ -9,7 +9,7 @@
   </head>
   <body>
       <header>
-        <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: rgba(18,20,34, .7);">
+        <nav class="navbar navbar-expand-xl navbar-dark fixed-top" style="background-color: rgba(18,20,34, .7);">
           <a class="navbar-brand" href="/">
             <img src="/images/logo.gif" alt="" width="120" height="20">
           </a>
@@ -38,12 +38,17 @@
               <li class="nav-item active">
                 <a class="nav-link" href="/gallery">Gallery</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">&copy;Conative</a>
-              </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-              <button type="button" class="btn btn-warning mr-2" onclick="location.href='/auth/sign/in'">Log In</button>
+            
+            <form class="form-inline my-2 my-lg-0" style="color:white">
+              <%if(permission.user_id !=undefined){%>
+                <span class="nav-link " tabindex="-1" aria-disabled="true">환영합니다 <%=permission.user_id%>님.</span>
+                <button type="button" class="btn btn-warning mr-2" onclick="location.href='/auth/logout'">Log Out</button>
+              <%}else{%>
+                <span class="nav-link "  tabindex="-1" aria-disabled="true">환영합니다 손님.</span>
+                <button type="button" class="btn btn-warning mr-2" onclick="location.href='/auth/sign/in'">Log In</button>
+              <%}%>
+              
               <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Search</button>
             </form>

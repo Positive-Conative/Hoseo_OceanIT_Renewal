@@ -1,0 +1,84 @@
+2021-01-22 13:52:49 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id="21" && user_pw="1"
+ 	Error: ER_BAD_FIELD_ERROR: Unknown column 'user_pw' in 'where clause'
+2021-01-22 13:52:58 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id="12" && user_pw="1"
+ 	Error: ER_BAD_FIELD_ERROR: Unknown column 'user_pw' in 'where clause'
+2021-01-22 13:53:05 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id="12" && user_pw="3"
+ 	Error: ER_BAD_FIELD_ERROR: Unknown column 'user_pw' in 'where clause'
+2021-01-22 14:37:27 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id="1" && user_pw="1"|1==1""
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '==1""' at line 1
+2021-01-22 14:40:28 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id="1" && user_pw=""a"
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'a"' at line 1
+2021-01-22 14:40:36 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id="1"" && user_pw=""
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '"1"" && user_pw=""' at line 1
+2021-01-22 14:41:51 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id=""1"" && user_pw=""2"3"
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1"" && user_pw=""2"3"' at line 1
+2021-01-22 14:42:10 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id=""1"" && user_pw=""3""
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1"" && user_pw=""3""' at line 1
+2021-01-22 14:42:30 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id=""1"" && user_pw=""3""
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1"" && user_pw=""3""' at line 1
+2021-01-22 14:43:42 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id=""1"" && user_pw="2"2"
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1"" && user_pw="2"2"' at line 1
+2021-01-22 14:45:03 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id=""1"" && user_pw="2"2"
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1"" && user_pw="2"2"' at line 1
+2021-01-22 14:45:13 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id=""1"" && user_pw="1"
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1"" && user_pw="1"' at line 1
+2021-01-22 14:45:42 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id=""1"" && user_pw="1"
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1"" && user_pw="1"' at line 1
+2021-01-22 14:46:27 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id=""1"" && user_pw="1"
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1"" && user_pw="1"' at line 1
+2021-01-22 14:47:15 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id=""1"" && user_pw=""2"
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1"" && user_pw=""2"' at line 1
+2021-01-22 14:47:40 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id=""1"" && user_pw="1"
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1"" && user_pw="1"' at line 1
+2021-01-22 14:47:53 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id="1" && user_pw=""1""
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1""' at line 1
+2021-01-22 14:48:02 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id="1"" && user_pw="1""
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1""' at line 1
+2021-01-22 14:48:16 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id="1"" && user_pw="1""
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1""' at line 1
+2021-01-22 14:48:24 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id=""1" && user_pw=""1"
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1" && user_pw=""1"' at line 1
+2021-01-22 14:49:40 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id="1"" && user_pw="1"
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1"' at line 1
+2021-01-22 14:50:37 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id=""1"" && user_pw="1"1"
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1"" && user_pw="1"1"' at line 1
+2021-01-22 14:52:35 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id=""1"" && user_pw="1"1"
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1"" && user_pw="1"1"' at line 1
+2021-01-22 14:52:39 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id=""1"" && user_pw="1"1"
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1"" && user_pw="1"1"' at line 1
+2021-01-22 14:56:07 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id="1"" && user_pw="1" "
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1" "' at line 1
+2021-01-22 14:58:09 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id="1"" && user_pw="1"
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1"' at line 1
+2021-01-22 14:58:22 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id="1"" && user_pw="1"
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1"' at line 1
+2021-01-22 14:58:28 [ERROR] - DB error [UserInfo]
+ 	SELECT * FROM UserInfo where user_id="1"" && user_pw="1""
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1""' at line 1

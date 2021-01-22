@@ -1,3 +1,5 @@
+'use strict';
+
 var jwtmiddle = require('../middleware/jwt');
 var express = require('express');
 var router = express.Router();
@@ -7,13 +9,10 @@ router.get('/', function (req, res, next) {
   
   let token = req.cookies.user;
   jwtmiddle.jwtModule.jwtCerti(token).then(
-    (is_ok)=>{
-      console.log(is_ok);
+    (permission)=>{
+      res.render('index', { title: 'Express' , permission});
     }
   ).catch(err=>res.send("<script>alert('jwt err');</script>"));
-  
-
-  res.render('index', { title: 'Express' });
 });
 
 router.get('/test', function(req, res, next) {

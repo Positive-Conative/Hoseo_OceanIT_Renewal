@@ -1,3 +1,5 @@
+'use strict';
+
 (function () {
     const root = document.querySelector('#intro_card_body');
     const routes = {

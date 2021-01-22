@@ -1,3 +1,5 @@
+'use strict';
+
 var jwt = require('jsonwebtoken');
 
 function jwtCerti(token){
@@ -7,17 +9,15 @@ function jwtCerti(token){
           console.log("JWT ERR!")
         }
         if(decoded){
-          console.log("권한이 있어서 API 수행 가능")
-          resolve("YES!!");
+          resolve(decoded);
         }
         else{
-          console.log("권한이 없습니다.")
-          resolve("No!!");
+          resolve(false);
         }
       });
   })
-    
 }
+
 module.exports.jwtModule = {
   jwtCerti
 };

@@ -1,3 +1,5 @@
+'use strict';
+
 var pageQuery = location.search;
 var queryParams = new URLSearchParams(pageQuery);
 function privpage(){

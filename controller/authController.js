@@ -1,58 +1,56 @@
+'use strict';
+
 var jwt = require('jsonwebtoken');
-// var generateToken = require('../middleware/jwt');
 var userInfoDAO = require('../model/userInfoDAO');
 
 function signIn(req, res, next) {
+    let token = req.cookies.user;
+    res.clearCookie('user');
     res.render('auth/signIn');
 }
 
 function checkUser(req, res, next) {
-    if(req.body.inputID == undefined || req.body.inputPW == undefined ||
-        req.body.inputID == "" || req.body.inputPW == ""||
+    var special_pattern = /[` ~!@#$%^&*|\\\'\";:\/?]/gi;
+    
+    if(special_pattern.test(req.body.inputID)|| special_pattern.test(req.body.inputPW) ||
+        req.body.inputID == undefined || req.body.inputPW == undefined ||
+        req.body.inputID == " " || req.body.inputPW == " "||
         req.body.inputID == null || req.body.inputPW == null){
-        res.send("<script>잘못된 값을 입력하셨습니다.</script>")
-    }
-    var parameters = {
-        "user_id": req.body.inputID,
-        "user_pw" : req.body.inputPW
-    }
-
-    userInfoDAO.userInfoFunc.search_UserDetail(parameters).then(
-        (db_data) => {
-            // passport.authenticate(
-            //     "register",
-            //     { session: false },
-            //     (err, user, info) => {
-            //       if (err) {
-            //         res.status(400);
-            //       } else if (!user) {
-            //         res.status(200).send("이미 가입된 이메일입니다.");
-            //       } else {
-            //         res.status(200).send("정상적으로 회원가입 되었습니다.");
-            //       }
-            //     }
-            //   )
-            const token = jwt.sign({
-                user_id: "asdf",
-                email: "asdfa",
-                nick: "asdfaa"
-            }, process.env.JWT_SECRET, {
-                expiresIn: '1m',
-                issuer: 'nodebird',
-            });
-
-            if(db_data[0] != undefined){
-                res.cookie("user", token);
-                res.redirect("/")
-            }else{
-                res.send("nn")
-            }
+        res.send("<script>alert('잘못된 값을 입력하셨습니다.'); history.go(-1);</script>")
+    }else{
+        var parameters = {
+            "user_id": req.body.inputID,
+            "user_pw" : req.body.inputPW
         }
-    ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
+    
+        userInfoDAO.userInfoFunc.search_UserDetail(parameters).then(
+            (db_data) => {
+                if(db_data[0] != undefined){
+                    const token = jwt.sign({
+                        user_id: db_data[0].user_id,
+                        user_name: db_data[0].user_name,
+                        user_email: db_data[0].user_email,
+                    }, process.env.JWT_SECRET, {
+                        expiresIn: '1m',
+                        issuer: 'Conative',
+                    });
+                    res.cookie("user", token);
+                    res.redirect("/")
+                }else{
+                    res.send("<script>alert('JWT is wrong...');history.go(-1);</script>")
+                }
+            }
+        ).catch(err=>res.send("<script>alert('"+ err +"');history.go(-1);</script>"))
+    }    
 }
 
-
+function logOut(req, res, next) {
+    let token = req.cookies.user;
+    res.clearCookie('user');
+    res.redirect('/');
+}
 module.exports.authFunc = {
     signIn,
-    checkUser
+    checkUser,
+    logOut
 }

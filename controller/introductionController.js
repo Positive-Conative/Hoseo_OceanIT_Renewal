@@ -1,13 +1,17 @@
+'use strict';
+
+var jwtmiddle = require('../middleware/jwt');
 var introductionDAO = require('../model/introductionDAO');
 
 function introductionMain(req, res, next) {
-    //req.session.userid = req.body.id;
-
-    var parameters={"adminID":1, "adminPW":2}
-    introductionDAO.introductionDBFunc.introduction_selectAll(parameters).then(
+    introductionDAO.introductionDBFunc.introduction_selectAll().then(
         (db_data) => {
-            //console.log(db_data);
-            res.render('introduction/introductionMain', { db_data });
+            let token = req.cookies.user;
+            jwtmiddle.jwtModule.jwtCerti(token).then(
+                (permission)=>{
+                    res.render('introduction/introductionMain', { db_data, permission });
+                }
+            ).catch(err=>res.send("<script>alert('jwt err');</script>"));
         }
     ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
 }
