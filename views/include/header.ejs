@@ -44,12 +44,13 @@
               <%if(permission.user_id !=undefined){%>
                 <span class="nav-link " tabindex="-1" aria-disabled="true">환영합니다 <%=permission.user_id%>님.</span>
                 <button type="button" class="btn btn-warning mr-2" onclick="location.href='/auth/logout'">Log Out</button>
+                <button type="button" class="btn btn-info mr-sm-2" onclick="location.href='/auth/revise_check'">회원 정보 수정</button>
               <%}else{%>
                 <span class="nav-link "  tabindex="-1" aria-disabled="true">환영합니다 손님.</span>
                 <button type="button" class="btn btn-warning mr-2" onclick="location.href='/auth/sign/in'">Log In</button>
               <%}%>
               
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" style="display: none;">
               <button class="btn btn-outline-success my-2 my-sm-0 " type="submit">Search</button>
             </form>
           </div>

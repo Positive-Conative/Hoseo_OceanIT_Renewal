@@ -12,7 +12,7 @@
 <body>
     <section>
         <div id="image_container"></div>
-        <div id="form_container" class="p-5">
+        <div id="form_container" class="p-4">
             <div class="h-100 p-5" style="border:1px solid lightgray; border-radius: 3%; box-shadow: 9px 9px 3px 1px rgba(0, 0, 255, .2);">
                 <!-- <h3 class="p-5 mr-2 fs-1" style="position:absolute; top:0; right:0;text-align: right; color:gray;">
                         <b style="cursor: pointer">X</b>
@@ -42,29 +42,53 @@
 <style>
     html{min-height:100%;position:relative;}
     body{height:100%;}
-
     #image_container{
-        position:absolute;
-        width:70%;
-        top:0;
-        bottom:0;
-        left:0;
-        right:0;
-        overflow:hidden;
-        z-index:-1;
-        background: url("/images/login.jpg") no-repeat center center fixed;
+            position:absolute;
+            top:0;
+            bottom:0;
+            left:0;
+            right:0;
+            overflow:hidden;
+            z-index:-1;
+            background: url("/images/login.jpg") no-repeat center center fixed;
+        }
+        #form_container{
+            position:absolute;
+            top:0;
+            bottom:0;
+            right:0;
+            overflow:hidden;
+            z-index:-1;
+        }
+        #form_container h1{
+            text-align: left;
+            color:rgb(50,55,95);
+        }
+
+    @media (min-width: 1414px) {
+        #image_container{
+            width:70%;
+        }
+        #form_container{
+            width:30%;
+        }
     }
-    #form_container{
-        position:absolute;
-        width:30%;
-        top:0;
-        bottom:0;
-        right:0;
-        overflow:hidden;
-        z-index:-1;
+    @media (min-width: 848px ) and (max-width: 1414px) {
+        #image_container{
+            width:60%;
+        }
+        #form_container{
+            width:40%;
+        }
     }
-    #form_container h1{
-        text-align: left;
-        color:rgb(50,55,95);
+    @media (max-width: 848px ){
+        #image_container{
+            display:none;
+            background-color: white;
+        }
+        #form_container{
+            width:100%;
+            padding:0
+        }
     }
 </style>

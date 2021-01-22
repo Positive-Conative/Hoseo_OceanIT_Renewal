@@ -1,6 +1,7 @@
 'use strict';
 
 var jwt = require('jsonwebtoken');
+var jwtmiddle = require('../middleware/jwt');
 var userInfoDAO = require('../model/userInfoDAO');
 
 function signIn(req, res, next) {
@@ -44,13 +45,24 @@ function checkUser(req, res, next) {
     }    
 }
 
+function revise_check(req, res, next) {
+    let token = req.cookies.user;
+    jwtmiddle.jwtModule.jwtCerti(token).then(
+        (permission)=>{
+            res.render('auth/revise_check', {permission});
+        }
+    ).catch(err=>res.send("<script>alert('jwt err');</script>"));    
+}
+
 function logOut(req, res, next) {
     let token = req.cookies.user;
     res.clearCookie('user');
     res.redirect('/');
 }
+
 module.exports.authFunc = {
     signIn,
     checkUser,
+    revise_check,
     logOut
 }

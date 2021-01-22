@@ -8,8 +8,13 @@ var authController = require('../controller/authController');
 router.get('/sign/in', authController.authFunc.signIn);
 router.post('/sign/in', authController.authFunc.checkUser);
 
+// update info (check)
+router.get('/revise_check', authController.authFunc.revise_check);
+
+
 // logout
 router.get('/logout', authController.authFunc.logOut);
+
 
 // sign up
 // router.get('/sign/up', authController.authFunc.signUp);
