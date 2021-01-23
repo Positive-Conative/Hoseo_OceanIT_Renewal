@@ -30,7 +30,7 @@ function checkUser(req, res, next) {
 
                     const token = jwt.sign({
                         user_id: db_data[0].user_id,
-                        user_name: db_data[0].user_name,
+                        user_name_ko: db_data[0].user_name_ko,
                         user_email: db_data[0].user_email,
                     }, process.env.JWT_SECRET, {
                         expiresIn: '30m',
@@ -38,7 +38,7 @@ function checkUser(req, res, next) {
                     });
 
                     res.cookie("user", token);
-                     res.redirect("/")
+                    res.redirect("/")
                 }else{
                     res.send("<script>alert('JWT is wrong...');history.go(-1);</script>")
                 }
