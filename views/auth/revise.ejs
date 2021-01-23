@@ -7,7 +7,11 @@
             <form method="POST" action="/auth/revise">
                 <div class="row">
                     <div class="col-6 col-md-4 mx-auto mb-5">
-                      <img id="img_area" src="/images/revise.jpg"/>
+                        <% if(db_data[0].user_img_src != undefined){%>
+                            <img id="img_area" src="/images/users/<%= db_data[0].user_img_src%>"/>
+                        <%}else{%>
+                            <img id="img_area" src="/images/notImage.jpg"/>
+                        <%}%>
                       <input class="form-control" type="file" id="formFile">
                     </div>
                     <div class="col-md-8">

@@ -1,1 +1,30 @@
-hello
+<%- include('../include/header.ejs') %>
+    <section >
+        <link href="/stylesheets/index.css" rel="stylesheet" />
+        <h1 id="info_Header" class="mt-5 text-center">ADMIN 관리 화면</h1>
+        <div class="container-fluidp-3 p-5">
+            <div class="row">
+                <div class="col-2">
+                    <%- include('../include/adminNav.ejs') %>
+                </div>
+                <div id="adminContent" class="col-10">
+                    <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <%- include('../include/footer.ejs') %>
+<style>
+    section {
+        background-color:white;
+        padding-top: 50px;
+        text-align: center;
+    }
+    canvas{
+        background-color: white;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
+<script src="/javascripts/dashboard.js"></script>

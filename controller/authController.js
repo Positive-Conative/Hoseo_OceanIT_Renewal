@@ -1,6 +1,6 @@
 'use strict';
 
-var jwt = require('jsonwebtoken');
+// var jwt = require('jsonwebtoken');
 var jwtmiddle = require('../middleware/jwt');
 var userInfoDAO = require('../model/userInfoDAO');
 
@@ -27,18 +27,17 @@ function checkUser(req, res, next) {
         userInfoDAO.userInfoFunc.search_UserDetail(parameters).then(
             (db_data) => {
                 if(db_data[0] != undefined){
-
-                    const token = jwt.sign({
+                    var userData = {
                         user_id: db_data[0].user_id,
                         user_name_ko: db_data[0].user_name_ko,
                         user_email: db_data[0].user_email,
-                    }, process.env.JWT_SECRET, {
-                        expiresIn: '30m',
-                        issuer: 'Conative',
-                    });
-
-                    res.cookie("user", token);
-                    res.redirect("/")
+                    }
+                    jwtmiddle.jwtModule.jwtCreate(userData).then(
+                        (token)=>{
+                            res.cookie("user", token);
+                            res.redirect("/")
+                        }
+                      ).catch(err=>res.send("<script>alert('jwt err');</script>"));
                 }else{
                     res.send("<script>alert('JWT is wrong...');history.go(-1);</script>")
                 }

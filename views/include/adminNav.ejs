@@ -1,0 +1,53 @@
+<table id="adminNav" class="table table-hover">
+    <tbody align=center>
+        <tr onclick="addquery('all')">
+            <th>방문자 수</th>
+        </tr>
+        <tr onclick="addquery('progress')">
+            <th>현재 게시물 수</th>
+        </tr>
+        <tr onclick="addquery('finish')">
+            <th>1:1문의 확인</th>
+        </tr>
+        <!-- <tr>
+            <th>논문</th>
+        </tr>
+        <tr>
+            <th>특허</th>
+        </tr>
+        <tr>
+            <th>발표</th>
+        </tr> -->
+    </tbody>
+</table>
+
+<style>
+    #adminNav tr{
+        cursor: pointer;
+    }
+    @media(max-width: 768px) {
+        #adminNav {
+            display: none;
+        }
+    }
+</style>
+
+<script>
+    $(window).resize(()=>{
+        width = window.matchMedia("screen and (max-width: 768px)")
+        if (width.matches) {
+            $('#adminContent').addClass("col-12");
+            $('#adminContent').removeClass("col-10");
+        } else {
+            $('#adminContent').addClass("col-10");
+            $('#adminContent').removeClass("col-12");
+        }
+    })
+    $(document).ready(function(){
+        width = window.matchMedia("screen and (max-width: 768px)")
+        if (width.matches) {
+            $('#adminContent').addClass("col-12");
+            $('#adminContent').removeClass("col-10");
+        }
+    });
+</script>
