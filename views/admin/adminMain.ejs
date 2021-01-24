@@ -12,7 +12,8 @@
                 </div>
             </div>
         </div>
-
+        <%=db_data[0].write_date %>
+        <%=db_data[0].count %>
     </section>
     <%- include('../include/footer.ejs') %>
 <style>
@@ -27,4 +28,49 @@
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script>
-<script src="/javascripts/dashboard.js"></script>
+<script>
+    (function () {
+    'use strict'
+    var mylabel = [];
+    var mycound = [];
+    <% for(var i=0; i<7 && i< db_data.length; i++){ %>
+        mylabel.push("<%= db_data[i].write_date %>")
+        mycound.push("<%= db_data[i].count %>")
+    <% } %>
+
+    mylabel.reverse();
+    mycound.reverse();
+
+    feather.replace()
+    console.log(mylabel)
+    // Graphs
+    var ctx = document.getElementById('myChart')
+    // eslint-disable-next-line no-unused-vars
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+        labels: mylabel,
+        datasets: [{
+            data: mycound,
+            lineTension: 0,
+            backgroundColor: 'transparent',
+            borderColor: '#007bff',
+            borderWidth: 4,
+            pointBackgroundColor: '#007bff'
+        }]
+        },
+        options: {
+        scales: {
+            yAxes: [{
+            ticks: {
+                beginAtZero: false
+            }
+            }]
+        },
+        legend: {
+            display: false
+        }
+        }
+    })
+})()
+</script>

@@ -22,7 +22,7 @@ function jwtCerti(token){
   return new Promise(function (resolve, rejcet) {
       jwt.verify(token, process.env.JWT_SECRET, (err, decoded)=>{
         if(err){
-          console.log("JWT ERR!")
+          console.log("JWT was Expired!")
         }
         if(decoded){
           resolve(decoded);

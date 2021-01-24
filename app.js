@@ -12,6 +12,7 @@ var researchRouter = require('./routes/research');
 var memberRouter = require('./routes/member');
 var galleryRouter = require('./routes/gallery');
 var authRouter = require('./routes/auth');
+var boardRouter = require('./routes/board');
 var adminRouter = require('./routes/admin');
 
 var app = express();
@@ -35,6 +36,7 @@ app.use('/research', researchRouter);
 app.use('/members', memberRouter);
 app.use('/gallery', galleryRouter);
 app.use('/auth', authRouter);
+app.use('/board', boardRouter);
 app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
