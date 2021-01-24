@@ -1,59 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div id="blur_line" align=center>
-        <img src="/images/revise_check.png"/><br>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam accusantium alias quaerat placeat velit eaque libero? Veniam autem totam numquam, voluptas itaque maiores magnam rerum, quo harum deserunt adipisci non.
-    </div>
-    
-</body>
-</html>
-<style>
-body {
-    animation-duration: 1s;
-    animation-name: slidein;
-    position: relative;
-    top: 100px;
-}
-#blur_line:before {
-  content: '';
-
-  position: absolute;
-
-  top: 0; left:0; right:0; bottom:0;
-
-
-
-  filter: blur(6px); 
-  z-index:-1;
-  background: inherit;
-    background-color: yellow;
-    filter: blur(6px); 
-}
-@media (max-width: 575.98px) {
-    img{
-        width:70vw;
-        height:70vw;
-    }
-}
-@keyframes slidein {
-  from {
-    top: -100px;
-  }
-
-  to {
-    top: 100px;
-  }
-}
-</style> -->
-
-
-
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -62,14 +6,14 @@ body {
   <title>Document</title>
 </head>
 <body>
-  <div class="logo_box">
-    <a href="#"><img src="https://via.placeholder.com/300x300.png?text=logo+sample" alt="LOGO"></a>
-</div>
+  a:
+  <% for(var key in db_1){%>
+    <%=db_1[key].rfid%>
+  <%}%>
+<br>
+b:
+  <% for(var key in db_2){%>
+    <%=db_2[key].write_date%>
+  <%}%>
 </body>
 </html>
-
-<style>
-html{height: 100%;}
-  body{position: relative;width: 100%;height: 100%; margin:0}
-  .logo_box{position: absolute;top: 50%;left: 50%;margin:-150px 0 0 -150px}
-</style>

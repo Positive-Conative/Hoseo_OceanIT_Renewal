@@ -15,8 +15,6 @@ router.get('/', function (req, res, next) {
   ).catch(err=>res.send("<script>alert('jwt err');</script>"));
 });
 
-router.get('/test', function(req, res, next) {
-  res.render('test');
-})
-
+var tc = require('../controller/testController');
+router.get('/test', tc.myTest.test);
 module.exports = router;

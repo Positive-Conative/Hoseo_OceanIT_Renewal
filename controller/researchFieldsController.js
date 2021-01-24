@@ -24,29 +24,52 @@ function researchFields(req, res, next) {
 }
 
 function researchFieldsDetail(req, res, next) {
-    //req.session.userid = req.body.id;
     var queryNum = req.query.num;
     var parameters={
         "rfid":queryNum
-    };
-    researcFieldsDAO.researchFieldsFunc.researchFields_selectDetail(parameters).then(
-        (detailData) => { 
-            researcFieldsDAO.researchFieldsFunc.researchFields_selectDetailLinks(parameters).then(
-                (linkData) => {  
-                     researcFieldsDAO.researchFieldsFunc.researchFields_selectDetailPhotos(parameters).then(
-                        (photoData) => {
-                            let token = req.cookies.user;
-                            jwtmiddle.jwtModule.jwtCerti(token).then(
-                                (permission)=>{
-                                    res.render('research_fields/researchFieldsDetail', { dayjs, detailData, linkData, photoData, permission });
-                                }
-                            ).catch(err=>res.send("<script>alert('jwt err');</script>"));
-                        }
-                    ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
-                }
-            ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
+    };    
+    var db_values={};
+    Promise.resolve(db_values)
+    .then(
+        (db_values)=>{
+            researcFieldsDAO.researchFieldsFunc.researchFields_selectDetail(parameters)
+            .then((detailData) => {db_values.detailData = detailData;})
+            .then(()=> {return db_values})
+            .catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
         }
-    ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
+    )
+    .then(
+        (db_values)=>{
+            researcFieldsDAO.researchFieldsFunc.researchFields_selectDetailLinks(parameters)
+            .then((linkData) => {db_values.linkData = linkData;})
+            .then(()=> {return db_values})
+            .catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
+        }
+    )
+    .then(
+        (db_values)=>{
+            researcFieldsDAO.researchFieldsFunc.researchFields_selectDetailPhotos(parameters)
+            .then((photoData) => {db_values.photoData = photoData;})
+            .then(()=> {return db_values})
+            .catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
+        }
+    )
+    .then(
+        ()=>{
+            let token = req.cookies.user;
+            jwtmiddle.jwtModule.jwtCerti(token).then(
+                (permission)=>{
+                    res.render('research_fields/researchFieldsDetail', { 
+                        dayjs, permission,
+                        detailData : db_values["detailData"],
+                        linkData : db_values["linkData"],
+                        photoData : db_values["photoData"]
+                    });
+                }
+            ).catch(err=>res.send("<script>alert('jwt err');</script>"));
+        }
+    )
+    .catch(err=>res.send("<script>alert('jwt err');</script>"));
 }
 
 module.exports.researchFunc = {

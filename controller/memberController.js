@@ -4,8 +4,10 @@ var jwtmiddle = require('../middleware/jwt');
 var memberDAO = require('../model/memberDAO');
 
 function memberMain(req, res, next) {
-    memberDAO.memberDBFunc.Member_selectAll().then(
-        (db_data) => {
+    var db_data;
+    memberDAO.memberDBFunc.Member_selectAll().then((recv_data) => { db_data = recv_data; })
+    .then(
+        ()=>{
             let token = req.cookies.user;
             jwtmiddle.jwtModule.jwtCerti(token).then(
                 (permission)=>{
@@ -13,7 +15,8 @@ function memberMain(req, res, next) {
                 }
             ).catch(err=>res.send("<script>alert('jwt err');</script>"));
         }
-    ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
+    )
+    .catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
 }
 
 module.exports.memberFunc = {
