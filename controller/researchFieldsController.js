@@ -32,7 +32,7 @@ function researchFieldsDetail(req, res, next) {
     Promise.resolve(db_values)
     .then(
         (db_values)=>{
-            researcFieldsDAO.researchFieldsFunc.researchFields_selectDetail(parameters)
+            return researcFieldsDAO.researchFieldsFunc.researchFields_selectDetail(parameters)
             .then((detailData) => {db_values.detailData = detailData;})
             .then(()=> {return db_values})
             .catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
@@ -40,7 +40,7 @@ function researchFieldsDetail(req, res, next) {
     )
     .then(
         (db_values)=>{
-            researcFieldsDAO.researchFieldsFunc.researchFields_selectDetailLinks(parameters)
+            return researcFieldsDAO.researchFieldsFunc.researchFields_selectDetailLinks(parameters)
             .then((linkData) => {db_values.linkData = linkData;})
             .then(()=> {return db_values})
             .catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
@@ -48,7 +48,7 @@ function researchFieldsDetail(req, res, next) {
     )
     .then(
         (db_values)=>{
-            researcFieldsDAO.researchFieldsFunc.researchFields_selectDetailPhotos(parameters)
+            return researcFieldsDAO.researchFieldsFunc.researchFields_selectDetailPhotos(parameters)
             .then((photoData) => {db_values.photoData = photoData;})
             .then(()=> {return db_values})
             .catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
@@ -59,6 +59,7 @@ function researchFieldsDetail(req, res, next) {
             let token = req.cookies.user;
             jwtmiddle.jwtModule.jwtCerti(token).then(
                 (permission)=>{
+                    console.log(db_values["detailData"])
                     res.render('research_fields/researchFieldsDetail', { 
                         dayjs, permission,
                         detailData : db_values["detailData"],
