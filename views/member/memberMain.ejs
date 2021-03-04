@@ -82,7 +82,7 @@
                             <tbody>
                                 <tr>
                                     <th scope="row">학위</th>
-                                    <td id="bachelor_modaltable"></td>
+                                    <td id="bachelor_modaltable" style="white-space:pre;"></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">학부</th>
@@ -132,6 +132,7 @@
                     text-align: center;
                 }
             }
+            
         </style>
         <script>
             $('#memberModal').on('show.bs.modal', function (event) {
@@ -154,11 +155,12 @@
                 modal.find('.modal-body table #phone_modaltable ').text(phone)
                 modal.find('.modal-body table #email_modaltable ').text(email)
                 modal.find('.modal-body table #photo_modaltable ').text(photo)
-                modal.find('.modal-body table #bachelor_modaltable ').text(bachelor)
+                modal.find('.modal-body table #bachelor_modaltable ').html(bachelor)
                 modal.find('.modal-body table #master_modaltable ').text(master)
                 modal.find('.modal-body table #doctor_modaltable ').text(doctor)
 
                 document.getElementById('photo_modaltable').src = photo;
                 modal.find('.modal-body input').val(name)
+
             })
         </script>

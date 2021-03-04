@@ -44,7 +44,7 @@
                                 if(svData==undefined) continue; 
                             %>
                             <tr onclick="location.href='/research/fields/detail?num=<%=svData.rfid%>'">
-                                <td><%=svData.rfid%></td>
+                                <td><%=db_data.length - (5 * (parameters.page-1)) -i%></td>
                                 <td><%=svData.research_name_ko%></td>
                                 <td><%=svData.business_name_ko%></td>
                                 <td><%=dayjs(svData.date_end).format('YYYY-MM-DD');%></td>
@@ -56,13 +56,13 @@
                       <div class="text-center">
                         <div class="btn-group">
                             <%if(parameters.page>1){%>
-                                <a class="btn btn-primary" onclick="privpage()">Priv</a>
+                                <a class="btn btn-outline-primary" onclick="privpage()">Priv</a>
                             <%}%>
                             <%for(var i = 1; i <= Math.ceil(db_data.length / 5 ); i++){%>
-                                <a id="pagebtn<%=i%>" class="btn btn-primary" aria-current="page" onclick="addpage(<%=i%>)"><%= i %></a>
+                                <a id="pagebtn<%=i%>" class="btn btn-outline-primary" aria-current="page" onclick="addpage(<%=i%>)"><%= i %></a>
                             <%}%>
                             <%if(parameters.page<=Math.ceil(db_data.length / 5 )-1){%>
-                                <a class="btn btn-primary" onclick="nextpage()">Next</a>
+                                <a class="btn btn-outline-primary" onclick="nextpage()">Next</a>
                             <%}%>
                         </div>
                       </div>

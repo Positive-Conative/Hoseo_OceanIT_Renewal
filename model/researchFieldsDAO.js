@@ -4,12 +4,13 @@ var db = require("../config/kyjdb");
 var logger = require('../config/logger');
 
 function researchFields_selectAll(parameters) {
-    var queryData = `SELECT * FROM Research_Fields `;
+    var queryData = `SELECT * FROM Research_Fields`;
     if(parameters.type=="progress"){
-        queryData += `WHERE date_end > NOW()`;
+        queryData += ` WHERE date_end > NOW()`;
     }else if(parameters.type=="finish"){
-        queryData += `WHERE date_end < NOW()`;
+        queryData += ` WHERE date_end < NOW()`;
     }
+    queryData += ` ORDER BY date_end asc`;
     return new Promise(function (resolve, rejcet) {
         db.query(queryData, function (error, db_data) {
             if (error) {
