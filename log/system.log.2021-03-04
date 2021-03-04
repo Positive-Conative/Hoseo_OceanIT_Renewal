@@ -10,3 +10,6 @@
 2021-03-04 13:40:37 [ERROR] - DB error [Research_Fields]
  	SELECT * FROM Research_FieldsWHERE date_end < NOW() ORDER BY date_end asc
  	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '< NOW() ORDER BY date_end asc' at line 1
+2021-03-04 16:48:41 [ERROR] - DB error [Research_Fields]
+ 	SELECT DISTINCT * FROM  Member left JOIN Member_Career ON Member.mid = Member_Career.mid; LIMIT 0,4
+ 	Error: ER_PARSE_ERROR: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'LIMIT 0,4' at line 1

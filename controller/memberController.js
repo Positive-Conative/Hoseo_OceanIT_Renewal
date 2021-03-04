@@ -5,7 +5,8 @@ var memberDAO = require('../model/memberDAO');
 
 function memberMain(req, res, next) {
     var db_data;
-    memberDAO.Member_selectAll().then((recv_data) => { db_data = recv_data; })
+    memberDAO.Member_selectAll()
+    .then((recv_data) => { db_data = recv_data; })
     .then(
         ()=>{
             let token = req.cookies.user;
