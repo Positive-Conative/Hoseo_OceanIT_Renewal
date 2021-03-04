@@ -23,6 +23,6 @@ function search_UserDetail(parameters) {
         });
     })
 }
-module.exports.userInfoFunc = {
+module.exports = {
     search_UserDetail
 }

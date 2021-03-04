@@ -5,12 +5,12 @@ var boardDAO = require('../model/boardDAO');
 
 function adminMain(req, res, next) {
     var db_data;
-    boardDAO.boardDBFunc.count_questionBoard()
+    boardDAO.count_questionBoard()
     .then((recv_data) => {db_data = recv_data;})
     .then(
         ()=>{
             let token = req.cookies.user;
-            jwtmiddle.jwtModule.jwtCerti(token).then(
+            jwtmiddle.jwtCerti(token).then(
                 (permission)=>{
                     res.render('admin/adminMain', { db_data, permission});
                 }
@@ -20,6 +20,6 @@ function adminMain(req, res, next) {
     .catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
 
 }
-module.exports.adminFunc = {
+module.exports = {
     adminMain
 }

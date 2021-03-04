@@ -25,6 +25,6 @@ function Member_selectAll(parameters) {
     })
 }
 
-module.exports.memberDBFunc = {
+module.exports = {
     Member_selectAll
 }

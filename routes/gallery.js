@@ -6,9 +6,9 @@ var router = express.Router();
 var galleryController = require('../controller/galleryController');
 
 //gallery
-router.get('/', galleryController.galleryFunc.galleryMain);
+router.get('/', galleryController.galleryMain);
 
 //gallery detail
-router.get('/detail', galleryController.galleryFunc.galleryDetail);
+router.get('/detail', galleryController.galleryDetail);
 
 module.exports = router;

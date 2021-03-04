@@ -35,7 +35,7 @@ function gallery_selectOneDetail(parameters) {
         });
     })
 }
-module.exports.galleryDBFunc = {
+module.exports = {
     gallery_selectAll,
     gallery_selectOneDetail
 }

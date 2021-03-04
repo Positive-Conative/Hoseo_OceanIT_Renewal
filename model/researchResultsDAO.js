@@ -18,6 +18,6 @@ function researchFields_selectAll(parameters) {
         });
     })
 }
-module.exports.researchResultsFunc = {
+module.exports = {
     researchFields_selectAll
 }

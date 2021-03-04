@@ -24,7 +24,7 @@ function checkUser(req, res, next) {
             "user_pw" : req.body.inputPW
         }
     
-        userInfoDAO.userInfoFunc.search_UserDetail(parameters).then(
+        userInfoDAO.search_UserDetail(parameters).then(
             (db_data) => {
                 if(db_data[0] != undefined){
                     var userData = {
@@ -32,7 +32,7 @@ function checkUser(req, res, next) {
                         user_name_ko: db_data[0].user_name_ko,
                         user_email: db_data[0].user_email,
                     }
-                    jwtmiddle.jwtModule.jwtCreate(userData).then(
+                    jwtmiddle.jwtCreate(userData).then(
                         (token)=>{
                             res.cookie("user", token);
                             res.redirect("/")
@@ -48,7 +48,7 @@ function checkUser(req, res, next) {
 
 function revise_check(req, res, next) {
     let token = req.cookies.user;
-    jwtmiddle.jwtModule.jwtCerti(token).then(
+    jwtmiddle.jwtCerti(token).then(
         (permission)=>{
             res.render('auth/revise_check', {permission});
         }
@@ -57,7 +57,7 @@ function revise_check(req, res, next) {
 
 function revise_check_post(req, res, next) {
     let token = req.cookies.user;
-    jwtmiddle.jwtModule.jwtCerti(token).then(
+    jwtmiddle.jwtCerti(token).then(
         (permission)=>{
             if(permission!=false){
                 console.log(permission.user_id)
@@ -65,7 +65,7 @@ function revise_check_post(req, res, next) {
                     "user_id": permission.user_id,
                     "user_pw": req.body.inputPW
                 }
-                userInfoDAO.userInfoFunc.search_UserDetail(parameters).then(
+                userInfoDAO.search_UserDetail(parameters).then(
                     (db_data) => {
                         res.render('auth/revise', {db_data, permission});
                     }
@@ -87,7 +87,7 @@ function logOut(req, res, next) {
     res.redirect('/');
 }
 
-module.exports.authFunc = {
+module.exports = {
     signIn,
     checkUser,
     revise_check,

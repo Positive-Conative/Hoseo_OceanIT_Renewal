@@ -5,11 +5,11 @@ var memberDAO = require('../model/memberDAO');
 
 function memberMain(req, res, next) {
     var db_data;
-    memberDAO.memberDBFunc.Member_selectAll().then((recv_data) => { db_data = recv_data; })
+    memberDAO.Member_selectAll().then((recv_data) => { db_data = recv_data; })
     .then(
         ()=>{
             let token = req.cookies.user;
-            jwtmiddle.jwtModule.jwtCerti(token).then(
+            jwtmiddle.jwtCerti(token).then(
                 (permission)=>{
                     res.render('member/memberMain', { db_data, permission });
                 }
@@ -19,6 +19,6 @@ function memberMain(req, res, next) {
     .catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
 }
 
-module.exports.memberFunc = {
+module.exports = {
     memberMain
 }

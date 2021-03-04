@@ -6,6 +6,6 @@ var router = express.Router();
 var introductionController = require('../controller/introductionController');
 
 //introduction
-router.get('/', introductionController.introductionMainFunc.introductionMain);
+router.get('/', introductionController.introductionMain);
 
 module.exports = router;

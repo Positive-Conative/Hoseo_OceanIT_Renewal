@@ -4,10 +4,10 @@ var jwtmiddle = require('../middleware/jwt');
 var researchResultsDAO = require('../model/researchResultsDAO');
 
 function researchResults(req, res, next) {
-    researchResultsDAO.researchResultsFunc.researchFields_selectAll().then(
+    researchResultsDAO.researchFields_selectAll().then(
         (db_data) => {
             let token = req.cookies.user;
-            jwtmiddle.jwtModule.jwtCerti(token).then(
+            jwtmiddle.jwtCerti(token).then(
                 (permission)=>{
                     res.render('research_results/researchResultsMain', { db_data, permission});
                 }
@@ -16,6 +16,6 @@ function researchResults(req, res, next) {
     ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
 }
 
-module.exports.researchResultsFunc = {
+module.exports = {
     researchResults
 }

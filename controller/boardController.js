@@ -4,7 +4,7 @@ var jwtmiddle = require('../middleware/jwt');
 
 function noticeMain(req, res, next) {
     let token = req.cookies.user;
-    jwtmiddle.jwtModule.jwtCerti(token).then(
+    jwtmiddle.jwtCerti(token).then(
         (permission)=>{
             res.render('board/notice/noticeMain', { permission })
         }
@@ -13,7 +13,7 @@ function noticeMain(req, res, next) {
 
 function inquiryMain(req, res, next) {
     let token = req.cookies.user;
-    jwtmiddle.jwtModule.jwtCerti(token).then(
+    jwtmiddle.jwtCerti(token).then(
         (permission)=>{
             res.render('board/inquiry/inquiryMain', { permission })
         }
@@ -22,13 +22,13 @@ function inquiryMain(req, res, next) {
 
 function freeBoardMain(req, res, next) {
     let token = req.cookies.user;
-    jwtmiddle.jwtModule.jwtCerti(token).then(
+    jwtmiddle.jwtCerti(token).then(
         (permission)=>{
             res.render('board/free/FreeBoardMain', { permission })
         }
     ).catch(err=>res.send("<script>alert('jwt err');</script>"));
 }
-module.exports.boardFunc = {
+module.exports = {
     noticeMain,
     inquiryMain,
     freeBoardMain

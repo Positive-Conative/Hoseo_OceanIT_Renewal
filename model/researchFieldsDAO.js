@@ -75,7 +75,7 @@ function researchFields_selectDetailPhotos(parameters) {
         });
     })
 }
-module.exports.researchFieldsFunc = {
+module.exports = {
     researchFields_selectAll,
     researchFields_selectDetail,
     researchFields_selectDetailLinks,

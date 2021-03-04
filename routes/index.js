@@ -8,7 +8,7 @@ var router = express.Router();
 router.get('/', function (req, res, next) {
   
   let token = req.cookies.user;
-  jwtmiddle.jwtModule.jwtCerti(token).then(
+  jwtmiddle.jwtCerti(token).then(
     (permission)=>{
       res.render('index', { title: 'Express' , permission});
     }
@@ -16,5 +16,5 @@ router.get('/', function (req, res, next) {
 });
 
 var tc = require('../controller/testController');
-router.get('/test', tc.myTest.test);
+router.get('/test', tc.test);
 module.exports = router;

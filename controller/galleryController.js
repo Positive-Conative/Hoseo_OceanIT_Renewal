@@ -5,10 +5,10 @@ var galleryDAO = require('../model/galleryDAO');
 
 function galleryMain(req, res, next) {
 
-    galleryDAO.galleryDBFunc.gallery_selectAll().then(
+    galleryDAO.gallery_selectAll().then(
         (db_data) => {
             let token = req.cookies.user;
-            jwtmiddle.jwtModule.jwtCerti(token).then(
+            jwtmiddle.jwtCerti(token).then(
                 (permission)=>{
                     res.render('gallery/galleryMain', { db_data, permission});
                 }
@@ -22,10 +22,10 @@ function galleryDetail(req, res, next) {
     var parameters={
         "gid":queryNum
     };
-    galleryDAO.galleryDBFunc.gallery_selectOneDetail(parameters).then(
+    galleryDAO.gallery_selectOneDetail(parameters).then(
         (db_data) => {
             let token = req.cookies.user;
-            jwtmiddle.jwtModule.jwtCerti(token).then(
+            jwtmiddle.jwtCerti(token).then(
                 (permission)=>{
                     res.render('gallery/galleryDetail', { db_data, permission });
                 }
@@ -33,7 +33,7 @@ function galleryDetail(req, res, next) {
         }
     ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
 }
-module.exports.galleryFunc = {
+module.exports = {
     galleryMain,
     galleryDetail
 }

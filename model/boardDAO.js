@@ -19,6 +19,6 @@ function count_questionBoard(parameters) {
         });
     })
 }
-module.exports.boardDBFunc = {
+module.exports = {
     count_questionBoard
 }

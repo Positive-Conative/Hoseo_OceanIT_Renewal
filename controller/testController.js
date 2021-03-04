@@ -11,14 +11,14 @@ function test(req, res, next) {
     Promise.resolve(db_values)
     .then(
         (db_values)=>{
-            return  researcFieldsDAO.researchFieldsFunc.researchFields_selectAll(parameters)
+            return  researcFieldsDAO.researchFields_selectAll(parameters)
             .then((db_1) => {db_values.db_1 = db_1;})
             .then(()=> {return db_values})
         }
     )
     .then(
         (db_values)=>{
-            return boardDAO.boardDBFunc.count_questionBoard(parameters)
+            return boardDAO.count_questionBoard(parameters)
             .then((db_2) => {db_values.db_2 = db_2;})
             .then(()=> {return db_values})
         }
@@ -40,6 +40,6 @@ function test(req, res, next) {
     //     console.log(db_values);res.render('test', { db_1 : db_values.db_1, db_2 : db_values.db_2 });})
     // .catch(err=>res.send("<script>alert('"+ err +"');</script>"))
 }
-module.exports.myTest = {
+module.exports = {
     test
 }

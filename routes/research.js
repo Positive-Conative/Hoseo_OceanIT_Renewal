@@ -5,12 +5,12 @@ var router = express.Router();
 
 //research fields
 var researchFieldsController = require('../controller/researchFieldsController');
-router.get('/fields', researchFieldsController.researchFunc.researchFields);
-router.get('/fields/detail', researchFieldsController.researchFunc.researchFieldsDetail);
+router.get('/fields', researchFieldsController.researchFields);
+router.get('/fields/detail', researchFieldsController.researchFieldsDetail);
 
 //----------------------------------------------------------------------------------//
 //research results
 var researchResultsController = require('../controller/researchResultsController');
-router.get('/results', researchResultsController.researchResultsFunc.researchResults);
+router.get('/results', researchResultsController.researchResults);
 
 module.exports = router;

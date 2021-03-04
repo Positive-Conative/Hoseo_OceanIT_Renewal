@@ -34,7 +34,7 @@ function jwtCerti(token){
   })
 }
 
-module.exports.jwtModule = {
+module.exports = {
   jwtCreate,
   jwtCerti
 };

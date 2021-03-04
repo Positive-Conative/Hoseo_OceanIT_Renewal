@@ -23,6 +23,6 @@ function introduction_selectAll(parameters) {
         });
     })
 }
-module.exports.introductionDBFunc = {
+module.exports = {
     introduction_selectAll
 }

@@ -6,6 +6,6 @@ var router = express.Router();
 var memberController = require('../controller/memberController');
 
 //member
-router.get('/', memberController.memberFunc.memberMain);
+router.get('/', memberController.memberMain);
 
 module.exports = router;
