@@ -1,23 +1,7 @@
 <table id="researchFieldNav" class="table table-hover">
+    
     <tbody align=center>
-        <tr onclick="addquery('all')">
-            <th>전체</th>
-        </tr>
-        <tr onclick="addquery('progress')">
-            <th>진행 과제</th>
-        </tr>
-        <tr onclick="addquery('finish')">
-            <th>완료 과제</th>
-        </tr>
-        <!-- <tr>
-            <th>논문</th>
-        </tr>
-        <tr>
-            <th>특허</th>
-        </tr>
-        <tr>
-            <th>발표</th>
-        </tr> -->
+
     </tbody>
 </table>
 
@@ -51,5 +35,33 @@
         queryParams.set('type', type);
         queryParams.set('page', 1);
         location.search = queryParams.toString();
+    }
+    if(location.pathname == '/research/fields'){
+        $('#researchFieldNav tbody').html(`
+            <tr onclick="addquery('all')">
+                <th>전체</th>
+            </tr>
+            <tr onclick="addquery('progress')">
+                <th>진행 과제</th>
+            </tr>
+            <tr onclick="addquery('finish')">
+                <th>완료 과제</th>
+            </tr>
+        `)
+    }else if(location.pathname == '/research/results'){
+        $('#researchFieldNav tbody').html(`
+            <tr onclick="addquery('all')">
+                <th>전체</th>
+            </tr>
+            <tr onclick="addquery('patent')">
+                <th>특허</th>
+            </tr>
+            <tr onclick="addquery('treatise')">
+                <th>논문</th>
+            </tr>
+            <tr onclick="addquery('announcement')">
+                <th>발표</th>
+            </tr>
+        `)
     }
 </script>

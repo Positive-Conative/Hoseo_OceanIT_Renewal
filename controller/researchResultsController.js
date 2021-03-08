@@ -1,15 +1,22 @@
 'use strict';
  
+var dayjs = require('dayjs');
 var jwtmiddle = require('../middleware/jwt');
 var researchResultsDAO = require('../model/researchResultsDAO');
 
 function researchResults(req, res, next) {
-    researchResultsDAO.researchFields_selectAll().then(
+    var queryType = req.query.type;
+    var queryPage = req.query.page;
+    var parameters={
+        "type":queryType,
+        "page":queryPage
+    };
+    researchResultsDAO.researchResults_selectAll(parameters).then(
         (db_data) => {
             let token = req.cookies.user;
             jwtmiddle.jwtCerti(token).then(
                 (permission)=>{
-                    res.render('research_results/researchResultsMain', { db_data, permission});
+                    res.render('research_results/researchResultsMain', { db_data, permission, parameters, dayjs});
                 }
             ).catch(err=>res.send("<script>alert('jwt err');</script>"));
         }
