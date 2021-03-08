@@ -3,13 +3,16 @@
 var db = require("../config/kyjdb");
 var logger = require('../config/logger');
 
-function researchFields_selectAll(parameters) {
+function researchResults_selectAll(parameters) {
+    var queryData = `SELECT * FROM Research_Results`
+    queryData += ` ORDER BY date desc`;
+    if(!(parameters.limit==undefined)) queryData+=` LIMIT 0,${parameters.limit}`;
     return new Promise(function (resolve, rejcet) {
-        db.query(`SELECT * FROM Research_Results`, function (error, db_data) {
+        db.query(queryData, function (error, db_data) {
             if (error) {
                 logger.error(
                     "DB error [Research_Results]"+
-                    "\n \t" + `SELECT * FROM Research_Results` +
+                    "\n \t" + queryData +
                     "\n \t" + error);
                 rejcet('DB ERR');
                 //throw error;
@@ -19,5 +22,5 @@ function researchFields_selectAll(parameters) {
     })
 }
 module.exports = {
-    researchFields_selectAll
+    researchResults_selectAll
 }

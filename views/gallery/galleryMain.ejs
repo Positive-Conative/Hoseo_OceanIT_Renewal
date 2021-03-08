@@ -10,7 +10,7 @@
           <%for(var key in db_data){%>
             <div class="col">
               <div class="card text-center m-1" onclick="location.href='/gallery/detail?num=<%=db_data[key].gid%>'">
-                <img src="/images/<%=JSON.parse(db_data[key].img_src).photos[0]%>" class="card-img-top">
+                <img src="/images/gallery/<%=JSON.parse(db_data[key].img_src).photos[0]%>" class="card-img-top">
                 <div class="card-body">
                   <h5 class="card-title gallerySub"><%= db_data[key].title_ko%></h5>
                 </div>

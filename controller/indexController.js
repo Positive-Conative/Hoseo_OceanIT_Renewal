@@ -2,6 +2,8 @@
 
 var jwtmiddle = require('../middleware/jwt');
 var memberDAO = require('../model/memberDAO');
+var researchFieldsDAO = require('../model/researchFieldsDAO');
+var researchResultsDAO = require('../model/researchResultsDAO');
 
 function indexMain(req, res, next) {
     let token = req.cookies.user;
@@ -10,11 +12,27 @@ function indexMain(req, res, next) {
     }
     var db_results = {};
     Promise.resolve()
-    .then(
+    .then(  //MEMBER
       ()=>{
         return memberDAO.Member_selectAll(parameters)
         .then(
           (db_data)=>{db_results.member = db_data;}
+        )
+      }
+    )
+    .then(  //research Fields
+      ()=>{
+        return researchFieldsDAO.researchFields_selectAll(parameters)
+        .then(
+          (db_data)=>{db_results.research_fields = db_data;}
+        )
+      }
+    )
+    .then(  //research Results
+      ()=>{
+        return researchResultsDAO.researchResults_selectAll(parameters)
+        .then(
+          (db_data)=>{db_results.research_results = db_data;}
         )
       }
     )

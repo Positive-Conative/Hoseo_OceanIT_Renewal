@@ -10,7 +10,8 @@ function researchFields_selectAll(parameters) {
     }else if(parameters.type=="finish"){
         queryData += ` WHERE date_end < NOW()`;
     }
-    queryData += ` ORDER BY date_end asc`;
+    queryData += ` ORDER BY date_end desc`;
+    if(!(parameters.limit==undefined)) queryData+=` LIMIT 0,${parameters.limit}`;
     return new Promise(function (resolve, rejcet) {
         db.query(queryData, function (error, db_data) {
             if (error) {
@@ -21,6 +22,7 @@ function researchFields_selectAll(parameters) {
                 rejcet('DB ERR');
                 //throw error;
             }
+            console.log(db_data)
             resolve(db_data);
         });
     })

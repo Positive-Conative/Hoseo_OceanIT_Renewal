@@ -14,7 +14,7 @@
                     <article>
                       <div align=center class="m-2">
                         <%for(var key in JSON.parse(db_data[0].img_src).photos){%>
-                          <img src="/images/<%=JSON.parse(db_data[0].img_src).photos[key]%>" class="carouselNav mr-2" data-target="#researchCarousel" data-slide-to="<%= key%>">
+                          <img src="/images/gallery/<%=JSON.parse(db_data[0].img_src).photos[key]%>" class="carouselNav mr-2" data-target="#researchCarousel" data-slide-to="<%= key%>">
                         <%}%>
                       </div>
                       <div id="researchCarousel" class="carousel slide mx-auto" data-ride="carousel">
@@ -25,7 +25,7 @@
                             <%}else{%>
                               <div class="carousel-item">
                             <%}%>
-                            <img src="/images/<%=JSON.parse(db_data[0].img_src).photos[key]%>" class="d-block w-100 carouselImg">
+                            <img src="/images/gallery/<%=JSON.parse(db_data[0].img_src).photos[key]%>" class="d-block w-100 carouselImg">
                           </div>
                           <%}%>
                         </div>
