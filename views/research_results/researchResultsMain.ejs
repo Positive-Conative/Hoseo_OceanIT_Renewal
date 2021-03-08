@@ -1,5 +1,4 @@
 <%- include('../include/header.ejs') %>
-<script src="/javascripts/research_fields/researchFieldsMain.js"></script>
 <link rel="stylesheet" href="/stylesheets/research_fields/researchFieldsMain.css"/>
 
     <section>
@@ -56,6 +55,7 @@
                       <div class="text-center">
                         <div class="btn-group">
                             <%if(parameters.page>1){%>
+                                <a class="btn btn-outline-primary" onclick="privX2page()">&lt;&lt;</a>
                                 <a class="btn btn-outline-primary" onclick="privpage()">Priv</a>
                             <%}%>
                             <%for(var i = 1; i <= Math.ceil(db_data.length / 5 ); i++){%>
@@ -63,6 +63,7 @@
                             <%}%>
                             <%if(parameters.page<=Math.ceil(db_data.length / 5 )-1){%>
                                 <a class="btn btn-outline-primary" onclick="nextpage()">Next</a>
+                                <a class="btn btn-outline-primary" onclick="nextX2page()">&gt;&gt;</a>
                             <%}%>
                         </div>
                       </div>
@@ -72,5 +73,33 @@
     </section>
     <%- include('../include/footer.ejs') %>
     <script>
+        'use strict';
+
         $('#pagebtn<%=parameters.page%>').addClass("active");
+
+        var pageQuery = location.search;
+        var queryParams = new URLSearchParams(pageQuery);
+        function privX2page(){
+            if(queryParams.get('page') <= 7) queryParams.set('page', 1);
+            else queryParams.set('page', queryParams.get('page')-7);
+            location.search = queryParams.toString();
+        }
+        function privpage(){
+            queryParams.set('page', queryParams.get('page')-1);
+            location.search = queryParams.toString();
+        }
+        function addpage(page){
+            queryParams.set('page', page);
+            location.search = queryParams.toString();
+        }
+        function nextpage(){
+            queryParams.set('page', Number(queryParams.get('page'))+1);
+            location.search = queryParams.toString();
+        }
+        function nextX2page(){
+            
+            if(queryParams.get('page') > <%=Math.ceil(db_data.length / 5 )%>-7) queryParams.set('page', <%=Math.ceil(db_data.length / 5 )%> );
+            else queryParams.set('page', Number(queryParams.get('page'))+7);
+            location.search = queryParams.toString();
+        }
     </script>
