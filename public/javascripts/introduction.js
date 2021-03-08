@@ -1,4 +1,4 @@
-'use strict';
+
 
 (function () {
     const root = document.querySelector('#intro_card_body');
@@ -9,7 +9,7 @@
       three: '/introduction/introduction3.ejs',
       four: '/introduction/introduction4.ejs'
     };
-  
+  console.log(fdsa);
     const render = async () => {
       try {
         // url의 hash를 취득
@@ -22,7 +22,6 @@
   
         const res = await fetch(url);
         const contentType = res.headers.get('content-type');
-  
         if (contentType?.includes('application/json')) {
           const json = await res.json();
           root.innerHTML = `<h1>${json.title}</h1><p>${json.content}</p>`;
