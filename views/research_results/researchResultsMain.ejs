@@ -58,8 +58,10 @@
                                 <a class="btn btn-outline-primary" onclick="privX2page()">&lt;&lt;</a>
                                 <a class="btn btn-outline-primary" onclick="privpage()">Priv</a>
                             <%}%>
+
                             <%//for(var i = 1; i <= Math.ceil(db_data.length / 5 ); i++){%>
-                            <%for(var i = parseInt(parameters.page/7)*7+1; i/parameters.page < 1; i++){%>
+                            <%for(var i = parseInt(parameters.page/7 - 0.1)*7+1; i <= parseInt(parameters.page/7 - 0.1)*7+7; i++){%>
+                                <%if(Math.ceil(db_data.length / 5 ) < i) continue%>
                                 <a id="pagebtn<%=i%>" class="btn btn-outline-primary" aria-current="page" onclick="addpage(<%=i%>)"><%= i %></a>
                             <%}%>
                             
