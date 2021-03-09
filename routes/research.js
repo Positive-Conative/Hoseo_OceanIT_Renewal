@@ -12,5 +12,6 @@ router.get('/fields/detail', researchFieldsController.researchFieldsDetail);
 //research results
 var researchResultsController = require('../controller/researchResultsController');
 router.get('/results', researchResultsController.researchResults);
+router.get('/results/detail', researchResultsController.researchResultsDetail);
 
 module.exports = router;
