@@ -23,6 +23,18 @@ function researchResults(req, res, next) {
     ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
 }
 
+function androidResearchResultsAll(req, res, next) {
+    var parameters={
+        "querys":req.query.classify
+    };
+    researchResultsDAO.researchResults_android_all(parameters).then(
+        (db_data) => {
+           res.json(db_data)
+        }
+    ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
+}
+
 module.exports = {
-    researchResults
+    researchResults,
+    androidResearchResultsAll
 }
