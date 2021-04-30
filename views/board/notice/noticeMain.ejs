@@ -1,1 +1,68 @@
-NOTICE
+<%- include('../../include/header.ejs') %>
+    <link rel="stylesheet" href="/stylesheets/board.css" />
+    <section>
+        <div id="indexbg" class="mb-5"></div>
+        <div id="indexbg_text">
+            <h1 class="fs-1">공지 사항</h1>
+            <div>아직 미완성입니다..!</div>
+        </div>
+        <div>
+            <table class="table table-responsive-sm table-hover text-center">
+                <thead>
+                    <tr>
+                        <th scope="col" width="10%">순번</th>
+                        <th scope="col" width="40%">제목</th>
+                        <th scope="col" width="20%">작성자</th>
+                        <th scope="col" width="20%">날짜</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>2</td>
+                        <td>1</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td>1</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>3</td>
+                        <td>1</td>
+                        <td>2</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center">
+            <div class="mx-auto" style="text-align: right;"><a href="/notice/write" type="button"
+                    class="btn btn-outline-secondary">작성하기</a>
+            </div>
+            <div class="btn-group">
+
+                <a class="btn btn-outline-primary" onclick="privX2page()">&lt;&lt;</a>
+                <a class="btn btn-outline-primary" onclick="privpage()">Priv</a>
+                <a id="pagebtn class=" btn btn-outline-primary" aria-current="page" onclick="addpage()">
+                </a>
+
+
+
+                <a class="btn btn-outline-primary" onclick="nextpage()">Next</a>
+                <a class="btn btn-outline-primary" onclick="nextX2page()">&gt;&gt;</a>
+
+            </div>
+        </div>
+    </section>
+
+    <%- include('../../include/footer.ejs') %>

@@ -78,34 +78,9 @@ function researchFields_selectDetailPhotos(parameters) {
         });
     })
 }
-function researchFields_android_all(parameters) {
-    var queryData = ""
-    if(parameters.querys == "all")
-        queryData = `SELECT * from Research_Fields`
-    else if(parameters.querys == "progress")
-        queryData = `SELECT * FROM Research_Fields WHERE date_end > NOW()`
-    else
-        queryData = `SELECT * FROM Research_Fields WHERE date_end < NOW()`
-
-    return new Promise(function (resolve, rejcet) {
-        db.query(queryData, function (error, db_data) {
-            if (error) {
-                logger.error(
-                    "DB error [Research_Fields]"+
-                    "\n \t" + queryData +
-                    "\n \t" + error);
-                rejcet('DB ERR');
-                //throw error;
-            }
-            resolve(db_data);
-        });
-    })
-}
-
 module.exports = {
     researchFields_selectAll,
     researchFields_selectDetail,
     researchFields_selectDetailLinks,
-    researchFields_selectDetailPhotos,
-    researchFields_android_all
+    researchFields_selectDetailPhotos
 }

@@ -5,11 +5,28 @@
   <section>
     <div id="indexbg">
       <div id="indexbg_text">
-        <h1 class="fs-1">해양 IT 연구소에 오신것을<br>진심으로 환영합니다</h1>
+        <h1 class="fs-1">해양 IT 융합 기술 연구소에 오신것을<br>진심으로 환영합니다</h1>
         <div>해양IT 연구소는 항상 더 나은 미래를 위한 <br>연구를 진행하고 있습니다.</div>
       </div>
     </div>
+
     
+    <!-- Google 번역 -->
+<div id="google_translate_element" class="hd_lang"></div>
+<script>
+	function googleTranslateElementInit() {
+		new google.translate.TranslateElement({
+			pageLanguage: 'ko',
+			includedLanguages: 'ko,zh-CN,zh-TW,ja,vi,th,tl,km,my,mn,ru,en,fr,ar',
+			//layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+			autoDisplay: false
+		}, 'google_translate_element');
+	}
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<!-- //Google 번역 -->
+
+
     <h1 class="mt-5 text-center">Members</h1>
     <div class="card-group m-3">
       <%for(var key in db_results.member){%>

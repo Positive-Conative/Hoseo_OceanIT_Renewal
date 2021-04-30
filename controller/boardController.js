@@ -1,6 +1,7 @@
 'use strict';
 
 var jwtmiddle = require('../middleware/jwt');
+var boardDAO = require('../model/boardDAO');
 
 function noticeMain(req, res, next) {
     let token = req.cookies.user;
