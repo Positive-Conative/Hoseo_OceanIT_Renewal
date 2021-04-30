@@ -73,7 +73,22 @@ function researchFieldsDetail(req, res, next) {
     .catch(err=>res.send("<script>alert('jwt err');</script>"));
 }
 
+function androidResearchFieldsAll(req, res, next) {
+    var querys = req.query.classify
+    var sql = ""
+
+    var parameters={
+        "querys":querys,
+    };
+
+    researcFieldsDAO.researchFields_android_all(parameters).then(
+        (db_data) => {
+            res.json(db_data)
+        }
+    ).catch(err=>res.send("DBDRR",err))
+}
 module.exports = {
     researchFields,
-    researchFieldsDetail
+    researchFieldsDetail,
+    androidResearchFieldsAll
 }

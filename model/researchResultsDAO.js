@@ -30,8 +30,11 @@ function researchResults_selectAll(parameters) {
     })
 }
 
-function researchResults_selectDetail(parameters) {
-    var queryData = `SELECT * FROM Research_Results where rrid="${parameters.rrid}"`;
+
+function researchResults_android_all(parameters) {
+    var queryData = `SELECT * FROM Research_Results where classify_ko = '${parameters.querys}'`
+
+
     return new Promise(function (resolve, rejcet) {
         db.query(queryData, function (error, db_data) {
             if (error) {
@@ -46,7 +49,14 @@ function researchResults_selectDetail(parameters) {
         });
     })
 }
+
 module.exports = {
     researchResults_selectAll,
     researchResults_selectDetail
+
+
+module.exports = {
+    researchResults_selectAll,
+    researchResults_android_all
+
 }

@@ -4,7 +4,7 @@ var db = require("../config/kyjdb");
 var logger = require('../config/logger');
 
 function Member_selectAll(parameters) {
-    return new Promise(function (resolve, rejcet) {
+    return new Promise(function (resolve, reject) {
         //SELECT * FROM Member LEFT OUTER JOIN Member_Career ON Member.mid = Member_Career.mid
         var queryData = `SELECT DISTINCT * FROM  Member left JOIN Member_Career ON Member.mid = Member_Career.mid`
         if(!(parameters==undefined)) queryData+=` LIMIT 0,${parameters.limit}`
@@ -14,7 +14,7 @@ function Member_selectAll(parameters) {
                     "DB error [Research_Fields]"+
                     "\n \t" + queryData +
                     "\n \t" + error);
-                rejcet('DB ERR');
+                reject('DB ERR');
                 //throw error;
             }
             if(db_data === undefined)
