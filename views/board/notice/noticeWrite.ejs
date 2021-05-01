@@ -1,1 +1,25 @@
-안녕하세요
+<% include ../../include/header %>
+    <link rel="stylesheet" href="/stylesheets/board.css" />
+    <section>
+        <div id="indexbg" class="mb-5"></div>
+        <div id="indexbg_text">
+            <h1 class="fs-1">공지 사항</h1>
+            <div>아직 미완성입니다..!</div>
+        </div>
+        <form action="/action_page.php">
+            <div class="form-group">
+                <label for="usr">제목:</label>
+                <input type="text" class="form-control" id="usr">
+            </div>
+            <div class="form-group">
+                <label for="comment">작성하기:</label>
+                <textarea class="form-control" rows="10" id="comment"></textarea>
+            </div>
+
+            <div class="text-center">
+                <div> <a href="./noticeMain" type="button" class="btn btn-primary">작성완료</a>
+                </div>
+        </form>
+        <br>
+        <br>
+        <% include ../../include/footer %>
