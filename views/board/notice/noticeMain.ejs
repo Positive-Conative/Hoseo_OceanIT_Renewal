@@ -17,38 +17,31 @@
                     </tr>
                 </thead>
                 <tbody>
-
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>2</td>
-                        <td>1</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td>1</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>2</td>
-                    </tr>
+                    <% for(var i=0;i<db_data.length;i++){
+                         var data = db_data[i];%>
+                        <tr onclick="location.href=''">
+                            <td>
+                                <%=data.qid%>
+                            </td>
+                            <td>
+                                <%=data.title%>
+                            </td>
+                            <td>
+                                <%=data.user_id%>
+                            </td>
+                            <td>
+                                <%=dayjs(data.date).format('YYYY-MM-DD');%>
+                            </td>
+                        </tr>
+                        <%}%>
                 </tbody>
             </table>
         </div>
         <div class="text-center">
-            <div style="text-align: right;"><a href="./noticeWrite" type="button"
-                    class="btn btn-primary">작성하기</a>
+            <% if(permission.user_id!=undefined){%>
+            <div style="text-align: right;"><a href="./noticeWrite" type="button" class="btn btn-default">작성하기</a>
             </div>
+            <%}%>
             <br><br>
             <div class="btn-group">
 
