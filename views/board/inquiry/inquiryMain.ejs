@@ -17,30 +17,44 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% for(var i=0;i<db_data.length;i++){
-                        var data = db_data[i];%>
-                       <tr onclick="location.href=''">
-                           <td>
-                               <%=data.qid%>
-                           </td>
-                           <td>
-                               <%=data.title%>
-                           </td>
-                           <td>
-                               <%=data.user_id%>
-                           </td>
-                           <td>
-                               <%=dayjs(data.write_dateç).format('YYYY-MM-DD');%>
-                           </td>
-                       </tr>
-                       <%}%>
+                    <% for(var i=0;i<db_data.length;i++){ var data=db_data[i];%>
+                        <tr onclick="location.href=''">
+                            <td>
+                                <%=data.qid%>
+                            </td>
+                            <td>
+                                <%=data.title%>
+                            </td>
+                            <td>
+                                <%=data.user_id%>
+                            </td>
+                            <td>
+                                <%=dayjs(data.write_dateç).format('YYYY-MM-DD');%>
+                            </td>
+                        </tr>
+                        <%}%>
                 </tbody>
             </table>
         </div>
         <% if(permission.user_id!=undefined){%>
-        <div class="mx-auto" style="text-align: right;"><a href="./inquiryWrite" type="button"
-                class="btn btn-primary">작성하기</a></div>
-        <%}%>
+            <div class="mx-auto" style="text-align: right;"><a href="./inquiryWrite" type="button"
+                    class="btn btn-primary">작성하기</a></div>
+            <%}%>
+            <div class="text-center">
+                <div class="btn-group">
+
+                    <a class="btn btn-outline-primary" onclick="privX2page()">&lt;&lt;</a>
+                    <a class="btn btn-outline-primary" onclick="privpage()">Priv</a>
+                    <a id="pagebtn class=" btn btn-outline-primary aria-current="page" onclick="addpage()">
+                    </a>
+
+
+
+                    <a class="btn btn-outline-primary" onclick="nextpage()">Next</a>
+                    <a class="btn btn-outline-primary" onclick="nextX2page()">&gt;&gt;</a>
+
+                </div>
+            </div>
     </section>
     <br><br>
     <%- include('../../include/footer.ejs') %>
