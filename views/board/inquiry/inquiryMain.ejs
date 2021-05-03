@@ -8,19 +8,19 @@
             <h1 class="fs-1">문의 사항</h1>
             <div>아직 미완성 입니다..!</div>
         </div>
-        <div>
+        <div class ="container">
             <table class="table table-responsive-sm table-hover text-center">
                 <thead>
                     <tr>
-                        <th scope="col" width="10%">순번</th>
-                        <th scope="col" width="40%">제목</th>
-                        <th scope="col" width="20%">작성자</th>
-                        <th scope="col" width="20%">날짜</th>
+                        <th bgcolor="#dbdbdb" scope="col" width="10%">순번</th>
+                        <th bgcolor="#dbdbdb" scope="col" width="40%">제목</th>
+                        <th bgcolor="#dbdbdb" scope="col" width="30%">작성자</th>
+                        <th bgcolor="#dbdbdb" scope="col" width="20%">날짜</th>
                     </tr>
                 </thead>
                 <tbody>
                     <% for(var i=0;i<db_data.length;i++){ var data=db_data[i];%>
-                        <tr onclick="location.href=''">
+                        <tr id="board_cursor" onclick="location.href='./inquiryDetail'">
                             <td>
                                 <%=data.qid%>
                             </td>

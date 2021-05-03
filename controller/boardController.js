@@ -28,6 +28,14 @@ function noticeWrite(req, res, next) {
         }
     ).catch(err => res.send("<script>alert('jwt err');</script>"));
 }
+function noticeDetail(req, res, next) {
+    let token = req.cookies.user;
+    jwtmiddle.jwtCerti(token).then(
+        (permission) => {
+            res.render('board/notice/noticeDetail', { permission })
+        }
+    ).catch(err => res.send("<script>alert('jwt err');</script>"));
+}
 function noticeWritePost(req, res, next) {
     var content = req.body.content;
     var title = req.body.title;
@@ -69,6 +77,14 @@ function inquiryWrite(req, res, next) {
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
             res.render('board/inquiry/inquiryWrite', { permission })
+        }
+    ).catch(err => res.send("<script>alert('jwt err');</script>"));
+}
+function inquiryDetail(req, res, next) {
+    let token = req.cookies.user;
+    jwtmiddle.jwtCerti(token).then(
+        (permission) => {
+            res.render('board/inquiry/inquiryDetail', { permission })
         }
     ).catch(err => res.send("<script>alert('jwt err');</script>"));
 }
@@ -117,6 +133,14 @@ function freeBoardWrite(req, res, next) {
         }
     ).catch(err => res.send("<script>alert('jwt err');</script>"));
 }
+function freeBoardDetail(req, res, next) {
+    let token = req.cookies.user;
+    jwtmiddle.jwtCerti(token).then(
+        (permission) => {
+            res.render('board/free/freeBoardDetail', { permission })
+        }
+    ).catch(err => res.send("<script>alert('jwt err');</script>"));
+}
 function freeBoardWritePost(req, res, next) {
     var content = req.body.content;
     var title = req.body.title;
@@ -145,12 +169,15 @@ function freeBoardWritePost(req, res, next) {
 module.exports = {
     noticeMain,
     noticeWrite,
+    noticeDetail,
     noticeWritePost,
     inquiryMain,
     inquiryWrite,
+    inquiryDetail,
     inquiryWritePost,
     freeBoardMain,
     freeBoardWrite,
+    freeBoardDetail,
     freeBoardWritePost
 
 }
