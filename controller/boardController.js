@@ -28,7 +28,7 @@ function noticeWrite(req, res, next) {
         }
     ).catch(err => res.send("<script>alert('jwt err');</script>"));
 }
-function noticeWritePost(req, res, next) {
+/*function noticeWritePost(req, res, next) {
     var content = req.body.content;
     var title = req.body.title;
     console.log("title : " + title);
@@ -51,7 +51,7 @@ function noticeWritePost(req, res, next) {
             })
         }
     ).catch(err => res.send("<script>alert('jwt err');</script>"));
-}
+}*/
 function inquiryMain(req, res, next) {
     boardDAO.count_questionBoard().then(
         (db_data) => {
@@ -72,7 +72,7 @@ function inquiryWrite(req, res, next) {
         }
     ).catch(err => res.send("<script>alert('jwt err');</script>"));
 }
-function inquiryWritePost(req, res, next) {
+/*function inquiryWritePost(req, res, next) {
     var content = req.body.content;
     var title = req.body.title;
     console.log("title : " + title);
@@ -96,7 +96,7 @@ function inquiryWritePost(req, res, next) {
         }
     ).catch(err => res.send("<script>alert('jwt err');</script>"));
 }
-
+*/
 function freeBoardMain(req, res, next) {
     boardDAO.count_freeBoard().then(
         (db_data) => {
@@ -118,7 +118,7 @@ function freeBoardWrite(req, res, next) {
         }
     ).catch(err => res.send("<script>alert('jwt err');</script>"));
 }
-function freeBoardWritePost(req, res, next) {
+/*function freeBoardWritePost(req, res, next) {
     var content = req.body.content;
     var title = req.body.title;
     console.log("title : " + title);
@@ -142,7 +142,7 @@ function freeBoardWritePost(req, res, next) {
         }
     ).catch(err => res.send("<script>alert('jwt err');</script>"));
 }
-
+*/
 
 module.exports = {
     noticeMain,

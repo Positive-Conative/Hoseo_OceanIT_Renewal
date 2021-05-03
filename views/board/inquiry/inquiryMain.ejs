@@ -1,4 +1,6 @@
 <%- include('../../include/header.ejs') %>
+
+<!-- git test--><!-- git test--><!-- git test--><!-- git test-->
     <link rel="stylesheet" href="/stylesheets/board.css" />
     <section>
         <div id="indexbg" class="mb-5"></div>
@@ -29,7 +31,7 @@
                                 <%=data.user_id%>
                             </td>
                             <td>
-                                <%=dayjs(data.write_dateç).format('YYYY-MM-DD');%>
+                                <%=dayjs(data.date).format('YYYY-MM-DD');%>
                             </td>
                         </tr>
                         <%}%>
@@ -42,14 +44,10 @@
             <%}%>
             <div class="text-center">
                 <div class="btn-group">
-
                     <a class="btn btn-outline-primary" onclick="privX2page()">&lt;&lt;</a>
                     <a class="btn btn-outline-primary" onclick="privpage()">Priv</a>
                     <a id="pagebtn class=" btn btn-outline-primary aria-current="page" onclick="addpage()">
                     </a>
-
-
-
                     <a class="btn btn-outline-primary" onclick="nextpage()">Next</a>
                     <a class="btn btn-outline-primary" onclick="nextX2page()">&gt;&gt;</a>
 
@@ -57,4 +55,10 @@
             </div>
     </section>
     <br><br>
+    <style></style>
+    <script>
+        function a(){
+
+        }
+    </script>
     <%- include('../../include/footer.ejs') %>

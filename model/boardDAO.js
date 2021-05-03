@@ -1,11 +1,11 @@
 'use strict';
-
+//test
 var db = require("../config/kyjdb");
 var logger = require('../config/logger');
 
 function count_questionBoard(parameters) {
     return new Promise(function (resolve, rejcet) {
-        let queryData = `SELECT * FROM Inquiry_Board ORDER BY write_date desc`;
+        let queryData = `SELECT * FROM Inquiry_Board ORDER BY date desc`;
         db.query(queryData, function (error, db_data) {
             if (error) {
                 logger.error(
@@ -43,7 +43,7 @@ function count_freeBoard(parameters){
             console.log(db_data)
             if (error) {
                 logger.error(
-                    "DB error [Notice_Board]" +
+                    "DB error [Free_Board]" +
                     "\n \t" + queryData +
                     "\n \t" + error);
                 rejcet('DB ERR');
