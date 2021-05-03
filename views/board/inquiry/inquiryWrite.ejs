@@ -6,19 +6,18 @@
             <h1 class="fs-1">문의 사항</h1>
             <div>아직 미완성입니다..!</div>
         </div>
-        <form action="/action_page.php">
+        <form method="POST">
             <div class="form-group">
                 <label for="usr">제목:</label>
-                <input type="text" class="form-control" id="usr">
+                <input type="text" class="form-control"name="title">
             </div>
             <div class="form-group">
                 <label for="comment">작성하기:</label>
-                <textarea class="form-control" rows="10" id="comment"></textarea>
+                <textarea class="form-control" rows="10" name="content"></textarea>
             </div>
-
             <div class="text-center">
-                <div> <a href="./noticeMain" type="button" class="btn btn-primary">작성완료</a>
-                </div>
+                <input type="submit" class="btn btn-primary" value="작성하기">
+            </div>
         </form>
         <br>
         <br>
