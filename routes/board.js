@@ -2,7 +2,7 @@
 var express = require('express');
 var router = express.Router();
 var boardController = require('../controller/boardController');
-
+//git test
 //공지사항 게시판
 router.get('/notice', boardController.noticeMain);
 router.get('/notice/noticeWrite', boardController.noticeWrite);
@@ -18,7 +18,7 @@ router.post('/inquiry/inquiryWrite', boardController.inquiryWritePost);
 router.get('/free', boardController.freeBoardMain);
 router.get('/free/freeBoardWrite', boardController.freeBoardWrite);
 router.post('/free/freeBoardWrite', boardController.freeBoardWritePost);
-//router.post('/free/freeBoardWrite',boardController.freeBoardWritePost);
+
 
 
 module.exports = router;

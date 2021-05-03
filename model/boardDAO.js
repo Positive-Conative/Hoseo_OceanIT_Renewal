@@ -1,5 +1,5 @@
 'use strict';
-
+//test
 var db = require("../config/kyjdb");
 var logger = require('../config/logger');
 
