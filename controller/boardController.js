@@ -72,6 +72,30 @@ function inquiryWrite(req, res, next) {
         }
     ).catch(err => res.send("<script>alert('jwt err');</script>"));
 }
+function inquiryWritePost(req, res, next) {
+    var content = req.body.content;
+    var title = req.body.title;
+    console.log("title : " + title);
+    console.log("content : " + content);
+    let token = req.cookies.user;
+    jwtmiddle.jwtCerti(token).then(
+        (permission) => {
+            var date = new dayjs();
+            var datetime = date.format('YYYY-MM-DD HH:mm:ss');
+            var user_id = permission.user_id;
+            var datas = {user_id:user_id, title:title, content:content, date:datetime};
+            db.query('INSERT INTO Inquiry_Board SET ?', datas, function (error, row) {
+                //console.log("db_data : " + row)
+                if (error) {
+                    logger.error(
+                        "DB error [Inquiry_Board]" +
+                        "\n \t" + error);
+                    rejcet('DB ERR');}
+                else { res.redirect("/board/inquiry"); }
+            })
+        }
+    ).catch(err => res.send("<script>alert('jwt err');</script>"));
+}
 
 function freeBoardMain(req, res, next) {
     boardDAO.count_freeBoard().then(
@@ -94,6 +118,31 @@ function freeBoardWrite(req, res, next) {
         }
     ).catch(err => res.send("<script>alert('jwt err');</script>"));
 }
+function freeBoardWritePost(req, res, next) {
+    var content = req.body.content;
+    var title = req.body.title;
+    console.log("title : " + title);
+    console.log("content : " + content);
+    let token = req.cookies.user;
+    jwtmiddle.jwtCerti(token).then(
+        (permission) => {
+            var date = new dayjs();
+            var datetime = date.format('YYYY-MM-DD HH:mm:ss');
+            var user_id = permission.user_id;
+            var datas = {user_id:user_id, title:title, content:content, date:datetime};
+            db.query('INSERT INTO Free_Board SET ?', datas, function (error, row) {
+                //console.log("db_data : " + row)
+                if (error) {
+                    logger.error(
+                        "DB error [Free_Board]" +
+                        "\n \t" + error);
+                    rejcet('DB ERR');}
+                else { res.redirect("/board/free"); }
+            })
+        }
+    ).catch(err => res.send("<script>alert('jwt err');</script>"));
+}
+
 
 module.exports = {
     noticeMain,
@@ -101,6 +150,9 @@ module.exports = {
     noticeWritePost,
     inquiryMain,
     inquiryWrite,
+    inquiryWritePost,
     freeBoardMain,
-    freeBoardWrite
+    freeBoardWrite,
+    freeBoardWritePost
+
 }
