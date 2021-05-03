@@ -35,26 +35,22 @@
                         <%}%>
                 </tbody>
             </table>
-        </div>
-        <div class="text-center">
-            <% if(permission.user_id!=undefined){%>
-                <div style="text-align: right;"><a href="./noticeWrite" type="button" class="btn btn-primary">작성하기</a>
-                </div>
-                <%}%>
-                    <br><br>
-                    <div class="btn-group">
-
-                        <a class="btn btn-outline-primary" onclick="privX2page()">&lt;&lt;</a>
-                        <a class="btn btn-outline-primary" onclick="privpage()">Priv</a>
-                        <a id="pagebtn class=" btn btn-outline-primary aria-current="page" onclick="addpage()">
-                        </a>
-
-
-
-                        <a class="btn btn-outline-primary" onclick="nextpage()">Next</a>
-                        <a class="btn btn-outline-primary" onclick="nextX2page()">&gt;&gt;</a>
-
+            <div class="text-center">
+                <% if(permission.user_id!=undefined){%>
+                    <div style="text-align: right; padding-right:6%"><a href="./noticeWrite" type="button" class="btn btn-outline-secondary">작성하기</a>
                     </div>
+                    <%}%>
+                        <div class="btn-group">
+                            <a class="btn btn-outline-secondary" onclick="privX2page()">&lt;&lt;</a>
+                            <a class="btn btn-outline-secondary" onclick="privpage()">Priv</a>
+                            <a id="pagebtn class=" btn btn-outline-primary aria-current="page" onclick="addpage()">
+                            </a>
+                            <a class="btn btn-outline-secondary" onclick="nextpage()">Next</a>
+                            <a class="btn btn-outline-secondary" onclick="nextX2page()">&gt;&gt;</a>
+    
+                        </div>
+            </div>
+            <br><br>
         </div>
     </section>
 
