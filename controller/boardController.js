@@ -5,7 +5,7 @@ const db = require('../config/kyjdb');
 var jwtmiddle = require('../middleware/jwt');
 var boardDAO = require('../model/boardDAO');
 var logger = require('../config/logger');
-
+//git test
 function noticeMain(req, res, next) {
     boardDAO.count_noticeBoard().then(
         (db_data) => {

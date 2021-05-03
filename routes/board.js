@@ -12,7 +12,7 @@ router.post('/notice/noticeWrite', boardController.noticeWritePost);
 router.get('/inquiry', boardController.inquiryMain);
 router.get('/inquiry/inquiryWrite', boardController.inquiryWrite);
 router.post('/inquiry/inquiryWrite', boardController.inquiryWritePost);
-//router.post('/inquiry/inquiryWrite',boardController.inquiryWritePost);
+
 
 // 자유게시판
 router.get('/free', boardController.freeBoardMain);
