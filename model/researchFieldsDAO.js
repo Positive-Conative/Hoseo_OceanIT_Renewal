@@ -4,6 +4,8 @@ var db = require("../config/kyjdb");
 var logger = require('../config/logger');
 
 function researchFields_selectAll(parameters) {
+
+    console.log("parameters.page : " + parameters.page);
     var queryData = `SELECT * FROM Research_Fields`;
     if(parameters.type=="progress"){
         queryData += ` WHERE date_end > NOW()`;

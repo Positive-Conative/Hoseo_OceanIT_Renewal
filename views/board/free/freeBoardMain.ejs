@@ -1,4 +1,5 @@
 <%- include('../../include/header.ejs') %>
+<script src="/javascripts/board/board.js"></script>
     <link rel="stylesheet" href="/stylesheets/board.css" />
     <section>
         <div id="indexbg" class="mb-5"></div>
@@ -17,22 +18,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% for(var i=0;i<db_data.length;i++){ var data=db_data[i];%>
-                        <tr id="board_cursor" onclick="location.href='./freeBoardDetail'">
-                            <td>
-                                <%=data.qid%>
-                            </td>
-                            <td>
-                                <%=data.title%>
-                            </td>
-                            <td>
-                                <%=data.user_id%>
-                            </td>
-                            <td>
-                                <%=dayjs(data.date).format('YYYY-MM-DD');%>
-                            </td>
-                        </tr>
-                        <%}%>
+                    <% for(var i=0;i<5;i++){%>
+                        <% var data=db_data[((parameters.page-1) * 5)+i]; if(data==undefined) continue; %>
+                            <tr id="board_cursor" onclick="location.href='./freeBoardDetail?num=<%=data.qid%>'">
+                                <td>
+                                    <%=db_data.length - (5 * (parameters.page-1)) -i%>
+                                </td>
+                                <td>
+                                    <%=data.title%>
+                                </td>
+                                <td>
+                                    <%=data.user_id%>
+                                </td>
+                                <td>
+                                    <%=dayjs(data.date).format('YYYY-MM-DD');%>
+                                </td>
+                            </tr>
+                            <%}%>
                 </tbody>
             </table>
         </div>
@@ -40,21 +42,26 @@
             <div class="mx-auto" style="text-align: right;"><a href="./freeBoardWrite" type="button"
                     class="btn btn-primary">작성하기</a></div>
             <%}%>
-            <div class ="text-center">
+            <div class="text-center">
                 <div class="btn-group">
-
-                    <a class="btn btn-outline-primary" onclick="privX2page()">&lt;&lt;</a>
-                    <a class="btn btn-outline-primary" onclick="privpage()">Priv</a>
-                    <a id="pagebtn class=" btn btn-outline-primary aria-current="page" onclick="addpage()">
-                    </a>
-
-
-
-                    <a class="btn btn-outline-primary" onclick="nextpage()">Next</a>
-                    <a class="btn btn-outline-primary" onclick="nextX2page()">&gt;&gt;</a>
-
+                    <%if(parameters.page>1){%>
+                        <a class="btn btn-outline-secondary" onclick="privpage()">Priv</a>
+                        <%}%>
+                            <%for(var i=1; i <=Math.ceil(db_data.length / 5 ); i++){%>
+                                <a id="pagebtn<%=i%>" class="btn btn-outline-secondary" aria-current="page"
+                                    onclick="addpage(<%=i%>)">
+                                    <%= i %>
+                                </a>
+                                <%}%>
+                                    <%if(parameters.page<=Math.ceil(db_data.length / 5 )-1){%>
+                                        <a class="btn btn-outline-secondary" onclick="nextpage()">Next</a>
+                                        <%}%>
                 </div>
             </div>
     </section>
     <br><br>
+
+    <script>
+        $('#pagebtn<%=parameters.page%>').addClass("active");
+    </script>
     <%- include('../../include/footer.ejs') %>
