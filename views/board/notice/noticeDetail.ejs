@@ -24,15 +24,15 @@
                                 <tbody>
                                     <tr>
                                         <td style="width: 15%;">작성자</td>
-                                        <td colspan="2"><%=detailData[0].user_id%></td>
+                                        <td style="text-align: left;"colspan="2"><%=detailData[0].user_id%></td>
                                     </tr>
                                     <tr>
                                         <td>작성일</td>
-                                        <td colspan="2"><%=dayjs(detailData[0].date).format('YYYY-MM-DD HH:mm:ss');%></td>
+                                        <td style="text-align: left;" colspan="2"><%=dayjs(detailData[0].date).format('YYYY-MM-DD HH:mm:ss');%></td>
                                     </tr>
                                     <tr>
                                         <td>내용</td>
-                                        <td colspan="2" style="text-align: left;"><%=detailData[0].content%></td>
+                                        <td  colspan="2" style=" text-align: left; word-break:break-all; "><%=detailData[0].content%></td>
                                     </tr>
                                 </tbody>
                         </table>
