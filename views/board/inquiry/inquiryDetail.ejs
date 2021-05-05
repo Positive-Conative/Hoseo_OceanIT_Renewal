@@ -14,48 +14,60 @@
                         Ocean-IT
                     </h3>
                     <article>
-                        <table class="table table-responsive-sm text-center" style="box-shadow: 0 4px 8px 0 rgb(0, 0, 0, 0.2);">
+                        <table class="table table-responsive-sm text-center"
+                            style="box-shadow: 0 4px 8px 0 rgb(0, 0, 0, 0.2);">
                             <div class="row">
                                 <thead>
                                     <tr>
-                                        <th colspan="2" bgcolor="#dbdbdb"><%=detailData[0].title%></th>
+                                        <th colspan="2" bgcolor="#dbdbdb">
+                                            <%=detailData[0].title%>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td style="width: 15%;">작성자</td>
-                                        <td colspan="2"><%=detailData[0].user_id%></td>
+                                        <td colspan="2">
+                                            <%=detailData[0].user_id%>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>작성일</td>
-                                        <td colspan="2"><%=dayjs(detailData[0].date).format('YYYY-MM-DD HH:mm:ss');%></td>
+                                        <td colspan="2">
+                                            <%=dayjs(detailData[0].date).format('YYYY-MM-DD HH:mm:ss');%>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>내용</td>
-                                        <td colspan="2" style="text-align: left;"><%=detailData[0].content%></td>
+                                        <td colspan="2" style="text-align: left;">
+                                            <%=detailData[0].content%>
+                                        </td>
                                     </tr>
                                 </tbody>
                         </table>
                     </article>
                     <a type="button" class="btn btn-outline-secondary" href="javascript:history.back();">목록</a>
-                    <a href="" class="btn btn-outline-secondary">수정</a>
-                    <a href="" class="btn btn-outline-secondary">삭제</a>
-
+                    <a href="/board/inquiry/inquiryModify?num=<%=detailData[0].qid%>"
+                        class="btn btn-outline-secondary">수정</a>
+                    <form method="POST" action="/board/inquiry/delete?num=<%=detailData[0].qid%>"><button
+                            class="btn btn-outline-secondary">삭제</button>
+                    </form>
                 </div>
             </div>
             <br><br>
             <form>
             <div style="background-color: #dbdbdb;">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="댓글을 입력해주세요" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                  <span class="input-group-text" id="basic-addon2">작성</span>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="댓글을 입력해주세요" aria-label="Recipient's username"
+                        aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="basic-addon2">작성</span>
+                    </div>
                 </div>
-              </div>
-              <p>댓글 보기란입니다</p>
+                <p>댓글 보기란입니다</p>
                 <p>댓글 보기란입니다</p>
                 <p>댓글 보기란입니다</p>
             </div>
-        </form>
+        </div>
     </section>
     <%- include('../../include/footer.ejs') %>
