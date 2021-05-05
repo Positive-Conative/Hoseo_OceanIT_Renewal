@@ -18,10 +18,9 @@ function count_questionBoard(parameters) {
             resolve(db_data);
         });
     })
-}function count_questionBoardDetail(parameters){
-    console.log("parameters : " + parameters.qid);
+}
+function count_questionBoardDetail(parameters){
     var queryData = `SELECT * FROM Inquiry_Board where qid="${parameters.qid}"`;
-    console.log("queryData : " + queryData);
     return new Promise(function (resolve, rejcet) {
         db.query(queryData, function (error, db_data) {
             if (error) {
@@ -53,9 +52,7 @@ function count_noticeBoard(parameters) {
     })
 }
 function count_noticeBoardDetail(parameters){
-    console.log("parameters : " + parameters.qid);
     var queryData = `SELECT * FROM Notice_Board where qid="${parameters.qid}"`;
-    console.log("queryData : " + queryData);
     return new Promise(function (resolve, rejcet) {
         db.query(queryData, function (error, db_data) {
             if (error) {
@@ -74,7 +71,6 @@ function count_freeBoard(parameters){
     return new Promise(function(resolve,rejcet){
         let queryData = `SELECT * FROM Free_Board ORDER BY date desc`;
         db.query(queryData, function (error, db_data) {
-            console.log(db_data)
             if (error) {
                 logger.error(
                     "DB error [Free_Board]" +
@@ -87,9 +83,7 @@ function count_freeBoard(parameters){
         })
     })
 }function count_freeBoardDetail(parameters){
-    console.log("parameters : " + parameters.qid);
     var queryData = `SELECT * FROM Free_Board where qid="${parameters.qid}"`;
-    console.log("queryData : " + queryData);
     return new Promise(function (resolve, rejcet) {
         db.query(queryData, function (error, db_data) {
             if (error) {
