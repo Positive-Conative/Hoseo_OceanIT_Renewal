@@ -6,12 +6,13 @@
             <h1 class="fs-1">자유게시판</h1>
             <div>아직 미완성입니다..!</div>
         </div>
+        <div class="container">
         <form action="/board/free/freeBoardModify?num=<%=detailData[0].qid%>" method="POST">
-            <div class="form-group">
+            <div class="form-group"style="font-size: 20px;">
                 <label for="usr">제목:</label>
                 <input type="text" class="form-control"name="title" value="<%=detailData[0].title%>">
             </div>
-            <div class="form-group">
+            <div class="form-group"style="font-size: 20px;">
                 <label for="comment">작성하기:</label>
                 <textarea wrap="hard" class="form-control" rows="10" name="content"><%=detailData[0].content%></textarea>
             </div>
@@ -19,6 +20,7 @@
                 <input type="submit" class="btn btn-outline-secondary" value="수정하기">
             </div>
         </form>
+    </div>
         <br>
         <br>
         <%- include('../../include/footer.ejs') %>

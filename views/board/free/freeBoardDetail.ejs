@@ -10,48 +10,51 @@
         <div class="container">
             <div class="row">
                 <div id="researchDetailContent" class="col-12">
-                    <h3 class="mb-5" align=center>
+                    <h1 class="mb-5" align=center>
                         Ocean-IT
-                    </h3>
+                    </h1>
                     <article>
                         <table class="table table-responsive-sm text-center"
                             style="box-shadow: 0 4px 8px 0 rgb(0, 0, 0, 0.2);">
                             <div class="row">
                                 <thead>
-                                    <tr>
+                                    <tr style="font-size: 28px;">
                                         <th colspan="2" bgcolor="#dbdbdb">
                                             <%=detailData[0].title%>
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    <tr style="font-size: 23px;">
                                         <td style="width: 15%;">작성자</td>
                                         <td colspan="2">
                                             <%=detailData[0].user_id%>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr style="font-size: 23px;">
                                         <td>작성일</td>
                                         <td colspan="2">
                                             <%=dayjs(detailData[0].date).format('YYYY-MM-DD HH:mm:ss');%>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr style="font-size: 23px;">
                                         <td>내용</td>
-                                        <td colspan="2" style="text-align: left;">
+                                        <td colspan="2" style="text-align: left;word-break: break-all;">
                                             <%=detailData[0].content%>
                                         </td>
                                     </tr>
                                 </tbody>
                         </table>
                     </article>
-                    <a type="button" class="btn btn-outline-secondary" href="javascript:history.back();">목록</a>
-                    <a href="/board/free/freeBoardModify?num=<%=detailData[0].qid%>"
-                        class="btn btn-outline-secondary">수정</a>
-                    <form method="POST" action="/board/free/delete?num=<%=detailData[0].qid%>"><button
-                            class="btn btn-outline-secondary">삭제</button>
+                    <form method="POST" action="/board/free/delete?num=<%=detailData[0].qid%>">
+                        <a type="button" class="btn btn-outline-secondary" href="javascript:history.back();">목록</a>
+                        <a href="/board/free/freeBoardModify?num=<%=detailData[0].qid%>"
+                            class="btn btn-outline-secondary">수정</a>
+
+                        <button class="btn btn-outline-secondary">삭제</button>
                     </form>
+
+
                 </div>
             </div>
             <br><br>
