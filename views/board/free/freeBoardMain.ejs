@@ -10,7 +10,7 @@
         <div class ="container">
             <table class="table table-responsive-sm table-hover text-center">
                 <thead>
-                    <tr>
+                    <tr style="font-size: 20px;">
                         <th bgcolor="#dbdbdb" scope="col" width="10%">순번</th>
                         <th bgcolor="#dbdbdb" scope="col" width="40%">제목</th>
                         <th bgcolor="#dbdbdb" scope="col" width="30%">작성자</th>
@@ -20,7 +20,7 @@
                 <tbody>
                     <% for(var i=0;i<5;i++){%>
                         <% var data=db_data[((parameters.page-1) * 5)+i]; if(data==undefined) continue; %>
-                            <tr id="board_cursor" onclick="location.href='./freeBoardDetail?num=<%=data.qid%>'">
+                            <tr style="font-size: 19px;" id="board_cursor" onclick="location.href='./freeBoardDetail?num=<%=data.qid%>'">
                                 <td>
                                     <%=db_data.length - (5 * (parameters.page-1)) -i%>
                                 </td>
@@ -37,10 +37,10 @@
                             <%}%>
                 </tbody>
             </table>
-        </div>
+        
         <% if(permission.user_id!=undefined){%>
-            <div class="mx-auto" style="text-align: right;"><a href="./freeBoardWrite" type="button"
-                    class="btn btn-primary">작성하기</a></div>
+            <div  style="text-align: right; padding-right:6%;"><a href="./freeBoardWrite" type="button"
+                    class="btn btn-outline-secondary">작성하기</a></div>
             <%}%>
             <div class="text-center">
                 <div class="btn-group">
@@ -60,6 +60,7 @@
             </div>
     </section>
     <br><br>
+</div>
 
     <script>
         $('#pagebtn<%=parameters.page%>').addClass("active");
