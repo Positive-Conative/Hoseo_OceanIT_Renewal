@@ -43,6 +43,14 @@
                                             <%=detailData[0].content%>
                                         </td>
                                     </tr>
+                                    <% if(detailData[0].img){%>
+                                    <tr style="font-size: 23px;">
+                                        <td>이미지</td>
+                                        <td colspan="2" style="text-align: left; word-break: break-all;">
+                                            <img src="/images/board/<%=detailData[0].img%>" alt="">
+                                        </td>
+                                    </tr>
+                                    <%}%>
                                 </tbody>
                         </table>
                     </article>

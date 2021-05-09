@@ -6,6 +6,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var helmet = require('helmet');
+var fs = require('fs');
 var indexRouter = require('./routes/index');
 var introductionRouter = require('./routes/introduction');
 var researchRouter = require('./routes/research');
@@ -56,4 +57,9 @@ app.use(function(err, req, res, next) {
 });
 app.use(helmet());
 app.disable('x-powered-by'); //HELMET으로 X-powerde-by 안보이게 수정
+
+app.use(function(req,res,next){
+  var dir = './public/images';
+    if(!fs.existsSync(dir)) fs.mkdirSync(dir);
+});
 module.exports = app;
