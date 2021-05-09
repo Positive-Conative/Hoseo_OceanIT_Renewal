@@ -27,7 +27,12 @@ function noticeWrite(req, res, next) {
     let token = req.cookies.user;
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
-            res.render('board/notice/noticeWrite', { permission })
+            if (permission.user_id != undefined) {
+                res.render('board/notice/noticeWrite', { permission })
+            }
+            else {
+                res.send("<script>alert('Inaccessible');history.back();</script>")
+            }
         }
     ).catch(err => res.send("<script>alert('jwt err');</script>"));
 }
@@ -99,26 +104,30 @@ function noticeModifyPost(req, res, next) {
         "qid": queryNum
     };
     let token = req.cookies.user;
-    jwtmiddle.jwtCerti(token).then(
-        (permission) => {
-            console.log(req.body.title)
-            console.log(req.body.content)
-            var date = new dayjs();
-            var datetime = date.format('YYYY-MM-DD HH:mm:ss');
-            db.query(`UPDATE Notice_Board SET title=?, content=?,date=? where qid=${parameters.qid}`, [req.body.title, req.body.content, datetime], function (error, results) {
-                if (error) {
-                    logger.error(
-                        "DB error [Notice_Board]" +
-                        "\n \t" + queryData +
-                        "\n \t" + error);
-                    rejcet('DB ERR');
-                }
-                else {
-                    res.redirect('/board/notice?page=1')
-                }
-            })
-        }
-    ).catch(err => res.send("<script>alert('jwt err');</script>"));
+    if (req.body.title == "") res.send("<script>alert('제목을입력하세요.');history.back();</script>")
+    else if (req.body.content == "") res.send("<script>alert('내용을입력하세요.');history.back();</script>")
+    else {
+        jwtmiddle.jwtCerti(token).then(
+            (permission) => {
+                console.log(req.body.title)
+                console.log(req.body.content)
+                var date = new dayjs();
+                var datetime = date.format('YYYY-MM-DD HH:mm:ss');
+                db.query(`UPDATE Notice_Board SET title=?, content=?,date=? where qid=${parameters.qid}`, [req.body.title, req.body.content, datetime], function (error, results) {
+                    if (error) {
+                        logger.error(
+                            "DB error [Notice_Board]" +
+                            "\n \t" + queryData +
+                            "\n \t" + error);
+                        rejcet('DB ERR');
+                    }
+                    else {
+                        res.redirect('/board/notice?page=1')
+                    }
+                })
+            }
+        ).catch(err => res.send("<script>alert('jwt err');</script>"));
+    }
 }
 function noticeWritePost(req, res, next) {
     var content = req.body.content;
@@ -126,24 +135,28 @@ function noticeWritePost(req, res, next) {
     console.log("title : " + title);
     console.log("content : " + content);
     let token = req.cookies.user;
-    jwtmiddle.jwtCerti(token).then(
-        (permission) => {
-            var date = new dayjs();
-            var datetime = date.format('YYYY-MM-DD HH:mm:ss');
-            var user_id = permission.user_id;
-            var datas = { user_id: user_id, title: title, content: content, date: datetime };
-            db.query('INSERT INTO Notice_Board SET ?', datas, function (error, row) {
-                //console.log("db_data : " + row)
-                if (error) {
-                    logger.error(
-                        "DB error [Notice_Board]" +
-                        "\n \t" + error);
-                    rejcet('DB ERR');
-                }
-                else { res.redirect("/board/notice?page=1"); }
-            })
-        }
-    ).catch(err => res.send("<script>alert('jwt err');</script>"));
+    if (title == "") res.send("<script>alert('제목을입력하세요.');history.back();</script>")
+    else if (content == "") res.send("<script>alert('내용을입력하세요.');history.back();</script>")
+    else {
+        jwtmiddle.jwtCerti(token).then(
+            (permission) => {
+                var date = new dayjs();
+                var datetime = date.format('YYYY-MM-DD HH:mm:ss');
+                var user_id = permission.user_id;
+                var datas = { user_id: user_id, title: title, content: content, date: datetime };
+                db.query('INSERT INTO Notice_Board SET ?', datas, function (error, row) {
+                    //console.log("db_data : " + row)
+                    if (error) {
+                        logger.error(
+                            "DB error [Notice_Board]" +
+                            "\n \t" + error);
+                        rejcet('DB ERR');
+                    }
+                    else { res.redirect("/board/notice?page=1"); }
+                })
+            }
+        ).catch(err => res.send("<script>alert('jwt err');</script>"));
+    }
 }
 function noticeDelete(req, res, next) {
     var queryNum = req.query.num;
@@ -192,7 +205,12 @@ function inquiryWrite(req, res, next) {
     let token = req.cookies.user;
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
-            res.render('board/inquiry/inquiryWrite', { permission })
+            if (permission.user_id != undefined) {
+                res.render('board/inquiry/inquiryWrite', { permission })
+            }
+            else {
+                res.send("<script>alert('Inaccessible');history.back();</script>")
+            }
         }
     ).catch(err => res.send("<script>alert('jwt err');</script>"));
 }
@@ -215,6 +233,7 @@ function inquiryDetail(req, res, next) {
                 let token = req.cookies.user;
                 jwtmiddle.jwtCerti(token).then(
                     (permission) => {
+                        console.log(db_values["detailData"]);
                         res.render('board/inquiry/inquiryDetail', {
                             dayjs, permission,
                             detailData: db_values["detailData"]
@@ -267,49 +286,61 @@ function inquiryModifyPost(req, res, next) {
         "qid": queryNum
     };
     let token = req.cookies.user;
-    jwtmiddle.jwtCerti(token).then(
-        (permission) => {
-            console.log(req.body.title)
-            console.log(req.body.content)
-            var date = new dayjs();
-            var datetime = date.format('YYYY-MM-DD HH:mm:ss');
-            db.query(`UPDATE Inquiry_Board SET title=?, content=?,date=? where qid=${parameters.qid}`, [req.body.title, req.body.content, datetime], function (error, results) {
-                if (error) {
-                    logger.error(
-                        "DB error [Inquiry_Board]" +
-                        "\n \t" + queryData +
-                        "\n \t" + error);
-                    rejcet('DB ERR');
-                }
-                else {
-                    res.redirect('/board/inquiry?page=1')
-                }
-            })
-        }
-    ).catch(err => res.send("<script>alert('jwt err');</script>"));
+    if (req.body.title == "") res.send("<script>alert('제목을입력하세요.');history.back();</script>")
+    else if (req.body.content == "") res.send("<script>alert('내용을입력하세요.');history.back();</script>")
+    else {
+        jwtmiddle.jwtCerti(token).then(
+            (permission) => {
+                var date = new dayjs();
+                var datetime = date.format('YYYY-MM-DD HH:mm:ss');
+                db.query(`UPDATE Inquiry_Board SET title=?, content=?,date=? where qid=${parameters.qid}`, [req.body.title, req.body.content, datetime], function (error, results) {
+                    if (error) {
+                        logger.error(
+                            "DB error [Inquiry_Board]" +
+                            "\n \t" + queryData +
+                            "\n \t" + error);
+                        rejcet('DB ERR');
+                    }
+                    else {
+                        res.redirect('/board/inquiry?page=1')
+                    }
+                })
+            }
+        ).catch(err => res.send("<script>alert('jwt err');</script>"));
+    }
 }
 function inquiryWritePost(req, res, next) {
     var content = req.body.content;
     var title = req.body.title;
     let token = req.cookies.user;
-    jwtmiddle.jwtCerti(token).then(
-        (permission) => {
-            var date = new dayjs();
-            var datetime = date.format('YYYY-MM-DD HH:mm:ss');
-            var user_id = permission.user_id;
-            var datas = { user_id: user_id, title: title, content: content, date: datetime };
-            db.query('INSERT INTO Inquiry_Board SET ?', datas, function (error, row) {
-                //console.log("db_data : " + row)
-                if (error) {
-                    logger.error(
-                        "DB error [Inquiry_Board]" +
-                        "\n \t" + error);
-                    rejcet('DB ERR');
+    var file = req.file;
+    if (title == "") res.send("<script>alert('제목을입력하세요.');history.back();</script>")
+    else if (content == "") res.send("<script>alert('내용을입력하세요.');history.back();</script>")
+    else {
+        jwtmiddle.jwtCerti(token).then(
+            (permission) => {
+                var date = new dayjs();
+                var datetime = date.format('YYYY-MM-DD HH:mm:ss');
+                var user_id = permission.user_id;
+                if (file != undefined) {
+                    var datas = { user_id: user_id, title: title, content: content, date: datetime, img: file.filename };
                 }
-                else { res.redirect("/board/inquiry?page=1"); }
-            })
-        }
-    ).catch(err => res.send("<script>alert('jwt err');</script>"));
+                else {
+                    var datas = { user_id: user_id, title: title, content: content, date: datetime };
+                }
+                db.query('INSERT INTO Inquiry_Board SET ?', datas, function (error, row) {
+                    //console.log("db_data : " + row)
+                    if (error) {
+                        logger.error(
+                            "DB error [Inquiry_Board]" +
+                            "\n \t" + error);
+                        rejcet('DB ERR');
+                    }
+                    else { res.redirect("/board/inquiry?page=1"); }
+                })
+            }
+        ).catch(err => res.send("<script>alert('jwt err');</script>"));
+    }
 }
 function inquiryDelete(req, res, next) {
     var queryNum = req.query.num;
@@ -337,6 +368,7 @@ function inquiryDelete(req, res, next) {
         }
     ).catch(err => res.send("<script>alert('jwt err');</script>"));
 }
+
 //free
 function freeBoardMain(req, res, next) {
     var queryPage = req.query.page;
@@ -359,7 +391,12 @@ function freeBoardWrite(req, res, next) {
     let token = req.cookies.user;
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
-            res.render('board/free/FreeBoardWrite', { permission })
+            if (permission.user_id != undefined) {
+                res.render('board/free/FreeBoardWrite', { permission })
+            }
+            else {
+                res.send("<script>alert('Inaccessible');history.back();</script>")
+            }
         }
     ).catch(err => res.send("<script>alert('jwt err');</script>"));
 }
@@ -433,51 +470,57 @@ function freeBoardModifyPost(req, res, next) {
         "qid": queryNum
     };
     let token = req.cookies.user;
-    jwtmiddle.jwtCerti(token).then(
-        (permission) => {
-            console.log(req.body.title)
-            console.log(req.body.content)
-            var date = new dayjs();
-            var datetime = date.format('YYYY-MM-DD HH:mm:ss');
-            db.query(`UPDATE Free_Board SET title=?, content=?,date=? where qid=${parameters.qid}`, [req.body.title, req.body.content, datetime], function (error, results) {
-                if (error) {
-                    logger.error(
-                        "DB error [Free_Board]" +
-                        "\n \t" + queryData +
-                        "\n \t" + error);
-                    rejcet('DB ERR');
-                }
-                else {
-                    res.redirect('/board/free?page=1')
-                }
-            })
-        }
-    ).catch(err => res.send("<script>alert('jwt err');</script>"));
+    if (req.body.title == "") res.send("<script>alert('제목을입력하세요.');history.back();</script>")
+    else if (req.body.content == "") res.send("<script>alert('내용을입력하세요.');history.back();</script>")
+    else {
+        jwtmiddle.jwtCerti(token).then(
+            (permission) => {
+                console.log(req.body.title)
+                console.log(req.body.content)
+                var date = new dayjs();
+                var datetime = date.format('YYYY-MM-DD HH:mm:ss');
+                db.query(`UPDATE Free_Board SET title=?, content=?,date=? where qid=${parameters.qid}`, [req.body.title, req.body.content, datetime], function (error, results) {
+                    if (error) {
+                        logger.error(
+                            "DB error [Free_Board]" +
+                            "\n \t" + queryData +
+                            "\n \t" + error);
+                        rejcet('DB ERR');
+                    }
+                    else {
+                        res.redirect('/board/free?page=1')
+                    }
+                })
+            }
+        ).catch(err => res.send("<script>alert('jwt err');</script>"));
+    }
 }
 function freeBoardWritePost(req, res, next) {
     var content = req.body.content;
     var title = req.body.title;
-    console.log("title : " + title);
-    console.log("content : " + content);
     let token = req.cookies.user;
-    jwtmiddle.jwtCerti(token).then(
-        (permission) => {
-            var date = new dayjs();
-            var datetime = date.format('YYYY-MM-DD HH:mm:ss');
-            var user_id = permission.user_id;
-            var datas = { user_id: user_id, title: title, content: content, date: datetime };
-            db.query('INSERT INTO Free_Board SET ?', datas, function (error, row) {
-                //console.log("db_data : " + row)
-                if (error) {
-                    logger.error(
-                        "DB error [Free_Board]" +
-                        "\n \t" + error);
-                    rejcet('DB ERR');
-                }
-                else { res.redirect("/board/free?page=1"); }
-            })
-        }
-    ).catch(err => res.send("<script>alert('jwt err');</script>"));
+    if (title == "") res.send("<script>alert('제목을입력하세요.');history.back();</script>")
+    else if (content == "") res.send("<script>alert('내용을입력하세요.');history.back();</script>")
+    else {
+        jwtmiddle.jwtCerti(token).then(
+            (permission) => {
+                var date = new dayjs();
+                var datetime = date.format('YYYY-MM-DD HH:mm:ss');
+                var user_id = permission.user_id;
+                var datas = { user_id: user_id, title: title, content: content, date: datetime };
+                db.query('INSERT INTO Free_Board SET ?', datas, function (error, row) {
+                    //console.log("db_data : " + row)
+                    if (error) {
+                        logger.error(
+                            "DB error [Free_Board]" +
+                            "\n \t" + error);
+                        rejcet('DB ERR');
+                    }
+                    else { res.redirect("/board/free?page=1"); }
+                })
+            }
+        ).catch(err => res.send("<script>alert('jwt err');</script>"));
+    }
 }
 function freeBoardDelete(req, res, next) {
     var queryNum = req.query.num;
