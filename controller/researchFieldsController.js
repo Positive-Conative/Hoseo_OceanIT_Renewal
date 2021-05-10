@@ -60,7 +60,6 @@ function researchFieldsDetail(req, res, next) {
             let token = req.cookies.user;
             jwtmiddle.jwtCerti(token).then(
                 (permission)=>{
-                    console.log(db_values["detailData"])
                     res.render('research_fields/researchFieldsDetail', { 
                         dayjs, permission,
                         detailData : db_values["detailData"],

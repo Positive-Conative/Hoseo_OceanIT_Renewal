@@ -34,6 +34,21 @@ function count_questionBoardDetail(parameters){
             resolve(db_data);
         });
     })
+}function count_questionBoardComment(parameters){
+    var queryData = `SELECT * FROM inquiryComment where qid="${parameters.qid}"`;
+    return new Promise(function (resolve, rejcet) {
+        db.query(queryData, function (error, db_data) {
+            if (error) {
+                logger.error(
+                    "DB error [inquiryComment]"+
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                rejcet('DB ERR');
+                //throw error;
+            }
+            resolve(db_data);
+        });
+    })
 }
 function count_noticeBoard(parameters) {
     return new Promise(function (resolve, rejcet) {
@@ -101,6 +116,7 @@ function count_freeBoard(parameters){
 module.exports = {
     count_questionBoard,
     count_questionBoardDetail,
+    count_questionBoardComment,
     count_noticeBoard,
     count_noticeBoardDetail,
     count_freeBoard,

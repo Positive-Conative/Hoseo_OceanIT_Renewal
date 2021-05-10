@@ -50,6 +50,7 @@ router.get('/inquiry/inquiryModify', boardController.inquiryModify);
 router.post('/inquiry/inquiryModify', boardController.inquiryModifyPost);
 router.post('/inquiry/inquiryWrite', upload.single('newFile'), boardController.inquiryWritePost);
 router.post('/inquiry/delete', boardController.inquiryDelete);
+router.post('/inquiry/inquiryComment', boardController.inquiryComment);
 
 // 자유게시판
 router.get('/free', boardController.freeBoardMain);
