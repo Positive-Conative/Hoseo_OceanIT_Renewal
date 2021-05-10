@@ -4,8 +4,6 @@ var db = require("../config/kyjdb");
 var logger = require('../config/logger');
 
 function researchFields_selectAll(parameters) {
-
-    console.log("parameters.page : " + parameters.page);
     var queryData = `SELECT * FROM Research_Fields`;
     if(parameters.type=="progress"){
         queryData += ` WHERE date_end > NOW()`;
@@ -69,6 +67,8 @@ function researchFields_selectDetailPhotos(parameters) {
     return new Promise(function (resolve, rejcet) {
         db.query(queryData, function (error, db_data) {
             if (error) {
+                console.log("db_data : ")
+                console.log(db_data)
                 logger.error(
                     "DB error [Research_Fields]"+
                     "\n \t" + queryData +
@@ -80,6 +80,8 @@ function researchFields_selectDetailPhotos(parameters) {
         });
     })
 }
+
+//android
 module.exports = {
     researchFields_selectAll,
     researchFields_selectDetail,
