@@ -11,5 +11,4 @@ router.get('/researchResultes',(req,res)=>{
         }
     })
 })
-
 module.exports = router;

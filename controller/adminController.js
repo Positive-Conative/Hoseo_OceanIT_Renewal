@@ -1,5 +1,6 @@
 'use strict';
 
+const db = require('../config/kyjDB');
 var jwtmiddle = require('../middleware/jwt');
 var boardDAO = require('../model/boardDAO');
 
@@ -9,6 +10,7 @@ function adminMain(req, res, next) {
     .then((recv_data) => {db_data = recv_data;})
     .then(
         ()=>{
+            console.log("db_data : " + db_data)
             let token = req.cookies.user;
             jwtmiddle.jwtCerti(token).then(
                 (permission)=>{

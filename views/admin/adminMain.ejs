@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        <%=db_data[0].write_date %>
+        <%=db_data.write_date %>
         <%=db_data[0].count %>
     </section>
     <div class="text-center" style="box-shadow: 0 4px 10px 0 rgb(0, 0, 0, 0.2);">
@@ -51,10 +51,10 @@
     'use strict'
     var mylabel = [];
     var mycound = [];
-    <% for(var i=0; i<7 && i< db_data.length; i++){ %>
-        mylabel.push("<%= db_data[i].write_date %>")
-        mycound.push("<%= db_data[i].count %>")
-    <% } %>
+    for(var i=0; i<7 && i< db_data.length; i++){
+        mylabel.push(db_data[i].write_date);
+        mycound.push(db_data[i].count);
+    }
 
     mylabel.reverse();
     mycound.reverse();
