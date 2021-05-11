@@ -28,7 +28,7 @@ function researchFieldsDetail(req, res, next) {
     console.log("queryNum : " + queryNum);
     var parameters={
         "rfid":queryNum
-    };    
+    };
     var db_values={};
     Promise.resolve(db_values)
     .then(

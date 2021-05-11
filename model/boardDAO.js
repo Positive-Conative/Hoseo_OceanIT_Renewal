@@ -34,7 +34,8 @@ function count_questionBoardDetail(parameters){
             resolve(db_data);
         });
     })
-}function count_questionBoardComment(parameters){
+}
+function count_questionBoardComment(parameters){
     var queryData = `SELECT * FROM inquiryComment where qid="${parameters.qid}"`;
     return new Promise(function (resolve, rejcet) {
         db.query(queryData, function (error, db_data) {
