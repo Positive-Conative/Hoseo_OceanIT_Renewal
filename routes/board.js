@@ -60,5 +60,6 @@ router.get('/free/freeBoardModify', boardController.freeBoardModify);
 router.post('/free/freeBoardModify', boardController.freeBoardModifyPost);
 router.post('/free/freeBoardWrite', boardController.freeBoardWritePost);
 router.post('/free/delete', boardController.freeBoardDelete);
+router.post('/free/freeBoardComment', boardController.freeBoardComment);
 
 module.exports = router;

@@ -114,6 +114,22 @@ function count_freeBoard(parameters){
         });
     })
 }
+function count_freeBoardComment(parameters){
+    var queryData = `SELECT * FROM freeBoardComment where qid="${parameters.qid}"`;
+    return new Promise(function (resolve, rejcet) {
+        db.query(queryData, function (error, db_data) {
+            if (error) {
+                logger.error(
+                    "DB error [freeBoardComment]"+
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                rejcet('DB ERR');
+                //throw error;
+            }
+            resolve(db_data);
+        });
+    })
+}
 module.exports = {
     count_questionBoard,
     count_questionBoardDetail,
@@ -121,5 +137,6 @@ module.exports = {
     count_noticeBoard,
     count_noticeBoardDetail,
     count_freeBoard,
-    count_freeBoardDetail
+    count_freeBoardDetail,
+    count_freeBoardComment
 }

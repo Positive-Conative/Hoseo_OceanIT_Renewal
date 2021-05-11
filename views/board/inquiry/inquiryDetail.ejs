@@ -73,17 +73,18 @@
                             <input type="submit" class="input-group-text" id="basic-addon2" value="댓글">
                         </div>
                     </div>
-                    <%for(var i=0;i<commentData.length;i++){ var data1=commentData[i];%>
-                        <div style="border-bottom: 1px solid;">
-                            <div style="font-size: 6px; color: #7b7b7b;">
-                                <%=data1.date%>
-                            </div>
-                            <div style="font-size: 18px;">
+                    <% if(commentData){%>
+                        <%for(var i=0;i<commentData.length;i++){ var data1=commentData[i];%>
+                            <p>
                                 <%=data1.comment%>
-                            </div>
-
-                        </div>
-                        <%}%>
+                            </p>
+                            <p>
+                                <%=data1.date%>
+                            </p>
+                            <p>
+                                작성자 : <%=data1.user_id%>
+                            </p>
+                            <%}}%>
                 </div>
             </form>
         </div>

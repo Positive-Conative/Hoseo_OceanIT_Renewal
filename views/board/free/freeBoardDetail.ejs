@@ -58,18 +58,30 @@
                 </div>
             </div>
             <br><br>
-            <div style="background-color: #dbdbdb;">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="댓글을 입력해주세요" aria-label="Recipient's username"
-                        aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <span class="input-group-text" id="basic-addon2">작성</span>
+            <form action="/board/free/freeBoardComment?num=<%=detailData[0].qid%>" method="POST">
+                <div style="background-color: #dbdbdb;">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="댓글을 입력해주세요"
+                            aria-label="Recipient's username" aria-describedby="basic-addon2" name="comment">
+                        <div class="input-group-append">
+                            <input type="submit" class="input-group-text" id="basic-addon2" value="댓글">
+                        </div>
                     </div>
+                    <% if(commentData){%>
+                        <% for(var i=0;i<commentData.length;i++){ var data2=commentData[i];%>
+                            <p>
+                                <%=data2.comment%>
+                            </p>
+                            <p>
+                                <%=data2.date%>
+                            </p>
+                            <p>
+                                작성자 : <%=data2.user_id%>
+                            </p>
+                            <%}%>
+                                <%}%>
                 </div>
-                <p>댓글 보기란입니다</p>
-                <p>댓글 보기란입니다</p>
-                <p>댓글 보기란입니다</p>
-            </div>
+            </form>
         </div>
     </section>
     <%- include('../../include/footer.ejs') %>
