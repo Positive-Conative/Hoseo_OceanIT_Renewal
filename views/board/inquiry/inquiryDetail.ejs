@@ -65,7 +65,7 @@
             </div>
             <br><br>
             <form action="/board/inquiry/inquiryComment?num=<%=detailData[0].qid%>" method="POST">
-                <div style="background-color: #dbdbdb;">
+                <div style="background-color: #ffffff;">
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" placeholder="댓글을 입력해주세요"
                             aria-label="Recipient's username" aria-describedby="basic-addon2" name="comment">
@@ -73,9 +73,16 @@
                             <input type="submit" class="input-group-text" id="basic-addon2" value="댓글">
                         </div>
                     </div>
-                        <%for(var i=0;i<commentData.length;i++){ var data1 = commentData[i];%>
-                        <p><%=data1.comment%></p>
-                        <p><%=data1.date%></p>
+                    <%for(var i=0;i<commentData.length;i++){ var data1=commentData[i];%>
+                        <div style="border-bottom: 1px solid;">
+                            <div style="font-size: 6px; color: #7b7b7b;">
+                                <%=data1.date%>
+                            </div>
+                            <div style="font-size: 18px;">
+                                <%=data1.comment%>
+                            </div>
+
+                        </div>
                         <%}%>
                 </div>
             </form>
