@@ -243,7 +243,7 @@ function inquiryDetail(req, res, next) {
                 let token = req.cookies.user;
                 jwtmiddle.jwtCerti(token).then(
                     (permission) => {
-                        console.log("detailData : " + db_values["detailData"]);
+                        console.log(db_values["detailData"]);
                         console.log(db_values["commentData"]);
                         res.render('board/inquiry/inquiryDetail', {
                             dayjs, permission,
@@ -452,6 +452,16 @@ function freeBoardDetail(req, res, next) {
             (db_values) => {
                 return boardDAO.count_freeBoardDetail(parameters)
                     .then((detailData) => { db_values.detailData = detailData; })
+                    .then(() => { return db_values })
+                    .catch(err => res.send("<script>alert('" + err + "');history.back();</script>"))
+            }
+        )
+        .then(
+            (db_values) => {
+                return boardDAO.count_freeBoardComment(parameters)
+                    .then((commentData) => { db_values.commentData = commentData; })
+                    .then(() => { return db_values })
+                    .catch(err => res.send("<script>alert('" + err + "');history.back();</script>"))
             }
         )
         .then(
@@ -461,13 +471,42 @@ function freeBoardDetail(req, res, next) {
                     (permission) => {
                         res.render('board/free/freeBoardDetail', {
                             dayjs, permission,
-                            detailData: db_values["detailData"]
+                            detailData: db_values["detailData"],
+                            commentData: db_values["commentData"]
                         });
                     }
                 ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
             }
         )
         .catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
+}
+function freeBoardComment(req, res, next) {
+    var queryNum = req.query.num;
+    console.log("queryNum : " + queryNum)
+    var parameters = {
+        "qid": queryNum
+    };
+    var comment = req.body.comment;
+    if (comment == "") res.send("<script>alert('댓글을 입력하세요.');history.back();</script>")
+    else {
+        let token = req.cookies.user;
+        jwtmiddle.jwtCerti(token).then(
+            (permission) => {
+                var date = new dayjs();
+                var datetime = date.format('YYYY-MM-DD HH:mm:ss');
+                db.query(`INSERT freeBoardComment SET qid=?, comment=?, date=?, user_id=?`, [parameters.qid, comment, datetime, permission.user_id], function (error, results) {
+                    if (error) {
+                        logger.error(
+                            "DB error [freeBoardComment]" +
+                            "\n \t" + error);
+                        rejcet('DB ERR');
+                    }
+                    else {
+                        res.redirect(`/board/free/freeBoardDetail?num=${parameters.qid}`)
+                    }
+                })
+            })
+    }
 }
 function freeBoardModify(req, res, next) {
     var queryNum = req.query.num;
@@ -610,5 +649,6 @@ module.exports = {
     freeBoardWritePost,
     freeBoardModify,
     freeBoardModifyPost,
-    freeBoardDelete
+    freeBoardDelete,
+    freeBoardComment
 }
