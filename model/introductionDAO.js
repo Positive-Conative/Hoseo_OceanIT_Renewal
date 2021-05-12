@@ -8,7 +8,7 @@ function introduction_selectAll(parameters) {
         db.query(`SELECT * FROM Introduction`, function (error, db_data) {
             if (error) {
                 logger.error(
-                    "DB error [Research_Fields]"+
+                    "DB error [Introduction]"+
                     "\n \t" + `SELECT * FROM Research_Fields` +
                     "\n \t" + error);
                 rejcet('DB ERR');

@@ -23,18 +23,24 @@ function researchResults(req, res, next) {
     ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
 }
 
-function androidResearchResultsAll(req, res, next) {
+function researchResultsDetail(req, res, next) {
+    var queryNum = req.query.num;
     var parameters={
-        "querys":req.query.classify
+        "rrid":queryNum
     };
-    researchResultsDAO.researchResults_android_all(parameters).then(
+    researchResultsDAO.researchResults_selectDetail(parameters).then(
         (db_data) => {
-           res.json(db_data)
+            let token = req.cookies.user;
+            jwtmiddle.jwtCerti(token).then(
+                (permission)=>{
+                    res.render('research_results/researchResultsDetail', { db_data, permission, parameters, dayjs});
+                }
+            ).catch(err=>res.send("<script>alert('jwt err');</script>"));
         }
     ).catch(err=>res.send("<script>alert('"+ err +"');location.href='/';</script>"))
 }
 
 module.exports = {
     researchResults,
-    androidResearchResultsAll
+    researchResultsDetail
 }
