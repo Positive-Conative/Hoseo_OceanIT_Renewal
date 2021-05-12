@@ -2,11 +2,14 @@
 
 var express = require('express');
 var router = express.Router();
+var androidController = require('../controller/androidController')
 
 //research fields
 var researchFieldsController = require('../controller/researchFieldsController');
 router.get('/fields', researchFieldsController.researchFields);
 router.get('/fields/detail', researchFieldsController.researchFieldsDetail);
+//android
+router.get('/android',androidController.Android);
 
 //----------------------------------------------------------------------------------//
 //research results
