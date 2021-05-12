@@ -25,10 +25,9 @@ function researchFields(req, res, next) {
 
 function researchFieldsDetail(req, res, next) {
     var queryNum = req.query.num;
-    console.log("queryNum : " + queryNum);
     var parameters={
         "rfid":queryNum
-    };
+    };    
     var db_values={};
     Promise.resolve(db_values)
     .then(
@@ -60,7 +59,7 @@ function researchFieldsDetail(req, res, next) {
             let token = req.cookies.user;
             jwtmiddle.jwtCerti(token).then(
                 (permission)=>{
-                    console.log(db_values["photoDta"]);
+                    console.log(db_values["detailData"])
                     res.render('research_fields/researchFieldsDetail', { 
                         dayjs, permission,
                         detailData : db_values["detailData"],
@@ -74,7 +73,23 @@ function researchFieldsDetail(req, res, next) {
     .catch(err=>res.send("<script>alert('jwt err');</script>"));
 }
 
+function androidResearchFieldsAll(req, res, next) {
+    var querys = req.query.classify
+    var sql = ""
+
+    var parameters={
+        "querys":querys,
+    };
+
+    researcFieldsDAO.researchFields_android_all(parameters).then(
+        (db_data) => {
+            res.json(db_data)
+        }
+    ).catch(err=>res.send("DBDRR",err))
+}
+
 module.exports = {
     researchFields,
-    researchFieldsDetail
+    researchFieldsDetail,
+    androidResearchFieldsAll
 }

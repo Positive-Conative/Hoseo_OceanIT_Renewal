@@ -48,8 +48,25 @@ function researchResults_selectDetail(parameters) {
         });
     })
 }
+function researchResults_android_all(parameters) {
+    var queryData = `SELECT * FROM Research_Results where classify_ko = '${parameters.querys}'`
 
+    return new Promise(function (resolve, rejcet) {
+        db.query(queryData, function (error, db_data) {
+            if (error) {
+                logger.error(
+                    "DB error [Research_Results]"+
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                rejcet('DB ERR');
+                //throw error;
+            }
+            resolve(db_data);
+        });
+    })
+}
 module.exports = {
     researchResults_selectAll,
-    researchResults_selectDetail
+    researchResults_selectDetail,
+    researchResults_android_all
 }
