@@ -15,7 +15,6 @@ var galleryRouter = require('./routes/gallery');
 var authRouter = require('./routes/auth');
 var boardRouter = require('./routes/board');
 var adminRouter = require('./routes/admin');
-var androidRouter = require('./routes/android');
 
 var app = express();
 
@@ -40,7 +39,6 @@ app.use('/gallery', galleryRouter);
 app.use('/auth', authRouter);
 app.use('/board', boardRouter);
 app.use('/admin', adminRouter);
-app.use('/android', androidRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
