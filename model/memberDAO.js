@@ -18,7 +18,7 @@ function Member_selectAll(parameters) {
                 //throw error;
             }
             if(db_data === undefined)
-                reject("<script>" +
+                rejcet("<script>" +
                 "alert('No Data');" +
                 "window.history.go(-1);"+
                 "</script>");
