@@ -7,6 +7,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var helmet = require('helmet');
 var fs = require('fs');
+var Data = require('date')
 var indexRouter = require('./routes/index');
 var introductionRouter = require('./routes/introduction');
 var researchRouter = require('./routes/research');
@@ -62,4 +63,5 @@ app.use(function(req,res,next){
   var dir = './public/images';
     if(!fs.existsSync(dir)) fs.mkdirSync(dir);
 });
+
 module.exports = app;

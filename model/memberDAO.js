@@ -11,7 +11,7 @@ function Member_selectAll(parameters) {
         db.query(queryData, function (error, db_data) {
             if (error) {
                 logger.error(
-                    "DB error [Research_Fields]"+
+                    "DB error [Member]"+
                     "\n \t" + queryData +
                     "\n \t" + error);
                 rejcet('DB ERR');

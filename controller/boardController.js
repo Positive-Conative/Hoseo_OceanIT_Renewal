@@ -245,7 +245,7 @@ function inquiryDetail(req, res, next) {
                     (permission) => {
                         console.log(db_values["detailData"]);
                         console.log(db_values["commentData"]);
-                        res.render('board/inquiry/inquiryDetail', {
+                        res.render('board/inquirdy/inquiryDetail', {
                             dayjs, permission,
                             detailData: db_values["detailData"],
                             commentData: db_values["commentData"]
@@ -270,7 +270,7 @@ function inquiryComment(req, res, next) {
             (permission) => {
                 var date = new dayjs();
                 var datetime = date.format('YYYY-MM-DD HH:mm:ss');
-                db.query(`INSERT inquiryComment SET qid=?, comment=?, date=?, user_id=?`, [parameters.qid, comment, datetime, permission.user_id], function (error, results) {
+            db.query(`INSERT inquiryComment SET qid=?, comment=?, date=?, user_id=?`, [parameters.qid, comment, datetime, permission.user_id], function (error, results) {
                     if (error) {
                         logger.error(
                             "DB error [inquiryComment]" +

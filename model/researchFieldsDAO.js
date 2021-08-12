@@ -22,7 +22,6 @@ function researchFields_selectAll(parameters) {
                 rejcet('DB ERR');
                 //throw error;
             }
-            console.log(db_data)
             resolve(db_data);
         });
     })
