@@ -1,0 +1,92 @@
+'use strict';
+
+var db = require("../config/kyjdb");
+var logger = require('../config/logger');
+var crypto = require('crypto')
+var dayjs = require('dayjs')
+
+function insertUser(parameters) {
+    return new Promise(function (resolve, rejcet) {
+        db.query(`SELECT * FROM User userId="${parameters.userId}"`, function (error, db_data) {
+            if (db_data != null) {
+                return res.send('<script>alert("이미 존재하는 계정 입니다."); window.location="/auth/sign/up"; </script>');
+            } else {
+                var date = new dayjs();
+                var datetime = date.format('YYYY-MM-DD HH:mm:ss');
+                const userObj = {
+                    userId: parameters.userId,
+                    userPw: crypto.createHash('sha512').update(parameters.userPw).digest('base64'),
+                    userName: parameters.userName,
+                    userEmail: parameters.userEmail,
+                    createDate: datetime,
+                }
+                db.query(`INSERT INTO User SET ? `, userObj, function (error, user) {
+                    if (error) {
+                        logger.error(
+                            "DB error [User]" +
+                            "\n \t" + user +
+                            "\n \t" + error);
+                        rejcet('DB ERR');
+                    }
+                    resolve(user);
+                })
+            }
+            resolve(db_data);
+        })
+    })
+}
+function checkUser(parameters) {
+    const queryData = `SELECT * FROM User WHERE userId="${parameters.userId}" && userPw="${crypto.createHash('sha512').update(parameters.userPw).digest('base64')}"`
+    return new Promise(function (resolve, rejcet) {
+        db.query(queryData, function (error, db_data) {
+            if (error) {
+                logger.error(
+                    "DB error [User]" +
+                    "\n \t" + db_data +
+                    "\n \t" + error);
+                rejcet('DB ERR');
+                //throw error;
+            }
+            resolve(db_data);
+        })
+    })
+}
+function updateToUser(parameters) {
+    let queryData = `SELECT * FROM User WHERE userId="${parameters.userId}"`
+    return new Promise(function (resolve, rejcet) {
+        db.query(queryData, function (error, db_data) {
+            var date = new dayjs();
+            var datetime = date.format('YYYY-MM-DD HH:mm:ss');
+            const userObj = {
+                userPw: crypto.createHash('sha512').update(parameters.userPw).digest('base64'),
+                userName: parameters.userName,
+                userEmail: parameters.userEmail,
+                userNameEn: parameters.userNameEN,
+                userPhone: parameters.userPhone,
+                userAdd: parameters.userAdd,
+                changeDate: datetime,
+            }
+            if (db_data[0].userPw === userObj.userPw) {
+                rejcet('DB ERR')
+            } else {
+                db.query(`UPDATE User SET ? WHERE userId="${parameters.userId}"`, userObj, function (error, user) {
+                    if (error) {
+                        logger.error(
+                            "DB error [User]" +
+                            "\n \t" + db_data +
+                            "\n \t" + error);
+                        rejcet('DB ERR');
+                        //throw error;
+                    }
+                    resolve(user);
+                })
+            }
+        })
+    })
+}
+
+module.exports = {
+    insertUser,
+    checkUser,
+    updateToUser,
+}

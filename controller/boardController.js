@@ -27,7 +27,7 @@ function noticeWrite(req, res, next) {
     let token = req.cookies.user;
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
-            if (permission.user_id != undefined) {
+            if (permission.userId != undefined) {
                 res.render('board/notice/noticeWrite', { permission })
             }
             else {
@@ -82,7 +82,7 @@ function noticeModify(req, res, next) {
                 let token = req.cookies.user;
                 jwtmiddle.jwtCerti(token).then(
                     (permission) => {
-                        if (permission.user_id == db_values["detailData"][0].user_id) {
+                        if (permission.userId == db_values["detailData"][0].userId) {
                             res.render('board/notice/noticeModify', {
                                 dayjs, permission,
                                 detailData: db_values["detailData"]
@@ -99,7 +99,6 @@ function noticeModify(req, res, next) {
 }
 function noticeModifyPost(req, res, next) {
     var queryNum = req.query.num;
-    console.log("queryNum : " + queryNum)
     var parameters = {
         "qid": queryNum
     };
@@ -109,8 +108,6 @@ function noticeModifyPost(req, res, next) {
     else {
         jwtmiddle.jwtCerti(token).then(
             (permission) => {
-                console.log(req.body.title)
-                console.log(req.body.content)
                 var date = new dayjs();
                 var datetime = date.format('YYYY-MM-DD HH:mm:ss');
                 db.query(`UPDATE Notice_Board SET title=?, content=?,date=? where qid=${parameters.qid}`, [req.body.title, req.body.content, datetime], function (error, results) {
@@ -132,8 +129,6 @@ function noticeModifyPost(req, res, next) {
 function noticeWritePost(req, res, next) {
     var content = req.body.content;
     var title = req.body.title;
-    console.log("title : " + title);
-    console.log("content : " + content);
     let token = req.cookies.user;
     if (title == "") res.send("<script>alert('제목을입력하세요.');history.back();</script>")
     else if (content == "") res.send("<script>alert('내용을입력하세요.');history.back();</script>")
@@ -142,10 +137,9 @@ function noticeWritePost(req, res, next) {
             (permission) => {
                 var date = new dayjs();
                 var datetime = date.format('YYYY-MM-DD HH:mm:ss');
-                var user_id = permission.user_id;
-                var datas = { user_id: user_id, title: title, content: content, date: datetime };
+                var userId = permission.userId;
+                var datas = { userId: userId, title: title, content: content, date: datetime };
                 db.query('INSERT INTO Notice_Board SET ?', datas, function (error, row) {
-                    //console.log("db_data : " + row)
                     if (error) {
                         logger.error(
                             "DB error [Notice_Board]" +
@@ -160,14 +154,13 @@ function noticeWritePost(req, res, next) {
 }
 function noticeDelete(req, res, next) {
     var queryNum = req.query.num;
-    console.log("queryNum : " + queryNum)
     var parameters = {
         "qid": queryNum
     };
     let token = req.cookies.user;
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
-            db.query(`DELETE FROM Notice_Board WHERE qid=${parameters.qid} and user_id=${permission.user_id}`, function (error, row) {
+            db.query(`DELETE FROM Notice_Board WHERE qid=${parameters.qid} and userId=${permission.userId}`, function (error, row) {
                 if (error) {
                     logger.error(
                         "DB error [Notice_Board]" +
@@ -205,7 +198,7 @@ function inquiryWrite(req, res, next) {
     let token = req.cookies.user;
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
-            if (permission.user_id != undefined) {
+            if (permission.userId != undefined) {
                 res.render('board/inquiry/inquiryWrite', { permission })
             }
             else {
@@ -216,7 +209,6 @@ function inquiryWrite(req, res, next) {
 }
 function inquiryDetail(req, res, next) {
     var queryNum = req.query.num;
-    console.log("queryNum : " + queryNum)
     var parameters = {
         "qid": queryNum
     };
@@ -243,8 +235,6 @@ function inquiryDetail(req, res, next) {
                 let token = req.cookies.user;
                 jwtmiddle.jwtCerti(token).then(
                     (permission) => {
-                        console.log(db_values["detailData"]);
-                        console.log(db_values["commentData"]);
                         res.render('board/inquiry/inquiryDetail', {
                             dayjs, permission,
                             detailData: db_values["detailData"],
@@ -258,7 +248,6 @@ function inquiryDetail(req, res, next) {
 }
 function inquiryComment(req, res, next) {
     var queryNum = req.query.num;
-    console.log("queryNum : " + queryNum)
     var parameters = {
         "qid": queryNum
     };
@@ -270,7 +259,7 @@ function inquiryComment(req, res, next) {
             (permission) => {
                 var date = new dayjs();
                 var datetime = date.format('YYYY-MM-DD HH:mm:ss');
-                db.query(`INSERT inquiryComment SET qid=?, comment=?, date=?, user_id=?`, [parameters.qid, comment, datetime, permission.user_id], function (error, results) {
+                db.query(`INSERT inquiryComment SET qid=?, comment=?, date=?, userId=?`, [parameters.qid, comment, datetime, permission.userId], function (error, results) {
                     if (error) {
                         logger.error(
                             "DB error [inquiryComment]" +
@@ -286,7 +275,6 @@ function inquiryComment(req, res, next) {
 }
 function inquiryModify(req, res, next) {
     var queryNum = req.query.num;
-    console.log("queryNum : " + queryNum)
     var parameters = {
         "qid": queryNum
     };
@@ -303,8 +291,7 @@ function inquiryModify(req, res, next) {
                 let token = req.cookies.user;
                 jwtmiddle.jwtCerti(token).then(
                     (permission) => {
-                        console.log("C : " + db_values["detailData"][0].user_id)
-                        if (permission.user_id == db_values["detailData"][0].user_id) {
+                        if (permission.userId == db_values["detailData"][0].userId) {
                             res.render('board/inquiry/inquiryModify', {
                                 dayjs, permission,
                                 detailData: db_values["detailData"]
@@ -321,7 +308,6 @@ function inquiryModify(req, res, next) {
 }
 function inquiryModifyPost(req, res, next) {
     var queryNum = req.query.num;
-    console.log("queryNum : " + queryNum)
     var parameters = {
         "qid": queryNum
     };
@@ -361,15 +347,14 @@ function inquiryWritePost(req, res, next) {
             (permission) => {
                 var date = new dayjs();
                 var datetime = date.format('YYYY-MM-DD HH:mm:ss');
-                var user_id = permission.user_id;
+                var userId = permission.userId;
                 if (file != undefined) {
-                    var datas = { user_id: user_id, title: title, content: content, date: datetime, img: file.filename };
+                    var datas = { userId: userId, title: title, content: content, date: datetime, img: file.filename };
                 }
                 else {
-                    var datas = { user_id: user_id, title: title, content: content, date: datetime };
+                    var datas = { userId: userId, title: title, content: content, date: datetime };
                 }
                 db.query('INSERT INTO Inquiry_Board SET ?', datas, function (error, row) {
-                    //console.log("db_data : " + row)
                     if (error) {
                         logger.error(
                             "DB error [Inquiry_Board]" +
@@ -384,14 +369,13 @@ function inquiryWritePost(req, res, next) {
 }
 function inquiryDelete(req, res, next) {
     var queryNum = req.query.num;
-    console.log("queryNum : " + queryNum)
     var parameters = {
         "qid": queryNum
     };
     let token = req.cookies.user;
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
-            db.query(`DELETE FROM Inquiry_Board WHERE qid=${parameters.qid} and user_id=${permission.user_id}`, function (error, row) {
+            db.query(`DELETE FROM Inquiry_Board WHERE qid=${parameters.qid} and userId=${permission.userId}`, function (error, row) {
                 if (error) {
                     logger.error(
                         "DB error [Inquiry_Board]" +
@@ -431,7 +415,7 @@ function freeBoardWrite(req, res, next) {
     let token = req.cookies.user;
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
-            if (permission.user_id != undefined) {
+            if (permission.userId != undefined) {
                 res.render('board/free/FreeBoardWrite', { permission })
             }
             else {
@@ -442,7 +426,6 @@ function freeBoardWrite(req, res, next) {
 }
 function freeBoardDetail(req, res, next) {
     var queryNum = req.query.num;
-    console.log("queryNum : " + queryNum)
     var parameters = {
         "qid": queryNum
     };
@@ -482,7 +465,6 @@ function freeBoardDetail(req, res, next) {
 }
 function freeBoardComment(req, res, next) {
     var queryNum = req.query.num;
-    console.log("queryNum : " + queryNum)
     var parameters = {
         "qid": queryNum
     };
@@ -494,7 +476,7 @@ function freeBoardComment(req, res, next) {
             (permission) => {
                 var date = new dayjs();
                 var datetime = date.format('YYYY-MM-DD HH:mm:ss');
-                db.query(`INSERT freeBoardComment SET qid=?, comment=?, date=?, user_id=?`, [parameters.qid, comment, datetime, permission.user_id], function (error, results) {
+                db.query(`INSERT freeBoardComment SET qid=?, comment=?, date=?, userId=?`, [parameters.qid, comment, datetime, permission.userId], function (error, results) {
                     if (error) {
                         logger.error(
                             "DB error [freeBoardComment]" +
@@ -510,7 +492,6 @@ function freeBoardComment(req, res, next) {
 }
 function freeBoardModify(req, res, next) {
     var queryNum = req.query.num;
-    console.log("queryNum : " + queryNum)
     var parameters = {
         "qid": queryNum
     };
@@ -527,7 +508,7 @@ function freeBoardModify(req, res, next) {
                 let token = req.cookies.user;
                 jwtmiddle.jwtCerti(token).then(
                     (permission) => {
-                        if (permission.user_id == db_values["detailData"][0].user_id) {
+                        if (permission.userId == db_values["detailData"][0].userId) {
                             res.render('board/free/freeBoardModify', {
                                 dayjs, permission,
                                 detailData: db_values["detailData"]
@@ -544,7 +525,6 @@ function freeBoardModify(req, res, next) {
 }
 function freeBoardModifyPost(req, res, next) {
     var queryNum = req.query.num;
-    console.log("queryNum : " + queryNum)
     var parameters = {
         "qid": queryNum
     };
@@ -554,8 +534,6 @@ function freeBoardModifyPost(req, res, next) {
     else {
         jwtmiddle.jwtCerti(token).then(
             (permission) => {
-                console.log(req.body.title)
-                console.log(req.body.content)
                 var date = new dayjs();
                 var datetime = date.format('YYYY-MM-DD HH:mm:ss');
                 db.query(`UPDATE Free_Board SET title=?, content=?,date=? where qid=${parameters.qid}`, [req.body.title, req.body.content, datetime], function (error, results) {
@@ -585,10 +563,9 @@ function freeBoardWritePost(req, res, next) {
             (permission) => {
                 var date = new dayjs();
                 var datetime = date.format('YYYY-MM-DD HH:mm:ss');
-                var user_id = permission.user_id;
-                var datas = { user_id: user_id, title: title, content: content, date: datetime };
+                var userId = permission.userId;
+                var datas = { userId: userId, title: title, content: content, date: datetime };
                 db.query('INSERT INTO Free_Board SET ?', datas, function (error, row) {
-                    //console.log("db_data : " + row)
                     if (error) {
                         logger.error(
                             "DB error [Free_Board]" +
@@ -603,14 +580,13 @@ function freeBoardWritePost(req, res, next) {
 }
 function freeBoardDelete(req, res, next) {
     var queryNum = req.query.num;
-    console.log("queryNum : " + queryNum)
     var parameters = {
         "qid": queryNum
     };
     let token = req.cookies.user;
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
-            db.query(`DELETE FROM Free_Board WHERE qid=${parameters.qid} and user_id=${permission.user_id}`, function (error, row) {
+            db.query(`DELETE FROM Free_Board WHERE qid=${parameters.qid} and userId=${permission.userId}`, function (error, row) {
                 if (error) {
                     logger.error(
                         "DB error [Free_Board]" +

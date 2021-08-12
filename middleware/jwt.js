@@ -5,9 +5,9 @@ var jwt = require('jsonwebtoken');
 function jwtCreate(userData){
   return new Promise(function (resolve, rejcet) {
       jwt.sign({
-        user_id: userData.user_id,
-        user_name_ko: userData.user_name_ko,
-        user_email: userData.user_email
+        userId: userData.userId,
+        userName: userData.userName,
+        userEmail: userData.userEmail
       }, process.env.JWT_SECRET, {
         expiresIn: '30m',
         issuer: 'Conative',
