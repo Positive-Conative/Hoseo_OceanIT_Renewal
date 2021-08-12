@@ -6,6 +6,7 @@ var router = express.Router();
 var authController = require('../controller/authController');
 // sign up이부분도 수정
 router.get('/sign/up', authController.signUp);
+router.post('/sign/up', authController.signUpPost);
 // sign in
 router.get('/sign/in', authController.signIn);
 router.post('/sign/in', authController.checkUser);

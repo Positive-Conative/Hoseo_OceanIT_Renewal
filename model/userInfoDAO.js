@@ -5,11 +5,11 @@ var logger = require('../config/logger');
 
 function search_UserDetail(parameters) {
     return new Promise(function (resolve, rejcet) {
-        db.query(`SELECT * FROM UserInfo where user_id="${parameters.user_id}" && user_pw="${parameters.user_pw}"`, function (error, db_data) {
+        db.query(`SELECT * FROM UserInfo where userId="${parameters.userId}" && userPw="${parameters.userPw}"`, function (error, db_data) {
             if (error) {
                 logger.error(
                     "DB error [UserInfo]"+
-                    "\n \t" + `SELECT * FROM UserInfo where user_id="${parameters.user_id}" && user_pw="${parameters.user_pw}"` +
+                    "\n \t" + `SELECT * FROM UserInfo where userId="${parameters.userId}" && userPw="${parameters.userPw}"` +
                     "\n \t" + error);
                 rejcet('DB ERR');
                 //throw error;

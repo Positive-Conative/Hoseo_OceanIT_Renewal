@@ -20,12 +20,16 @@
                 <h1 class="mb-5">Sign In</h1>
                 <form method="POST" id="loginForm">
                     <label for="inputID" class="form-label">Input ID</label>
-                    <input type="text" class="form-control mb-3" id="inputID" name="inputID" placeholder="Input your id">
+                    <input type="text" class="form-control mb-3" id="inputID" name="inputID" placeholder="Input your id" value=<%=userId%>>
     
                     <label for="inputPW" class="form-label">Input PW</label>
                     <input type="password" class="form-control mb-3" id="inputPW" name="inputPW" placeholder="Input your password">
                     <div class="form-check form-check-inline mb-3">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                        <% if(userId){%>
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="checked" name="rememberId" checked="checked">
+                        <%}else{%>
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="checked" name="rememberId">
+                        <%}%>
                         <label class="form-check-label" for="inlineCheckbox1">ID 기억하기</label>
                     </div>
     
@@ -45,7 +49,6 @@
 </body>
 </html>
 <script>
-    
     function signin(){
         setTimeout(function() {
             console.log("F")

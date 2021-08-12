@@ -7,8 +7,8 @@
             <form method="POST" action="/auth/revise">
                 <div class="row">
                     <div class="col-6 col-md-4 mx-auto mb-5">
-                        <% if(db_data[0].user_img_src != undefined){%>
-                            <img id="img_area" src="/images/users/<%= db_data[0].user_img_src%>"/>
+                        <% if(db_data[0].userImg != undefined){%>
+                            <img id="img_area" src="/images/users/<%= db_data[0].userImg%>"/>
                         <%}else{%>
                             <img id="img_area" src="/images/notImage.jpg"/>
                         <%}%>
@@ -18,57 +18,57 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="disable_id" class="form-label">ID<sup>*</sup></label>
-                                <input type="text" class="form-control" id="disable_id" value="<%= db_data[0].user_id%>" readonly>
+                                <label for="userId" class="form-label">ID<sup>*</sup></label>
+                                <input type="text" class="form-control" id="userId" value="<%= db_data[0].userId%>" readonly>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="input_email" class="form-label">Email<sup>*</sup></label>
-                                <input type="email" class="form-control" id="input_email" name="input_input_emailpassword" value="<%= db_data[0].user_email%>">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="input_pw" class="form-label">PW<sup>*</sup></label>
-                                <input type="password" class="form-control" id="input_pw" name="input_password" >
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="input_repw" class="form-label">PW 재입력<sup>*</sup></label>
-                                <input type="password" class="form-control" id="input_repw" name="input_repassword">
+                                <label for="userEmail" class="form-label">Email<sup>*</sup></label>
+                                <input type="email" class="form-control" id="userEmail" name="userEmail" value="<%= db_data[0].userEmail%>">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="input_name_ko" class="form-label">이름(KO)<sup>*</sup></label>
-                                <input type="text" class="form-control" id="input_name_ko" name="input_name_ko" value="<%= db_data[0].user_name_ko%>">
+                                <label for="inputPw" class="form-label">PW<sup>*</sup></label>
+                                <input type="password" class="form-control" id="inputPw" name="inputPw" >
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="checkPw" class="form-label">PW 재입력<sup>*</sup></label>
+                                <input type="password" class="form-control" id="checkPw" name="checkPw">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="inputName" class="form-label">이름(KO)<sup>*</sup></label>
+                                <input type="text" class="form-control" id="inputName" name="inputName" value="<%= db_data[0].userName%>">
                             </div>
                         </div>
                         
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="input_name_en" class="form-label">이름(EN)<sup>*</sup></label>
-                                <input type="text" class="form-control" id="input_name_en" name="input_name_en" value="<%= db_data[0].user_name_en%>">
+                                <label for="inputNameEN" class="form-label">이름(EN)<sup>*</sup></label>
+                                <input type="text" class="form-control" id="inputNameEN" name="inputNameEN" value="<%= db_data[0].userNameEN%>">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="input_phone" class="form-label">전화번호</label>
-                                <input type="phone" class="form-control" id="input_phone" name="input_phone" value="<%= db_data[0].user_phone%>">
+                                <label for="inputPhone" class="form-label">전화번호</label>
+                                <input type="phone" class="form-control" id="inputPhone" name="inputPhone" value="<%= db_data[0].userPhone%>">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="input_name" class="form-label">주소</label>
-                                <input type="text" class="form-control" id="input_name" name="input_name" value="<%= db_data[0].user_addr%>">
+                                <label for="inputAdd" class="form-label">주소</label>
+                                <input type="text" class="form-control" id="inputAdd" name="inputAdd" value="<%= db_data[0].userAdd%>">
                             </div>
                         </div>
                     </div>
