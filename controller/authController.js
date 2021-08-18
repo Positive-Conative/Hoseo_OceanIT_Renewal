@@ -226,6 +226,7 @@ function androidLogin(req, res, next) {
                 "userAdd": parameters.userAdd,
                 "userPhone": parameters.userPhone,
                 "userImg": parameters.userImg,
+                "Token" : parameters.Token,
                 "message" : "정상적으로 로그인 되었습니다."
             })
         })
