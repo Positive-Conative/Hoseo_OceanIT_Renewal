@@ -1,83 +1,108 @@
 <%- include('../include/header.ejs') %>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
     <section>
         <link href="/stylesheets/index.css" rel="stylesheet" />
         <h1 id="info_Header" class="mt-5 text-center">회원 정보 수정</h1>
         <h6 id="info_Header" class="mb-5 text-center">(*)은 필수 사항입니다.</h6>
         <div class="container-fluid">
-            <form method="POST" action="/auth/revise">
+            <form method="POST" action="/auth/revise" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-6 col-md-4 mx-auto mb-5">
-                        <% if(db_data[0].userImg != undefined){%>
-                            <img id="img_area" src="/images/users/<%= db_data[0].userImg%>"/>
-                        <%}else{%>
-                            <img id="img_area" src="/images/notImage.jpg"/>
-                        <%}%>
-                      <input class="form-control" type="file" id="formFile">
+                        <div id="showImg">
+                            <% if(db_data[0].userImg){%>
+
+                                <img id="img_area" src="/images/users/<%= db_data[0].userImg%>" class="img" />
+                                <%}else{%>
+                                    <img id="img_area" src="/images/notImage.jpg" />
+                                    <%}%>
+                        </div>
+                        <input type="hidden" id="attachment" name="attachment"
+                            value="<%= db_data[0].userImg?db_data[0].userImg:'' %>">
+                        <% if(db_data[0].userImg){ %>
+                            <div class="input-group mb-3" id="currentAttachemnt">
+                                <input type="text" class="form-control" value="<%= db_data[0].userImg %>" readonly />
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button"
+                                        onclick="$('#attachment').val('');$('#currentAttachemnt').hide();$('#newAttachment').removeClass('d-none');"
+                                        id="offDisplay">Delete</button>
+                                </div>
+                            </div>
+                            <% } %>
+                                    <input type="file" accept="image/*" required id="newAttachment" class="form-control-file <%= db_data[0].userImg?'d-none':'' %>" name="newFile">
+                                
                     </div>
                     <div class="col-md-8">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="userId" class="form-label">ID<sup>*</sup></label>
-                                <input type="text" class="form-control" id="userId" value="<%= db_data[0].userId%>" readonly>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="userId" class="form-label">ID<sup>*</sup></label>
+                                    <input type="text" class="form-control" id="userId" value="<%= db_data[0].userId%>"
+                                        readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="userEmail" class="form-label">Email<sup>*</sup></label>
+                                    <input type="email" class="form-control" id="userEmail" name="userEmail"
+                                        value="<%= db_data[0].userEmail%>">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="userEmail" class="form-label">Email<sup>*</sup></label>
-                                <input type="email" class="form-control" id="userEmail" name="userEmail" value="<%= db_data[0].userEmail%>">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="inputPw" class="form-label">PW<sup>*</sup></label>
+                                    <input type="password" class="form-control" id="inputPw" name="inputPw">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="checkPw" class="form-label">PW 재입력<sup>*</sup></label>
+                                    <input type="password" class="form-control" id="checkPw" name="checkPw">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="inputPw" class="form-label">PW<sup>*</sup></label>
-                                <input type="password" class="form-control" id="inputPw" name="inputPw" >
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="inputName" class="form-label">이름(KO)<sup>*</sup></label>
+                                    <input type="text" class="form-control" id="inputName" name="inputName"
+                                        value="<%= db_data[0].userName%>">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="inputNameEN" class="form-label">이름(EN)<sup>*</sup></label>
+                                    <input type="text" class="form-control" id="inputNameEN" name="inputNameEN"
+                                        value="<%= db_data[0].userNameEN%>">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="checkPw" class="form-label">PW 재입력<sup>*</sup></label>
-                                <input type="password" class="form-control" id="checkPw" name="checkPw">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="inputPhone" class="form-label">전화번호</label>
+                                    <input type="phone" class="form-control" id="inputPhone" name="inputPhone"
+                                        value="<%= db_data[0].userPhone%>">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="inputAdd" class="form-label">주소</label>
+                                    <input type="text" class="form-control" id="inputAdd" name="inputAdd"
+                                        value="<%= db_data[0].userAdd%>">
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="inputName" class="form-label">이름(KO)<sup>*</sup></label>
-                                <input type="text" class="form-control" id="inputName" name="inputName" value="<%= db_data[0].userName%>">
-                            </div>
+                        <div style="text-align:right">
+                            <input class="btn btn-primary" id="submit_btn" type="submit" value="변경하기">
                         </div>
-                        
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="inputNameEN" class="form-label">이름(EN)<sup>*</sup></label>
-                                <input type="text" class="form-control" id="inputNameEN" name="inputNameEN" value="<%= db_data[0].userNameEN%>">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="inputPhone" class="form-label">전화번호</label>
-                                <input type="phone" class="form-control" id="inputPhone" name="inputPhone" value="<%= db_data[0].userPhone%>">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="inputAdd" class="form-label">주소</label>
-                                <input type="text" class="form-control" id="inputAdd" name="inputAdd" value="<%= db_data[0].userAdd%>">
-                            </div>
-                        </div>
-                    </div>
-                    <div style="text-align:right">
-                        <input class="btn btn-primary" id="submit_btn" type="submit" value="변경하기">
-                    </div>
 
                     </div>
-                  </div>
+                </div>
             </form>
             <!-- <div id="blur_area"></div>
             <div >
@@ -88,59 +113,73 @@
 
     </section>
     <%- include('../include/footer.ejs') %>
-<style>
-    #blur_area_img{
-        position: absolute;
-        top:0;
-        left:40%;
-        width:25vw;
-        height:25vw;
-        z-index:5;
-    }
-    section {
-        background-color: rgb(227, 227, 241);
-        padding-top: 50px;
-        text-align: center;
-    }
-    #img_area{
-        width: 100%;
-        height: 30vw;
-    }
-    #blur_area{
-        position: absolute;
-        top:3%;
-        bottom:3%;
-        left:3%;
-        right:3%;
-        z-index: 3;
-        background-color: white;
-        filter:blur(6px);
-        opacity: 60%;
-        
-        animation-duration: 1s;
-        animation-name: slidein;
-    }
-    #blur_area_back{
-        position: absolute;
-        top:0;
-        bottom:0;
-        left:0;
-        right:0; 
-        z-index: 2;
-    }
-    @keyframes slidein {
-        from {
-            top:0;
-            bottom:0;
-            left:0;
-            right:0; 
-        }
+        <style>
+            #blur_area_img {
+                position: absolute;
+                top: 0;
+                left: 40%;
+                width: 25vw;
+                height: 25vw;
+                z-index: 5;
+            }
 
-        to {
-            top:3%;
-            bottom:3%;
-            left:3%;
-            right:3%;
-        }
-    }
-</style>
+            section {
+                background-color: rgb(227, 227, 241);
+                padding-top: 50px;
+                text-align: center;
+            }
+
+            #img_area {
+                width: 100%;
+                height: 30vw;
+            }
+
+            #blur_area {
+                position: absolute;
+                top: 3%;
+                bottom: 3%;
+                left: 3%;
+                right: 3%;
+                z-index: 3;
+                background-color: white;
+                filter: blur(6px);
+                opacity: 60%;
+
+                animation-duration: 1s;
+                animation-name: slidein;
+            }
+
+            #blur_area_back {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 2;
+            }
+
+            @keyframes slidein {
+                from {
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                }
+
+                to {
+                    top: 3%;
+                    bottom: 3%;
+                    left: 3%;
+                    right: 3%;
+                }
+            }
+        </style>
+        <script>
+            $(function () {
+                $('#offDisplay').click(function () {
+                    if ($('#showImg').css("display") !== "none") {
+                        $('#showImg').hide();
+                    }
+                })
+            })
+        </script>

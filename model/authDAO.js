@@ -45,42 +45,68 @@ function checkUser(parameters) {
                     "\n \t" + db_data +
                     "\n \t" + error);
                 rejcet('DB ERR');
-                //throw error;
+                if (db_data.rows[0] !== undefined) resolve(db_data.rows)
+                else rejcet("아이디 혹은 비밀번호를 다시 확인하세요.")
             }
             resolve(db_data);
         })
     })
 }
 function updateToUser(parameters) {
-    let queryData = `SELECT * FROM User WHERE userId="${parameters.userId}"`
+    var date = new dayjs();
+    var datetime = date.format('YYYY-MM-DD HH:mm:ss');
+    const userObj = {
+        userPw: crypto.createHash('sha512').update(parameters.userPw).digest('base64'),
+        userName: parameters.userName,
+        userEmail: parameters.userEmail,
+        userNameEn: parameters.userNameEN,
+        userPhone: parameters.userPhone,
+        userAdd: parameters.userAdd,
+        userImg: parameters.userImg,
+        changeDate: datetime,
+    }
     return new Promise(function (resolve, rejcet) {
+        db.query(`UPDATE User SET ? WHERE userId="${parameters.userId}"`, userObj, function (error, user) {
+            if (error) {
+                logger.error(
+                    "DB error [User]" +
+                    "\n \t" + error);
+                rejcet('DB ERR');
+                //throw error;
+            }
+            resolve(user);
+        })
+    })
+}
+function androidUser(parameters) {
+    return new Promise(function (resolve, rejcet) {
+        var queryData = `UPDATE User Set Token=? WHERE userId="${parameters.userId}"`
+        db.query(queryData, [parameters.Token], function (error, db_data) {
+            if (error) {
+                logger.error(
+                    "DB error [User]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                rejcet('DB ERR');
+            }
+            resolve(db_data)
+        })
+    })
+}
+function checkUserToken(parameters) {
+    return new Promise(function (resolve, rejcet) {
+        var queryData = `SELECT Token FROM User WHERE Token="${parameters.Token}"`;
         db.query(queryData, function (error, db_data) {
-            var date = new dayjs();
-            var datetime = date.format('YYYY-MM-DD HH:mm:ss');
-            const userObj = {
-                userPw: crypto.createHash('sha512').update(parameters.userPw).digest('base64'),
-                userName: parameters.userName,
-                userEmail: parameters.userEmail,
-                userNameEn: parameters.userNameEN,
-                userPhone: parameters.userPhone,
-                userAdd: parameters.userAdd,
-                changeDate: datetime,
+            if (error) {
+                logger.error(
+                    "DB error [User]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                rejcet('DB ERR');
             }
-            if (db_data[0].userPw === userObj.userPw) {
-                rejcet('DB ERR')
-            } else {
-                db.query(`UPDATE User SET ? WHERE userId="${parameters.userId}"`, userObj, function (error, user) {
-                    if (error) {
-                        logger.error(
-                            "DB error [User]" +
-                            "\n \t" + db_data +
-                            "\n \t" + error);
-                        rejcet('DB ERR');
-                        //throw error;
-                    }
-                    resolve(user);
-                })
-            }
+            console.log(db_data[0].Token)
+            if (db_data[0] == undefined) rejcet(1) //토큰이 존재하지 않습니다
+            else resolve(db_data[0].Token);
         })
     })
 }
@@ -89,4 +115,6 @@ module.exports = {
     insertUser,
     checkUser,
     updateToUser,
+    androidUser,
+    checkUserToken,
 }

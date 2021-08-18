@@ -2,13 +2,13 @@
 
 // var jwt = require('jsonwebtoken');
 var jwtmiddle = require('../middleware/jwt');
-var userInfoDAO = require('../model/userInfoDAO');
 var authDAO = require('../model/authDAO');
+const crypto = require('crypto');
 
 function signIn(req, res, next) {
     let token = req.cookies.user;
     var userId = "";
-    if(token !== undefined) {
+    if (token !== undefined) {
         return res.send("<script>alert('접근할수 없습니다.'); location.href='/'; </script>")
     }
     if (req.cookies['loginId'] !== undefined) {
@@ -79,6 +79,7 @@ function revise_check_post(req, res, next) {
                 }
                 authDAO.checkUser(parameters).then(
                     (db_data) => {
+                        console.log(db_data.userImg)
                         res.render('auth/revise', { db_data, permission });
                     }
                 ).catch(err => res.send("<script>alert('" + err + "');location.href='/auth/revise_check';</script>"))
@@ -91,22 +92,30 @@ function revise_check_post(req, res, next) {
 
 function updateUser(req, res, next) {
     let token = req.cookies.user
-    if(req.body.inputPw.length < 6){
+    var file = req.file;
+    console.log(req.body)
+    if (req.body.inputPw.length < 6) {
         return res.send("<script>alert('비밀번호를 6자 이상 입력해주세요.'); history.go(-1);</script>")
     }
-    if(req.body.inputPw !== req.body.checkPw){
+    if (req.body.inputPw !== req.body.checkPw) {
         return res.send("<script>alert('비밀번호가 일치하지 않습니다.'); history.go(-1);</script>")
     }
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
-            const parameters ={
-                userId:permission.userId,
-                userPw:req.body.inputPw,
-                userName:req.body.inputName,
-                userEmail:req.body.userEmail,
-                userNameEN:req.body.inputNameEN,
-                userPhone:req.body.inputPhone,
-                userAdd:req.body.inputAdd,
+            const parameters = {
+                userId: permission.userId,
+                userPw: req.body.inputPw,
+                userName: req.body.inputName,
+                userEmail: req.body.userEmail,
+                userNameEN: req.body.inputNameEN,
+                userPhone: req.body.inputPhone,
+                userAdd: req.body.inputAdd,
+            }
+            if (file != undefined) {
+                parameters.userImg = file.filename
+            }
+            else {
+                parameters.userImg = ''
             }
             authDAO.updateToUser(parameters).then(
                 () => {
@@ -119,30 +128,30 @@ function updateUser(req, res, next) {
 //우성아 이 부분 수정
 function signUp(req, res, next) {
     let token = req.cookies.user;
-    
-    if(token !== undefined) {
+
+    if (token !== undefined) {
         return res.send("<script>alert('접근할수 없습니다.'); location.href='/'; </script>")
     }
     res.render('auth/signUp');
 }
-function signUpPost(req, res, next){
-    if(!isNaN(req.body.inputID)){
+function signUpPost(req, res, next) {
+    if (!isNaN(req.body.inputID)) {
         return res.send("<script>alert('잘못된 아이디 값을 입력하셨습니다.'); history.go(-1);</script>")
     }
-    if(req.body.inputPW.length < 6){
+    if (req.body.inputPW.length < 6) {
         return res.send("<script>alert('비밀번호를 6자 이상 입력해주세요.'); history.go(-1);</script>")
     }
-    if(req.body.inputPW !== req.body.Pwcheck){
+    if (req.body.inputPW !== req.body.Pwcheck) {
         return res.send("<script>alert('비밀번호가 일치하지 않습니다..'); history.go(-1);</script>")
     }
     let parameters = {
-        userId:req.body.inputID,
-        userPw:req.body.inputPW,
-        userName:req.body.Name,
-        userEmail:req.body.Email,
+        userId: req.body.inputID,
+        userPw: req.body.inputPW,
+        userName: req.body.Name,
+        userEmail: req.body.Email,
     }
     authDAO.insertUser(parameters).then(
-        ()=>{
+        () => {
             res.redirect('/auth/sign/in')
         }
     ).catch(err => res.send("<script>alert('jwt err');</script>"))
@@ -154,6 +163,121 @@ function logOut(req, res, next) {
     res.redirect('/');
 }
 
+//안드로이드 로그인 && 자동로그인
+function androidLogin(req, res, next) {
+    if (req.body.userId === undefined || req.body.userPw === undefined) {
+        res.json({ "message": "Parameter ERR." })
+        return;
+    }
+    var parameters = {
+        "userId": req.body.userId,
+        "userPw":req.body.userPw,
+    }
+    var db_values = {};
+    Promise.resolve(db_values)
+        .then(
+            (db_values) => {
+                return authDAO.checkUser(parameters)
+                    .then((findUserData) => {
+                        parameters.userId = findUserData[0].userId
+                        parameters.userName = findUserData[0].userName
+                        parameters.userEmail = findUserData[0].userEmail
+                        parameters.userNameEN = findUserData[0].userNameEN
+                        parameters.userAdd = findUserData[0].userAdd
+                        parameters.userPhone = findUserData[0].userPhone
+                        parameters.userImg = findUserData[0].userImg
+                        return (findUserData)
+                    })
+                    .then(() => { return db_values; })
+            }
+        )
+        .then(
+            () => {
+                var userData = {
+                    "userId": parameters.userId,
+                    "userName": parameters.userName,
+                    "userEmail": parameters.userEmail,
+                    "userNameEN": parameters.userNameEN,
+                    "userAdd": parameters.userAdd,
+                    "userPhone": parameters.userPhone,
+                    "userImg": parameters.userImg,
+                }
+                return jwtmiddle.jwtCreateANDROID(userData)
+                    .then((jwtCreateANDROID) => {
+                        console.log(jwtCreateANDROID)
+                        res.cookie("user", jwtCreateANDROID)
+                        parameters.Token = jwtCreateANDROID
+                        return (jwtCreateANDROID)
+                    })
+            }
+        )
+        .then(
+            () => {
+                console.log(parameters)
+                 return authDAO.androidUser(parameters)
+                }
+        )
+        .then(()=>{
+            res.json({
+                "userId": parameters.userId,
+                "userName": parameters.userName,
+                "userEmail": parameters.userEmail,
+                "userNameEN": parameters.userNameEN,
+                "userAdd": parameters.userAdd,
+                "userPhone": parameters.userPhone,
+                "userImg": parameters.userImg,
+                "message" : "정상적으로 로그인 되었습니다."
+            })
+        })
+        .catch((err)=>{
+            res.status(200).json({
+                "userId": "",
+                "userName": "",
+                "userEmail": "",
+                "userNameEN": "",
+                "userAdd": "",
+                "userPhone": "",
+                "userImg": "",
+                "message" : err
+            })
+        })
+}
+function checkToken(req, res, next){
+    if(req.body.token === undefined) {
+        res.json({"message" :"Parameter ERR."})
+        return;
+    }
+    var queryToken = req.body.token;
+    var parameters = {
+        "Token" : queryToken
+    }
+    var db_values = {};
+    Promise.resolve(db_values)
+    .then(
+        (db_values) =>{
+            return authDAO.checkUserToken(parameters).then(
+                (db_data)=>{
+                    db_values.Token = db_data
+                }
+            )
+        }
+    )
+    .then(
+        ()=>{
+            return jwtmiddle.jwtCerti(db_values.Token)
+        }
+    )
+    .then(()=>{
+        res.json({"message":"성공"})
+    })
+    .catch(err=>{
+        if(err) //존재하지 않을 때
+            res.status(500).json({"message" :"토큰이 존재하지 않습니다."})
+        else
+            res.status(403).json({"message" :"토큰이 만료되었습니다."})
+    })
+}
+
 module.exports = {
     signUp,
     signUpPost,
@@ -162,5 +286,7 @@ module.exports = {
     revise_check,
     revise_check_post,
     updateUser,
-    logOut
+    logOut,
+    androidLogin,
+    checkToken,
 }

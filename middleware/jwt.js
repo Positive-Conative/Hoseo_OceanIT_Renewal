@@ -17,7 +17,21 @@ function jwtCreate(userData){
       });
   })
 }
-
+function jwtCreateANDROID(userData){
+  return new Promise(function (resolve, rejcet) {
+      jwt.sign({
+        userId: userData.userId,
+        userName: userData.userName,
+        userEmail: userData.userEmail
+      }, process.env.JWT_SECRET, {
+        expiresIn: '1d',
+        issuer: 'Conative',
+      },function(err,token){
+        if(err) reject(err)
+        else resolve(token)
+      });
+  })
+}
 function jwtCerti(token){
   return new Promise(function (resolve, rejcet) {
       jwt.verify(token, process.env.JWT_SECRET, (err, decoded)=>{
@@ -36,5 +50,6 @@ function jwtCerti(token){
 
 module.exports = {
   jwtCreate,
-  jwtCerti
+  jwtCerti,
+  jwtCreateANDROID,
 };
