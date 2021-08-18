@@ -3,35 +3,7 @@ var express = require('express');
 var randomstring = require('randomstring');
 var router = express.Router();
 var boardController = require('../controller/boardController');
-var multer = require('multer');
-var storage = multer.diskStorage({ // 2
-    destination(req, file, cb) {
-        cb(null, 'public/images/board');
-    },
-    filename(req, file, cb) {
-        var fileName = randomstring.generate(25);
-        var mimeType;
-        switch (file.mimetype) {
-            case 'image/jpeg':
-                mimeType = 'jpg';
-                break;
-            case 'image/png':
-                mimeType = 'png';
-                break;
-            case 'image/gif':
-                mimeType = 'gif';
-                break;
-            case 'image/bmp':
-                mimeType = 'bmp';
-                break;
-            default:
-                mimeType = 'jpg';
-                break;
-        }
-        cb(null, fileName + '.' + mimeType);
-    },
-});
-var upload = multer({ storage: storage });
+var multer = require('./multer')
 
 //공지사항 게시판
 router.get('/notice', boardController.noticeMain);
@@ -48,7 +20,7 @@ router.get('/inquiry/inquiryWrite', boardController.inquiryWrite);
 router.get('/inquiry/inquiryDetail', boardController.inquiryDetail);
 router.get('/inquiry/inquiryModify', boardController.inquiryModify);
 router.post('/inquiry/inquiryModify', boardController.inquiryModifyPost);
-router.post('/inquiry/inquiryWrite', upload.single('newFile'), boardController.inquiryWritePost);
+router.post('/inquiry/inquiryWrite', multer.uploadBoard.single('newFile'), boardController.inquiryWritePost);
 router.post('/inquiry/delete', boardController.inquiryDelete);
 router.post('/inquiry/inquiryComment', boardController.inquiryComment);
 
