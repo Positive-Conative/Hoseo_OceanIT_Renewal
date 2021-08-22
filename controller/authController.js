@@ -79,7 +79,6 @@ function revise_check_post(req, res, next) {
                 }
                 authDAO.checkUser(parameters).then(
                     (db_data) => {
-                        console.log(db_data.userImg)
                         res.render('auth/revise', { db_data, permission });
                     }
                 ).catch(err => res.send("<script>alert('" + err + "');location.href='/auth/revise_check';</script>"))
@@ -111,6 +110,7 @@ function updateUser(req, res, next) {
                 userPhone: req.body.inputPhone,
                 userAdd: req.body.inputAdd,
             }
+            console.log(file)
             if (file != undefined) {
                 parameters.userImg = file.filename
             }
