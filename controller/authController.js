@@ -186,6 +186,9 @@ function androidLogin(req, res, next) {
                         parameters.userAdd = findUserData[0].userAdd
                         parameters.userPhone = findUserData[0].userPhone
                         parameters.userImg = findUserData[0].userImg
+                        parameters.userBelong = findUserData[0].userBelong
+                        parameters.userDepartment = findUserData[0].userDepartment
+                        parameters.userPosition = findUserData[0].userPosition
                         return (findUserData)
                     })
                     .then(() => { return db_values; })
@@ -193,11 +196,15 @@ function androidLogin(req, res, next) {
         )
         .then(
             () => {
+                console.log(parameters)
                 var userData = {
                     "userId": parameters.userId,
                     "userName": parameters.userName,
                     "userEmail": parameters.userEmail,
                     "userNameEN": parameters.userNameEN,
+                    "userBelong": parameters.userBelong,
+                    "userDepartment" : parameters.userDepartment,
+                    "userPosition": parameters.userPosition,
                     "userAdd": parameters.userAdd,
                     "userPhone": parameters.userPhone,
                     "userImg": parameters.userImg,
@@ -223,6 +230,9 @@ function androidLogin(req, res, next) {
                 "userName": parameters.userName,
                 "userEmail": parameters.userEmail,
                 "userNameEN": parameters.userNameEN,
+                "userBelong": parameters.userBelong,
+                "userDepartment" : parameters.userDepartment,
+                "userPosition": parameters.userPosition,
                 "userAdd": parameters.userAdd,
                 "userPhone": parameters.userPhone,
                 "userImg": parameters.userImg,

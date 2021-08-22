@@ -27,6 +27,7 @@ router.get('/logout', authController.logOut);
 // sign up
 // router.get('/sign/up', authController.authFunc.signUp);
 
+// ---------------------------------------------------------------------------------------------------- //
 // 안드로이드
 // 로그인
 router.post('/android/login',authController.androidLogin)
