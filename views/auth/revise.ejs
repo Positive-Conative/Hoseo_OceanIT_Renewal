@@ -25,12 +25,12 @@
                                 <input type="text" class="form-control" value="<%= db_data[0].userImg %>" readonly />
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button"
-                                        onclick="$('#attachment').val('');$('#currentAttachemnt').hide();$('#newAttachment').removeClass('d-none');"
+                                        onclick="$('#attachment').val('');$('#currentAttachemnt').hide();"
                                         id="offDisplay">Delete</button>
                                 </div>
                             </div>
                             <% } %>
-                                    <input type="file" accept="image/*" required id="newAttachment" class="form-control-file <%= db_data[0].userImg?'d-none':'' %>" name="newFile">
+                                    <input type="file" accept="image/*" id="newAttachment" class="form-control-file" name="newFile">
                                 
                     </div>
                     <div class="col-md-8">
