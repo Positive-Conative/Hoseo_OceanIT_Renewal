@@ -6,10 +6,11 @@ var crypto = require('crypto')
 var dayjs = require('dayjs')
 
 function insertUser(parameters) {
+    console.log(parameters)
     return new Promise(function (resolve, reject) {
-        db.query(`SELECT * FROM User userId="${parameters.userId}"`, function (error, db_data) {
-            if (db_data != null) {
-                return res.send('<script>alert("이미 존재하는 계정 입니다."); window.location="/auth/sign/up"; </script>');
+        db.query(`SELECT * FROM User WHERE userId="${parameters.userId}"`, function (error, db_data) {
+            if (db_data[0] != null) {
+                return reject('DB ERR')
             } else {
                 var date = new dayjs();
                 var datetime = date.format('YYYY-MM-DD HH:mm:ss');
@@ -18,6 +19,9 @@ function insertUser(parameters) {
                     userPw: crypto.createHash('sha512').update(parameters.userPw).digest('base64'),
                     userName: parameters.userName,
                     userEmail: parameters.userEmail,
+                    userPosition: parameters.userPosition,
+                    userBelong: parameters.userBelong,
+                    userDepartment:parameters.userDepartment,
                     createDate: datetime,
                 }
                 db.query(`INSERT INTO User SET ? `, userObj, function (error, user) {
