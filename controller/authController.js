@@ -125,7 +125,7 @@ function updateUser(req, res, next) {
         }
     )
 }
-//우성아 이 부분 수정
+
 function signUp(req, res, next) {
     let token = req.cookies.user;
 
@@ -148,7 +148,10 @@ function signUpPost(req, res, next) {
         userId: req.body.inputID,
         userPw: req.body.inputPW,
         userName: req.body.Name,
-        userEmail: req.body.Email,
+        userPosition: req.body.Position,
+        userBelong: req.body.Belong,
+        userDepartment: req.body.Department,
+        userEmail: req.body.Email
     }
     authDAO.insertUser(parameters).then(
         () => {
