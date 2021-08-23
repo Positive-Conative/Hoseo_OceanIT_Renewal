@@ -15,14 +15,14 @@ function researchResults_selectAll(parameters) {
 
     queryData += ` ORDER BY date desc`;
     if(!(parameters.limit==undefined)) queryData+=` LIMIT 0,${parameters.limit}`;
-    return new Promise(function (resolve, rejcet) {
+    return new Promise(function (resolve, reject) {
         db.query(queryData, function (error, db_data) {
             if (error) {
                 logger.error(
                     "DB error [Research_Results]"+
                     "\n \t" + queryData +
                     "\n \t" + error);
-                rejcet('DB ERR');
+                reject('DB ERR');
                 //throw error;
             }
             resolve(db_data);
@@ -34,14 +34,14 @@ function researchResults_selectAll(parameters) {
 function researchResults_selectDetail(parameters) {
     var queryData = `SELECT * FROM Research_Results where rrid="${parameters.rrid}"`;
 
-    return new Promise(function (resolve, rejcet) {
+    return new Promise(function (resolve, reject) {
         db.query(queryData, function (error, db_data) {
             if (error) {
                 logger.error(
                     "DB error [Research_Results]"+
                     "\n \t" + queryData +
                     "\n \t" + error);
-                rejcet('DB ERR');
+                reject('DB ERR');
                 //throw error;
             }
             resolve(db_data);
@@ -51,14 +51,14 @@ function researchResults_selectDetail(parameters) {
 function researchResults_android_all(parameters) {
     var queryData = `SELECT * FROM Research_Results where classify_ko = '${parameters.querys}'`
 
-    return new Promise(function (resolve, rejcet) {
+    return new Promise(function (resolve, reject) {
         db.query(queryData, function (error, db_data) {
             if (error) {
                 logger.error(
                     "DB error [Research_Results]"+
                     "\n \t" + queryData +
                     "\n \t" + error);
-                rejcet('DB ERR');
+                reject('DB ERR');
                 //throw error;
             }
             resolve(db_data);

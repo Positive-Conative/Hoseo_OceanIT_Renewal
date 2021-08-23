@@ -12,14 +12,14 @@ function researchFields_selectAll(parameters) {
     }
     queryData += ` ORDER BY date_end desc`;
     if (!(parameters.limit == undefined)) queryData += ` LIMIT 0,${parameters.limit}`;
-    return new Promise(function (resolve, rejcet) {
+    return new Promise(function (resolve, reject) {
         db.query(queryData, function (error, db_data) {
             if (error) {
                 logger.error(
                     "DB error [Research_Fields]" +
                     "\n \t" + queryData +
                     "\n \t" + error);
-                rejcet('DB ERR');
+                reject('DB ERR');
                 //throw error;
             }
             console.log(db_data)
@@ -30,14 +30,14 @@ function researchFields_selectAll(parameters) {
 
 function researchFields_selectDetail(parameters) {
     var queryData = `SELECT * FROM Research_Fields where rfid="${parameters.rfid}"`;
-    return new Promise(function (resolve, rejcet) {
+    return new Promise(function (resolve, reject) {
         db.query(queryData, function (error, db_data) {
             if (error) {
                 logger.error(
                     "DB error [Research_Fields]" +
                     "\n \t" + queryData +
                     "\n \t" + error);
-                rejcet('DB ERR');
+                reject('DB ERR');
                 //throw error;
             }
             resolve(db_data);
@@ -47,14 +47,14 @@ function researchFields_selectDetail(parameters) {
 
 function researchFields_selectDetailLinks(parameters) {
     var queryData = `SELECT * FROM Research_Fields_Links where rfid="${parameters.rfid}"`;
-    return new Promise(function (resolve, rejcet) {
+    return new Promise(function (resolve, reject) {
         db.query(queryData, function (error, db_data) {
             if (error) {
                 logger.error(
                     "DB error [Research_Fields]" +
                     "\n \t" + queryData +
                     "\n \t" + error);
-                rejcet('DB ERR');
+                reject('DB ERR');
                 //throw error;
             }
             resolve(db_data);
@@ -64,7 +64,7 @@ function researchFields_selectDetailLinks(parameters) {
 
 function researchFields_selectDetailPhotos(parameters) {
     var queryData = `SELECT * FROM Research_Fields_Photos where rfid="${parameters.rfid}"`;
-    return new Promise(function (resolve, rejcet) {
+    return new Promise(function (resolve, reject) {
         db.query(queryData, function (error, db_data) {
             if (error) {
                 console.log("db_data : ")
@@ -73,7 +73,7 @@ function researchFields_selectDetailPhotos(parameters) {
                     "DB error [Research_Fields]" +
                     "\n \t" + queryData +
                     "\n \t" + error);
-                rejcet('DB ERR');
+                reject('DB ERR');
                 //throw error;
             }
             resolve(db_data);
@@ -90,14 +90,14 @@ function researchFields_android_all(parameters) {
     else
         queryData = `SELECT * FROM Research_Fields WHERE date_end < NOW()`
 
-    return new Promise(function (resolve, rejcet) {
+    return new Promise(function (resolve, reject) {
         db.query(queryData, function (error, db_data) {
             if (error) {
                 logger.error(
                     "DB error [Research_Fields]"+
                     "\n \t" + queryData +
                     "\n \t" + error);
-                rejcet('DB ERR');
+                reject('DB ERR');
                 //throw error;
             }
             resolve(db_data);

@@ -115,7 +115,7 @@ function updateUser(req, res, next) {
                 parameters.userImg = file.filename
             }
             else {
-                parameters.userImg = ''
+                parameters.userImg = null
             }
             authDAO.updateToUser(parameters).then(
                 () => {
@@ -220,7 +220,6 @@ function androidLogin(req, res, next) {
         )
         .then(
             () => {
-                console.log(parameters)
                  return authDAO.androidUser(parameters)
                 }
         )
