@@ -4,6 +4,7 @@ var jwtmiddle = require('../middleware/jwt');
 var memberDAO = require('../model/memberDAO');
 var researchFieldsDAO = require('../model/researchFieldsDAO');
 var researchResultsDAO = require('../model/researchResultsDAO');
+var countController = require('../controller/countController')
 
 function indexMain(req, res, next) {
   let token = req.cookies.user;

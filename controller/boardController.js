@@ -116,7 +116,7 @@ function noticeModifyPost(req, res, next) {
                             "DB error [Notice_Board]" +
                             "\n \t" + queryData +
                             "\n \t" + error);
-                        rejcet('DB ERR');
+                        reject('DB ERR');
                     }
                     else {
                         res.redirect('/board/notice?page=1')
@@ -144,7 +144,7 @@ function noticeWritePost(req, res, next) {
                         logger.error(
                             "DB error [Notice_Board]" +
                             "\n \t" + error);
-                        rejcet('DB ERR');
+                        reject('DB ERR');
                     }
                     else { res.redirect("/board/notice?page=1"); }
                 })
@@ -165,7 +165,7 @@ function noticeDelete(req, res, next) {
                     logger.error(
                         "DB error [Notice_Board]" +
                         "\n \t" + error);
-                    rejcet('DB ERR');
+                    reject('DB ERR');
                 }
                 if (row.affectedRows == 0) {
                     res.send("<script>alert('You do not have permission');history.back();</script>");
@@ -264,7 +264,7 @@ function inquiryComment(req, res, next) {
                         logger.error(
                             "DB error [inquiryComment]" +
                             "\n \t" + error);
-                        rejcet('DB ERR');
+                        reject('DB ERR');
                     }
                     else {
                         res.redirect(`/board/inquiry/inquiryDetail?num=${parameters.qid}`)
@@ -325,7 +325,7 @@ function inquiryModifyPost(req, res, next) {
                             "DB error [Inquiry_Board]" +
                             "\n \t" + queryData +
                             "\n \t" + error);
-                        rejcet('DB ERR');
+                        reject('DB ERR');
                     }
                     else {
                         res.redirect('/board/inquiry?page=1')
@@ -359,7 +359,7 @@ function inquiryWritePost(req, res, next) {
                         logger.error(
                             "DB error [Inquiry_Board]" +
                             "\n \t" + error);
-                        rejcet('DB ERR');
+                        reject('DB ERR');
                     }
                     else { res.redirect("/board/inquiry?page=1"); }
                 })
@@ -380,7 +380,7 @@ function inquiryDelete(req, res, next) {
                     logger.error(
                         "DB error [Inquiry_Board]" +
                         "\n \t" + error);
-                    rejcet('DB ERR');
+                    reject('DB ERR');
                 }
                 if (row.affectedRows == 0) {
                     res.send("<script>alert('You do not have permission');history.back();</script>");
@@ -481,7 +481,7 @@ function freeBoardComment(req, res, next) {
                         logger.error(
                             "DB error [freeBoardComment]" +
                             "\n \t" + error);
-                        rejcet('DB ERR');
+                        reject('DB ERR');
                     }
                     else {
                         res.redirect(`/board/free/freeBoardDetail?num=${parameters.qid}`)
@@ -542,7 +542,7 @@ function freeBoardModifyPost(req, res, next) {
                             "DB error [Free_Board]" +
                             "\n \t" + queryData +
                             "\n \t" + error);
-                        rejcet('DB ERR');
+                        reject('DB ERR');
                     }
                     else {
                         res.redirect('/board/free?page=1')
@@ -570,7 +570,7 @@ function freeBoardWritePost(req, res, next) {
                         logger.error(
                             "DB error [Free_Board]" +
                             "\n \t" + error);
-                        rejcet('DB ERR');
+                        reject('DB ERR');
                     }
                     else { res.redirect("/board/free?page=1"); }
                 })
@@ -591,7 +591,7 @@ function freeBoardDelete(req, res, next) {
                     logger.error(
                         "DB error [Free_Board]" +
                         "\n \t" + error);
-                    rejcet('DB ERR');
+                    reject('DB ERR');
                 }
                 if (row.affectedRows == 0) {
                     res.send("<script>alert('You do not have permission');history.back();</script>");

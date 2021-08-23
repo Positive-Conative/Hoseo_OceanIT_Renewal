@@ -4,14 +4,14 @@ var db = require("../config/kyjdb");
 var logger = require('../config/logger');
 
 function introduction_selectAll(parameters) {
-    return new Promise(function (resolve, rejcet) {
+    return new Promise(function (resolve, reject) {
         db.query(`SELECT * FROM Introduction`, function (error, db_data) {
             if (error) {
                 logger.error(
                     "DB error [Introduction]"+
                     "\n \t" + `SELECT * FROM Research_Fields` +
                     "\n \t" + error);
-                rejcet('DB ERR');
+                reject('DB ERR');
                 //throw error;
             }
             if(db_data[0] === undefined)
