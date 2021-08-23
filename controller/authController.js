@@ -155,9 +155,9 @@ function signUpPost(req, res, next) {
     }
     authDAO.insertUser(parameters).then(
         () => {
-            res.redirect('/auth/sign/in')
+            res.send("<script>alert('계정 생성에 성공하였습니다.');location.href='/auth/sign/in';</script>");
         }
-    ).catch(err => res.send("<script>alert('jwt err');</script>"))
+    ).catch(err => res.send("<script>alert('jwt err'); history.go(-1);</script> "))
 }
 
 function logOut(req, res, next) {
