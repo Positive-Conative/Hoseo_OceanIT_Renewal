@@ -98,7 +98,6 @@ function countVisitors(req, res, next) {
             })
           } else {
             if (db_data[0].date == parameters.date) {
-              console.log(3)
               counterDAO.updateCount(db_data[0]).then(
                 () => { }
               ).catch(err => {
@@ -106,7 +105,7 @@ function countVisitors(req, res, next) {
               })
             }
             else {
-              console.log(4)
+              db_data[0].date=parameters.date
               counterDAO.newUpdateCount(db_data[0]).then(
                 () => { }
               ).catch(err => {
