@@ -79,6 +79,7 @@ function revise_check_post(req, res, next) {
                 }
                 authDAO.checkUser(parameters).then(
                     (db_data) => {
+                        console.log(db_data)
                         res.render('auth/revise', { db_data, permission });
                     }
                 ).catch(err => res.send("<script>alert('" + err + "');location.href='/auth/revise_check';</script>"))
@@ -105,6 +106,9 @@ function updateUser(req, res, next) {
                 userId: permission.userId,
                 userPw: req.body.inputPw,
                 userName: req.body.inputName,
+                userPosition: req.body.Position,
+                userBelong: req.body.Belong,
+                userDepartment: req.body.Department,
                 userEmail: req.body.userEmail,
                 userNameEN: req.body.inputNameEN,
                 userPhone: req.body.inputPhone,
