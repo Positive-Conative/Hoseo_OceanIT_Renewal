@@ -1,30 +1,39 @@
 <%- include('../include/header.ejs') %>
     <section>
         <link href="/stylesheets/index.css" rel="stylesheet" />
-        <h1 id="info_Header" class="mt-5 text-center">해양 IT의 멤버를 소개합니다?</h1>
-        <div class="row row-cols-1 row-cols-md-4 p-3 m-0">
-            <% for(var key in db_data){%>
-                <div class="col mb-4">
-                    <div class="card m-1 border border-1">
-                        <img src="/images/members/<%= db_data[key].photo %>" class="card-img-top rounded " alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <%= db_data[key].name_ko %>
-                            </h5>
-                            <p class="card-text">
-                                <%= db_data[key].position_ko %>
-                            </p>
-                        </div>
+        <div id="indexbg" class="mb-5"></div>
+        <div id="indexbg_text">
+            <h1 class="fs-1">참여 명단</h1>
+            <div>해양IT 연구소에 참여하신 사람들의 명단입니다.</div>
+        </div>
+      
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-4 p-3 m-0">
+                <% for(var key in db_data){%>
+                    <div class="col mb-2">
+                        <div class="card  border border-1">
+                            <img src="/images/members/<%= db_data[key].photo %>" class="card-img-top rounded "
+                                alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <%= db_data[key].name_ko %>
+                                </h5>
+                                <p class="card-text">
+                                    <%= db_data[key].position_ko %>
+                                </p>
+                            </div>
 
-                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#memberModal"
-                            data-name="<%= db_data[key].name_ko %>" data-department="<%= db_data[key].department_ko %>"
-                            data-position="<%= db_data[key].position_ko %>" data-phone="<%= db_data[key].phone %>"
-                            data-email="<%= db_data[key].email %>" data-bachelor="<%= db_data[key].bachelor_ko %>"
-                            data-master="<%= db_data[key].master_ko %>" data-doctor="<%= db_data[key].doctor_ko %>"
-                            data-photo="/images/members/<%= db_data[key].photo %>">Detail</button>
+                            <button type="button" class="btn btn-secondary" data-toggle="modal"
+                                data-target="#memberModal" data-name="<%= db_data[key].name_ko %>"
+                                data-department="<%= db_data[key].department_ko %>"
+                                data-position="<%= db_data[key].position_ko %>" data-phone="<%= db_data[key].phone %>"
+                                data-email="<%= db_data[key].email %>" data-bachelor="<%= db_data[key].bachelor_ko %>"
+                                data-master="<%= db_data[key].master_ko %>" data-doctor="<%= db_data[key].doctor_ko %>"
+                                data-photo="/images/members/<%= db_data[key].photo %>">Detail</button>
+                        </div>
                     </div>
-                </div>
-                <%}%>
+                    <%}%>
+            </div>
         </div>
 
         <!-- MODAL -->
@@ -100,22 +109,50 @@
                 </div>
             </div>
         </div>
+
     </section>
     <%- include('../include/footer.ejs') %>
         <style>
             section {
-                background-color: rgb(227, 227, 241);
+                background-color: #fff;
                 padding-top: 50px;
                 text-align: center;
             }
 
             .card>img {
-                height: 20vw;
+                height: 15vw;
                 border-radius: 90%;
             }
-            .modal-body table tr>th:nth-child(1){
-                width:30%
+
+            .card-body {
+                background-color: rgba(0, 0, 0, 0.06);
             }
+
+            .modal-body table tr>th:nth-child(1) {
+                width: 30%
+            }
+
+            #indexbg {
+                position: relative;
+                background-size: cover;
+                height: 380px;
+                width: 100%;
+                filter: brightness(50%);
+                background: url("/images/member_header.jpg") no-repeat center center fixed;
+            }
+
+            #indexbg_text {
+                color: white;
+                width: 100%;
+                text-align: center;
+                position: absolute;
+                top: 6%;
+                left: 50%;
+                filter: brightness(100%);
+                transform: translate(-50%, -50%);
+            }
+
+
             @media (max-width: 768px) {
                 .card {
                     margin-left: 100px;
@@ -131,7 +168,6 @@
                     text-align: center;
                 }
             }
-            
         </style>
         <script>
             $('#memberModal').on('show.bs.modal', function (event) {
