@@ -4,42 +4,55 @@ var dayjs = require('dayjs');
 const db = require('../config/kyjdb');
 var jwtmiddle = require('../middleware/jwt');
 var boardDAO = require('../model/boardDAO');
+var counterDAO = require('../model/counterDAO')
 var logger = require('../config/logger');
 
 //notice
 function noticeMain(req, res, next) {
     var queryPage = req.query.page;
     var parameters = {
-        "page": queryPage
+        "page": queryPage,
+        "name": 'vistors'
     }
     boardDAO.count_noticeBoard(parameters).then(
         (db_data) => {
-            let token = req.cookies.user;
-            jwtmiddle.jwtCerti(token).then(
-                (permission) => {
-                    res.render('board/notice/noticeMain', { db_data, dayjs, permission, parameters })
+            counterDAO.findCount(parameters).then(
+                (count_data) => {
+                    let token = req.cookies.user;
+                    jwtmiddle.jwtCerti(token).then(
+                        (permission) => {
+                            res.render('board/notice/noticeMain', { db_data, dayjs, permission, parameters, count_data })
+                        }
+                    ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
                 }
-            ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
+            ).catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
         }
     ).catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
 }
 function noticeWrite(req, res, next) {
     let token = req.cookies.user;
-    jwtmiddle.jwtCerti(token).then(
-        (permission) => {
-            if (permission.userId != undefined) {
-                res.render('board/notice/noticeWrite', { permission })
-            }
-            else {
-                res.send("<script>alert('Inaccessible');history.back();</script>")
-            }
-        }
-    ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
+    var parameters = {
+        "name": 'vistors'
+    }
+    counterDAO.findCount(parameters).then(
+        (count_data) => {
+            jwtmiddle.jwtCerti(token).then(
+                (permission) => {
+                    if (permission.userId != undefined) {
+                        res.render('board/notice/noticeWrite', { permission, count_data })
+                    }
+                    else {
+                        res.send("<script>alert('Inaccessible');history.back();</script>")
+                    }
+                }
+            ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
+        })
 }
 function noticeDetail(req, res, next) {
     var queryNum = req.query.num;
     var parameters = {
-        "qid": queryNum
+        "qid": queryNum,
+        "name": 'vistors'
     };
     var db_values = {};
     Promise.resolve(db_values)
@@ -51,23 +64,28 @@ function noticeDetail(req, res, next) {
         )
         .then(
             () => {
-                let token = req.cookies.user;
-                jwtmiddle.jwtCerti(token).then(
-                    (permission) => {
-                        res.render('board/notice/noticeDetail', {
-                            dayjs, permission,
-                            detailData: db_values["detailData"]
-                        });
+                counterDAO.findCount(parameters).then(
+                    (count_data) => {
+                        let token = req.cookies.user;
+                        jwtmiddle.jwtCerti(token).then(
+                            (permission) => {
+                                res.render('board/notice/noticeDetail', {
+                                    dayjs, permission, count_data,
+                                    detailData: db_values["detailData"]
+                                });
+                            }
+                        ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
                     }
-                ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
+                ).catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
             }
         )
-        .catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
+        .catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
 }
 function noticeModify(req, res, next) {
     var queryNum = req.query.num;
     var parameters = {
-        "qid": queryNum
+        "qid": queryNum,
+        "name": 'vistors'
     };
     var db_values = {};
     Promise.resolve(db_values)
@@ -79,20 +97,24 @@ function noticeModify(req, res, next) {
         )
         .then(
             () => {
-                let token = req.cookies.user;
-                jwtmiddle.jwtCerti(token).then(
-                    (permission) => {
-                        if (permission.userId == db_values["detailData"][0].userId) {
-                            res.render('board/notice/noticeModify', {
-                                dayjs, permission,
-                                detailData: db_values["detailData"]
-                            });
-                        }
-                        else {
-                            res.send("<script>alert('You do not have permission');history.back();</script>");
-                        }
+                counterDAO.findCount(parameters).then(
+                    (count_data) => {
+                        let token = req.cookies.user;
+                        jwtmiddle.jwtCerti(token).then(
+                            (permission) => {
+                                if (permission.userId == db_values["detailData"][0].userId) {
+                                    res.render('board/notice/noticeModify', {
+                                        dayjs, permission, count_data,
+                                        detailData: db_values["detailData"]
+                                    });
+                                }
+                                else {
+                                    res.send("<script>alert('You do not have permission');history.back();</script>");
+                                }
+                            }
+                        ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
                     }
-                ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
+                ).catch(err => res.send("<script>alert('" + err + "');location.href='/'"))
             }
         )
         .catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
@@ -100,7 +122,7 @@ function noticeModify(req, res, next) {
 function noticeModifyPost(req, res, next) {
     var queryNum = req.query.num;
     var parameters = {
-        "qid": queryNum
+        "qid": queryNum,
     };
     let token = req.cookies.user;
     if (req.body.title == "") res.send("<script>alert('제목을입력하세요.');history.back();</script>")
@@ -181,36 +203,50 @@ function noticeDelete(req, res, next) {
 function inquiryMain(req, res, next) {
     var queryPage = req.query.page;
     var parameters = {
-        "page": queryPage
+        "page": queryPage,
+        'name': 'vistors'
     }
     boardDAO.count_questionBoard(parameters).then(
         (db_data) => {
-            let token = req.cookies.user;
-            jwtmiddle.jwtCerti(token).then(
-                (permission) => {
-                    res.render('board/inquiry/inquiryMain', { db_data, dayjs, permission, parameters })
+            counterDAO.findCount(parameters).then(
+                (count_data) => {
+                    let token = req.cookies.user;
+                    jwtmiddle.jwtCerti(token).then(
+                        (permission) => {
+                            res.render('board/inquiry/inquiryMain', { db_data, dayjs, permission, parameters, count_data })
+                        }
+                    ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
                 }
-            ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
+            ).catch(err => res.send("<script>alert('" + err + "');location.href='/'"))
         }
     ).catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
 }
 function inquiryWrite(req, res, next) {
     let token = req.cookies.user;
-    jwtmiddle.jwtCerti(token).then(
-        (permission) => {
-            if (permission.userId != undefined) {
-                res.render('board/inquiry/inquiryWrite', { permission })
-            }
-            else {
-                res.send("<script>alert('Inaccessible');history.back();</script>")
-            }
-        }
-    ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
+
+    var parameters = {
+        "name": 'vistors'
+    }
+
+    counterDAO.findCount(parameters).then(
+        (count_data) => {
+            jwtmiddle.jwtCerti(token).then(
+                (permission) => {
+                    if (permission.userId != undefined) {
+                        res.render('board/inquiry/inquiryWrite', { permission, count_data })
+                    }
+                    else {
+                        res.send("<script>alert('Inaccessible');history.back();</script>")
+                    }
+                }
+            ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
+        }).catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
 }
 function inquiryDetail(req, res, next) {
     var queryNum = req.query.num;
     var parameters = {
-        "qid": queryNum
+        "qid": queryNum,
+        "name": 'vistors'
     };
     var db_values = {};
     Promise.resolve(db_values)
@@ -232,16 +268,20 @@ function inquiryDetail(req, res, next) {
         )
         .then(
             () => {
-                let token = req.cookies.user;
-                jwtmiddle.jwtCerti(token).then(
-                    (permission) => {
-                        res.render('board/inquiry/inquiryDetail', {
-                            dayjs, permission,
-                            detailData: db_values["detailData"],
-                            commentData: db_values["commentData"]
-                        });
+                counterDAO.findCount(parameters).then(
+                    (count_data) => {
+                        let token = req.cookies.user;
+                        jwtmiddle.jwtCerti(token).then(
+                            (permission) => {
+                                res.render('board/inquiry/inquiryDetail', {
+                                    dayjs, permission,
+                                    detailData: db_values["detailData"],
+                                    commentData: db_values["commentData"], count_data
+                                });
+                            }
+                        ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
                     }
-                ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
+                ).catch(err => res.send("<script>alert('" + err + "');location.href='/'"))
             }
         )
         .catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
@@ -276,7 +316,8 @@ function inquiryComment(req, res, next) {
 function inquiryModify(req, res, next) {
     var queryNum = req.query.num;
     var parameters = {
-        "qid": queryNum
+        "qid": queryNum,
+        "name": 'vistors'
     };
     var db_values = {};
     Promise.resolve(db_values)
@@ -288,20 +329,24 @@ function inquiryModify(req, res, next) {
         )
         .then(
             () => {
-                let token = req.cookies.user;
-                jwtmiddle.jwtCerti(token).then(
-                    (permission) => {
-                        if (permission.userId == db_values["detailData"][0].userId) {
-                            res.render('board/inquiry/inquiryModify', {
-                                dayjs, permission,
-                                detailData: db_values["detailData"]
-                            });
-                        }
-                        else {
-                            res.send("<script>alert('You do not have permission');history.back();</script>");
-                        }
+                counterDAO.findCount(parameters).then(
+                    (count_data) => {
+                        let token = req.cookies.user;
+                        jwtmiddle.jwtCerti(token).then(
+                            (permission) => {
+                                if (permission.userId == db_values["detailData"][0].userId) {
+                                    res.render('board/inquiry/inquiryModify', {
+                                        dayjs, permission, count_data,
+                                        detailData: db_values["detailData"]
+                                    });
+                                }
+                                else {
+                                    res.send("<script>alert('You do not have permission');history.back();</script>");
+                                }
+                            }
+                        ).catch(err => res.send("<script>alert('jwt err');</script>"));
                     }
-                ).catch(err => res.send("<script>alert('jwt err');</script>"));
+                ).catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
             }
         )
         .catch(err => res.send("<script>alert('jwt err');</script>"));
@@ -397,37 +442,51 @@ function inquiryDelete(req, res, next) {
 function freeBoardMain(req, res, next) {
     var queryPage = req.query.page;
     var parameters = {
-        "page": queryPage
+        "page": queryPage,
+        "name": 'vistors'
     }
     boardDAO.count_freeBoard(parameters).then(
         (db_data) => {
-            let token = req.cookies.user;
-            jwtmiddle.jwtCerti(token).then(
-                (permission) => {
-                    res.render('board/free/FreeBoardMain', { db_data, dayjs, permission, parameters })
-                }
-            ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
+            counterDAO.findCount(parameters).then(
+                (count_data) => {
+                    let token = req.cookies.user;
+                    jwtmiddle.jwtCerti(token).then(
+                        (permission) => {
+                            res.render('board/free/FreeBoardMain', { db_data, dayjs, permission, parameters, count_data })
+                        }
+                    ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
 
+
+                }
+            ).catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
         }
     ).catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
 }
 function freeBoardWrite(req, res, next) {
     let token = req.cookies.user;
-    jwtmiddle.jwtCerti(token).then(
-        (permission) => {
-            if (permission.userId != undefined) {
-                res.render('board/free/FreeBoardWrite', { permission })
-            }
-            else {
-                res.send("<script>alert('Inaccessible');history.back();</script>")
-            }
+    var parameters = {
+        "name": 'vistors'
+    }
+    counterDAO.findCount(parameters).then(
+        (count_data) => {
+            jwtmiddle.jwtCerti(token).then(
+                (permission) => {
+                    if (permission.userId != undefined) {
+                        res.render('board/free/FreeBoardWrite', { permission, count_data })
+                    }
+                    else {
+                        res.send("<script>alert('Inaccessible');history.back();</script>")
+                    }
+                }
+            ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
         }
-    ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
+    ).catch(err => res.send("<script>alert('" + err + "');location.href='/'"))
 }
 function freeBoardDetail(req, res, next) {
     var queryNum = req.query.num;
     var parameters = {
-        "qid": queryNum
+        "qid": queryNum,
+        "name": 'vistors'
     };
     var db_values = {};
     Promise.resolve(db_values)
@@ -449,16 +508,20 @@ function freeBoardDetail(req, res, next) {
         )
         .then(
             () => {
-                let token = req.cookies.user;
-                jwtmiddle.jwtCerti(token).then(
-                    (permission) => {
-                        res.render('board/free/freeBoardDetail', {
-                            dayjs, permission,
-                            detailData: db_values["detailData"],
-                            commentData: db_values["commentData"]
-                        });
+                counterDAO.findCount(parameters).then(
+                    (count_data) => {
+                        let token = req.cookies.user;
+                        jwtmiddle.jwtCerti(token).then(
+                            (permission) => {
+                                res.render('board/free/freeBoardDetail', {
+                                    dayjs, permission, count_data,
+                                    detailData: db_values["detailData"],
+                                    commentData: db_values["commentData"]
+                                });
+                            }
+                        ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
                     }
-                ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
+                ).catch(err => res.send("<script>alert('" + err + "');location.href='/'"))
             }
         )
         .catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
@@ -493,7 +556,8 @@ function freeBoardComment(req, res, next) {
 function freeBoardModify(req, res, next) {
     var queryNum = req.query.num;
     var parameters = {
-        "qid": queryNum
+        "qid": queryNum,
+        "name": 'vistors'
     };
     var db_values = {};
     Promise.resolve(db_values)
@@ -505,20 +569,24 @@ function freeBoardModify(req, res, next) {
         )
         .then(
             () => {
-                let token = req.cookies.user;
-                jwtmiddle.jwtCerti(token).then(
-                    (permission) => {
-                        if (permission.userId == db_values["detailData"][0].userId) {
-                            res.render('board/free/freeBoardModify', {
-                                dayjs, permission,
-                                detailData: db_values["detailData"]
-                            });
-                        }
-                        else {
-                            res.send("<script>alert('You do not have permission');history.back();</script>");
-                        }
+                counterDAO.findCount(parameters).then(
+                    (count_data) => {
+                        let token = req.cookies.user;
+                        jwtmiddle.jwtCerti(token).then(
+                            (permission) => {
+                                if (permission.userId == db_values["detailData"][0].userId) {
+                                    res.render('board/free/freeBoardModify', {
+                                        dayjs, permission,
+                                        detailData: db_values["detailData"]
+                                    });
+                                }
+                                else {
+                                    res.send("<script>alert('You do not have permission');history.back();</script>");
+                                }
+                            }
+                        ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
                     }
-                ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
+                ).catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
             }
         )
         .catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
