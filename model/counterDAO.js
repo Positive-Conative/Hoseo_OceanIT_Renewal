@@ -7,6 +7,7 @@ function findCount(parameters) {
     var queryData = `SELECT * FROM Counter WHERE name="${parameters.name}"`;
     return new Promise(function (resolve, reject) {
         db.query(queryData, function (error, db_data) {
+            console.log(db_data)
             if (error) {
                 logger.error(
                     "DB error [Counter]" +
@@ -37,7 +38,6 @@ function updateCount(db_data) {
     var queryData = `UPDATE Counter SET totalCount=?, todayCount=? WHERE name="${db_data.name}"`
     return new Promise(function (resolve, reject) {
         db.query(queryData,[db_data.totalCount+1,db_data.todayCount+1],function (error, Update){
-            console.log(Update)
             if (error) {
                 logger.error(
                     "DB error [Counter]" +
