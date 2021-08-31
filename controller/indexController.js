@@ -4,16 +4,26 @@ var jwtmiddle = require('../middleware/jwt');
 var memberDAO = require('../model/memberDAO');
 var researchFieldsDAO = require('../model/researchFieldsDAO');
 var researchResultsDAO = require('../model/researchResultsDAO');
-var countController = require('../controller/countController')
+var counterDAO = require('../model/counterDAO')
 
 function indexMain(req, res, next) {
   let token = req.cookies.user;
-  return jwtmiddle.jwtCerti(token).then(
-    (permission) => {
-      res.render('index', { permission });
+  var parameters = {
+    "name": 'vistors'
+  }
+  return counterDAO.findCount(parameters).then(
+    (db_data) => {
+      jwtmiddle.jwtCerti(token).then(
+        (permission) => {
+          console.log(db_data)
+          res.render('index', { permission, db_data });
+        }
+      )
     }
   )
 }
+
+
 module.exports = {
   indexMain
 }

@@ -7,7 +7,6 @@ function findCount(parameters) {
     var queryData = `SELECT * FROM Counter WHERE name="${parameters.name}"`;
     return new Promise(function (resolve, reject) {
         db.query(queryData, function (error, db_data) {
-            console.log(db_data)
             if (error) {
                 logger.error(
                     "DB error [Counter]" +
