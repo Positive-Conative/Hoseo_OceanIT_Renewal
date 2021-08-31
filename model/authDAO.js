@@ -49,6 +49,7 @@ function checkUser(parameters) {
                     "\n \t" + db_data +
                     "\n \t" + error);
                 reject('DB ERR');
+                console.log(db_data)
                 if (db_data.rows[0] !== undefined) resolve(db_data.rows)
                 else reject("아이디 혹은 비밀번호를 다시 확인하세요.")
             }
