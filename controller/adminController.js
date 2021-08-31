@@ -33,7 +33,6 @@ function adminMain(req, res, next) {
                 let token = req.cookies.user;
                 jwtmiddle.jwtCerti(token).then(
                     (permission) => {
-                        console.log()
                         res.render('admin/adminMain', {
                             countData: db_values["countData"],
                             recv_data: db_values["recv_data"],
