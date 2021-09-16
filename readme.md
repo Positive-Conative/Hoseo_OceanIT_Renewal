@@ -9,6 +9,8 @@
 > APP : Flutter
 
 ## 제작 계획
+
+<h1> 이전 개발자 </h1>
 <p>
     <ul>
         <li>웹(Front-End, Back-End), DB 설계</li>
@@ -29,7 +31,23 @@
         </ul>
     </ul>
 </p>
-<br>
+
+<h1> 현재 개발자 </h1>
+<p>
+    <ul>
+        <li>Front-End</li>
+        <ul>
+            <li>백찬영</li>
+        </ul>
+    </ul>
+    <ul>
+        <li>Back-End</li>
+        <ul>
+            <li>홍우성</li>
+        </ul>
+    </ul>
+</p>
+
 
 ## Contribution rate (ing)
 
