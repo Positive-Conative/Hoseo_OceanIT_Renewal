@@ -26,7 +26,7 @@
         </ul>
     </ul>
     <ul>
-        <li>DB 데이터 입력</li>
+        <li>DB 관리</li>
         <ul>
             <li>이규환</li>
         </ul>
