@@ -152,6 +152,7 @@ function noticeWritePost(req, res, next) {
     var content = req.body.content;
     var title = req.body.title;
     let token = req.cookies.user;
+    console.log(req.body)
     if (title == "") res.send("<script>alert('제목을입력하세요.');history.back();</script>")
     else if (content == "") res.send("<script>alert('내용을입력하세요.');history.back();</script>")
     else {
@@ -160,7 +161,9 @@ function noticeWritePost(req, res, next) {
                 var date = new dayjs();
                 var datetime = date.format('YYYY-MM-DD HH:mm:ss');
                 var userId = permission.userId;
-                var datas = { userId: userId, title: title, content: content, date: datetime };
+                var userName = permission.userName
+                var datas = { userId: userId, title: title, content: content, date: datetime,userName:userName };
+                console.log(datas)
                 db.query('INSERT INTO Notice_Board SET ?', datas, function (error, row) {
                     if (error) {
                         logger.error(
@@ -395,8 +398,9 @@ function inquiryWritePost(req, res, next) {
                 var date = new dayjs();
                 var datetime = date.format('YYYY-MM-DD HH:mm:ss');
                 var userId = permission.userId;
+                var userName = permission.userName
                 if (file != undefined) {
-                    var datas = { userId: userId, title: title, content: content, date: datetime, img: file.filename };
+                    var datas = { userId: userId, title: title, content: content, date: datetime, img: file.filename,userName:userName };
                 }
                 else {
                     var datas = { userId: userId, title: title, content: content, date: datetime };
@@ -634,7 +638,8 @@ function freeBoardWritePost(req, res, next) {
                 var date = new dayjs();
                 var datetime = date.format('YYYY-MM-DD HH:mm:ss');
                 var userId = permission.userId;
-                var datas = { userId: userId, title: title, content: content, date: datetime };
+                var userName= permission.userName
+                var datas = { userId: userId, title: title, content: content, date: datetime ,userName:userName};
                 db.query('INSERT INTO Free_Board SET ?', datas, function (error, row) {
                     if (error) {
                         logger.error(

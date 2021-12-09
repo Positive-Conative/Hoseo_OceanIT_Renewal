@@ -90,6 +90,7 @@ function countVisitors(req, res, next) {
       res.cookie('countDate', datetime, { maxAge: 86400000, httpOnly: true });
       counterDAO.findCount(parameters).then(
         (db_data) => {
+          console.log(db_data)
           if (db_data[0] === undefined) {
             counterDAO.insertCount(parameters).then(
               () => { }
