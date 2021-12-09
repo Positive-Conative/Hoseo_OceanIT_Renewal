@@ -32,11 +32,31 @@
                     <table class="table table-responsive-sm table-hover text-center">
                         <thead>
                           <tr>
-                            <th scope="col" width="10%">
-                                <%if(parameters.type == "특허") %>
+                            <th scope="col" width="10%">순번</th>
+                            <th scope="col" width="40%">
+                                
+                        <%if(parameters.type == "patent"){%>
+                            특허명
+                        <%}else if(parameters.type == "treatise") {%>
+                            논문명
+                        <%}else if(parameters.type == "announcement") {%>
+                            논문명
+                        <%}else{%>
+                            제목
+                        <%}%>
                             </th>
-                            <th scope="col" width="40%">과제명</th>
-                            <th scope="col" width="20%">종료날짜</th>
+                            <th scope="col" width="20%">
+                                
+                        <%if(parameters.type == "patent"){%>
+                            출원/등록일자
+                        <%}else if(parameters.type == "treatise") {%>
+                            게재일자
+                        <%}else if(parameters.type == "announcement") {%>
+                            발표일자
+                        <%}else{%>
+                            날짜
+                        <%}%>
+                            </th>
                           </tr>
                         </thead>
                         <tbody>
