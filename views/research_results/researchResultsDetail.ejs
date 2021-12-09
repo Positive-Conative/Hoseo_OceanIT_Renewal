@@ -1,28 +1,65 @@
 <%- include('../include/header.ejs') %>
-<link rel="stylesheet" href="/stylesheets/research_fields/researchFieldsMain.css"/>
-<link rel="stylesheet" href="/stylesheets/research_fields/researchFieldsDetail.css"/>
+    <link rel="stylesheet" href="/stylesheets/research_fields/researchFieldsMain.css" />
+    <link rel="stylesheet" href="/stylesheets/research_fields/researchFieldsDetail.css" />
     <section>
         <div id="indexbg" class="mb-5"></div>
         <div id="indexbg_text">
             <h1 class="fs-1">연구 분야</h1>
-            <div>연구 분야에 대한 설명입니다..!</div>
+
         </div>
         <div class="container-fluidp-3 p-3">
-            <div class="row">
+            <div class=" row">
                 <div id="researchDetailContent" class="col-12">
-                    <h3 class="mb-5" align=center>fdsa</h3>
-                    <article>
-                      <table class="table table-responsive-sm text-center">
-                        <tbody>
-                            <tr>연구책임자</tr>
-                        </tbody>
-                    </table>
+                    <h3 class="mb-5" align=center>
+                        <%=db_data[0].title_ko%>
+                    </h3>
+                    <article class="container">
+
+                        <table class="table table-responsive-sm text-center">
+                            <tbody>
+
+                                <tr>
+                                    <th>특허상태</th>
+                                    <td>
+                                        <%=db_data[0].group%>
+                                    </td>
+
+                                    <th class="align-middle">날짜</th>
+                                    <td>
+                                        <%=db_data[0].date%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>발표명</th>
+                                    <td>
+                                        <%=db_data[0].title_ko%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>저자명</th>
+                                    <td>
+                                        <%=db_data[0].writer_ko%>
+                                    </td>
+                                    <th>발표국가</th>
+                                    <td>
+                                        <%=db_data[0].announe_nation_ko%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="align-middle ">구분</th>
+                                    <td colspan=1>
+                                        <%=db_data[0].classify_ko%>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </article>
 
                 </div>
             </div>
             <div id="secondDiv" style="text-align: right;">
-                <a type="button" class="btn btn-outline-primary" id="secondGoBack" href="javascript:history.back();">뒤로가기</a>
+                <a type="button" class="btn btn-outline-primary" id="secondGoBack"
+                    href="javascript:history.back();">뒤로가기</a>
             </div>
         </div>
     </section>
