@@ -182,7 +182,9 @@ function noticeDelete(req, res, next) {
     let token = req.cookies.user;
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
-            db.query(`DELETE FROM Notice_Board WHERE qid=${parameters.qid} and userId=${permission.userId}`, function (error, row) {
+            console.log(permission)
+            console.log(parameters)
+            db.query(`DELETE FROM Notice_Board WHERE qid="${parameters.qid}" && userId="${permission.userId}"`, function (error, row) {
                 if (error) {
                     logger.error(
                         "DB error [Notice_Board]" +
@@ -420,7 +422,7 @@ function inquiryDelete(req, res, next) {
     let token = req.cookies.user;
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
-            db.query(`DELETE FROM Inquiry_Board WHERE qid=${parameters.qid} and userId=${permission.userId}`, function (error, row) {
+            db.query(`DELETE FROM Inquiry_Board WHERE qid="${parameters.qid}" && userId="${permission.userId}"`, function (error, row) {
                 if (error) {
                     logger.error(
                         "DB error [Inquiry_Board]" +
@@ -654,7 +656,7 @@ function freeBoardDelete(req, res, next) {
     let token = req.cookies.user;
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
-            db.query(`DELETE FROM Free_Board WHERE qid=${parameters.qid} and userId=${permission.userId}`, function (error, row) {
+            db.query(`DELETE FROM Free_Board WHERE qid="${parameters.qid}" && userId="${permission.userId}"`, function (error, row) {
                 if (error) {
                     logger.error(
                         "DB error [Free_Board]" +
