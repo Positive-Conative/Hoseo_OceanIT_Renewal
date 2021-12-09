@@ -278,6 +278,7 @@ function inquiryDetail(req, res, next) {
                         let token = req.cookies.user;
                         jwtmiddle.jwtCerti(token).then(
                             (permission) => {
+                                console.log(db_values["commentData"])
                                 res.render('board/inquiry/inquiryDetail', {
                                     dayjs, permission,
                                     detailData: db_values["detailData"],
@@ -304,7 +305,7 @@ function inquiryComment(req, res, next) {
             (permission) => {
                 var date = new dayjs();
                 var datetime = date.format('YYYY-MM-DD HH:mm:ss');
-                db.query(`INSERT inquiryComment SET qid=?, comment=?, date=?, userId=?`, [parameters.qid, comment, datetime, permission.userId], function (error, results) {
+                db.query(`INSERT inquiryComment SET qid=?, comment=?, date=?, userId=?, userName=?`, [parameters.qid, comment, datetime, permission.userId, permission.userName], function (error, results) {
                     if (error) {
                         logger.error(
                             "DB error [inquiryComment]" +
@@ -398,12 +399,12 @@ function inquiryWritePost(req, res, next) {
                 var date = new dayjs();
                 var datetime = date.format('YYYY-MM-DD HH:mm:ss');
                 var userId = permission.userId;
-                var userName = permission.userName
+                var userName = permission.userName;
                 if (file != undefined) {
-                    var datas = { userId: userId, title: title, content: content, date: datetime, img: file.filename,userName:userName };
+                    var datas = { userId: userId, title: title, content: content, date: datetime, img: file.filename, userName:userName };
                 }
                 else {
-                    var datas = { userId: userId, title: title, content: content, date: datetime };
+                    var datas = { userId: userId, title: title, content: content, date: datetime,userName:userName };
                 }
                 db.query('INSERT INTO Inquiry_Board SET ?', datas, function (error, row) {
                     if (error) {
@@ -425,7 +426,8 @@ function inquiryDelete(req, res, next) {
     };
     let token = req.cookies.user;
     jwtmiddle.jwtCerti(token).then(
-        (permission) => {
+        async (permission) => {
+            db.query(`DELETE FROM inquiryComment WHERE qid="${parameters.qid}"`)
             db.query(`DELETE FROM Inquiry_Board WHERE qid="${parameters.qid}" && userId="${permission.userId}"`, function (error, row) {
                 if (error) {
                     logger.error(
@@ -545,7 +547,7 @@ function freeBoardComment(req, res, next) {
             (permission) => {
                 var date = new dayjs();
                 var datetime = date.format('YYYY-MM-DD HH:mm:ss');
-                db.query(`INSERT freeBoardComment SET qid=?, comment=?, date=?, userId=?`, [parameters.qid, comment, datetime, permission.userId], function (error, results) {
+                db.query(`INSERT freeBoardComment SET qid=?, comment=?, date=?, userId=?, userName=?`, [parameters.qid, comment, datetime, permission.userId,permission.userName], function (error, results) {
                     if (error) {
                         logger.error(
                             "DB error [freeBoardComment]" +
@@ -653,14 +655,15 @@ function freeBoardWritePost(req, res, next) {
         ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
     }
 }
-function freeBoardDelete(req, res, next) {
+async function freeBoardDelete(req, res, next) {
     var queryNum = req.query.num;
     var parameters = {
         "qid": queryNum
     };
     let token = req.cookies.user;
     jwtmiddle.jwtCerti(token).then(
-        (permission) => {
+        async (permission) => {
+            db.query(`DELETE FROM freeBoardComment WHERE qid="${parameters.qid}"`)
             db.query(`DELETE FROM Free_Board WHERE qid="${parameters.qid}" && userId="${permission.userId}"`, function (error, row) {
                 if (error) {
                     logger.error(
