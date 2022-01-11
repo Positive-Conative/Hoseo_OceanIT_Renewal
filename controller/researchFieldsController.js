@@ -108,7 +108,7 @@ async function researcFieldhWrite(req, res, next){
     try {
         const count_data = await counterDAO.findCount(parameters);
         const permission = await jwtmiddle.jwtCerti(token);
-        return res.render('research_results/researchResultsWrite',{count_data, permission});
+        return res.render('research_fields/researchFieldsWrite',{count_data, permission});
     } catch (error) {
         res.send("<scripte>alert('" + error + "');history.back();")
     }
