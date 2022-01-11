@@ -7,7 +7,8 @@ function jwtCreate(userData){
       jwt.sign({
         userId: userData.userId,
         userName: userData.userName,
-        userEmail: userData.userEmail
+        userEmail: userData.userEmail,
+        userRole: userData.userRole
       }, process.env.JWT_SECRET, {
         expiresIn: '30m',
         issuer: 'Conative',
@@ -24,7 +25,7 @@ function jwtCreateANDROID(userData){
         userName: userData.userName,
         userEmail: userData.userEmail
       }, process.env.JWT_SECRET, {
-        expiresIn: '1d',
+        expiresIn: '7d',
         issuer: 'Conative',
       },function(err,token){
         if(err) reject(err)

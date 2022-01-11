@@ -547,7 +547,7 @@ function freeBoardComment(req, res, next) {
             (permission) => {
                 var date = new dayjs();
                 var datetime = date.format('YYYY-MM-DD HH:mm:ss');
-                db.query(`INSERT freeBoardComment SET qid=?, comment=?, date=?, userId=?, userName=?`, [parameters.qid, comment, datetime, permission.userId,permission.userName], function (error, results) {
+                db.query(`INSERT freeBoardComment SET qid=?, comment=?, date=?, userId=?, userName=?`, [parameters.qid, comment, datetime, permission.userId, permission.userName], function (error, results) {
                     if (error) {
                         logger.error(
                             "DB error [freeBoardComment]" +

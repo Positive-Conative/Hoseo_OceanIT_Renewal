@@ -35,7 +35,6 @@ function researchResultsDetail(req, res, next) {
         "rrid": queryNum,
         "name": 'vistors'
     };
-
     researchResultsDAO.researchResults_selectDetail(parameters).then(
         (db_data) => {
             counterDAO.findCount(parameters).then(
@@ -62,9 +61,26 @@ function androidResearchResultsAll(req, res, next) {
         }
     ).catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
 }
+async function researcResultWrite(req, res, next){
+    let token = req.cookies.user;
+    var queryNum = req.query.num;
+    var parameters = {
+        "rrid": queryNum,
+        "name": 'vistors'
+    };
+    try {
+        const count_data = await counterDAO.findCount(parameters);
+        const permission = await jwtmiddle.jwtCerti(token);
+        return res.render('research_results/researchResultsWrite',{count_data, permission});
+    } catch (error) {
+        res.send("<scripte>alert('" + error + "');history.back();")
+    }
+}
+
 
 module.exports = {
     researchResults,
     researchResultsDetail,
-    androidResearchResultsAll
+    androidResearchResultsAll,
+    researcResultWrite,
 }
