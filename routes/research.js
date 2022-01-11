@@ -21,6 +21,6 @@ router.get('/results', researchResultsController.researchResults);
 router.get('/results/detail', researchResultsController.researchResultsDetail);
 router.get('/android/results', researchResultsController.androidResearchResultsAll);
 
-router.get('/results', researchResultsController.researcResultWrite);
+router.get('/results/write', researchResultsController.researcResultWrite);
 
 module.exports = router;
