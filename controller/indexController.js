@@ -10,7 +10,7 @@ function indexMain(req, res, next) {
   let token = req.cookies.user;
   jwtmiddle.jwtCerti(token).then(
     (permission) => {
-      res.render('index', { permission });
+       res.render('index', { permission });
     }
   )
 }

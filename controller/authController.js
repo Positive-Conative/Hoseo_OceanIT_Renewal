@@ -3,6 +3,7 @@
 // var jwt = require('jsonwebtoken');
 var jwtmiddle = require('../middleware/jwt');
 var authDAO = require('../model/authDAO');
+var counterDAO = require('../model/counterDAO')
 const crypto = require('crypto');
 
 function signIn(req, res, next) {
@@ -17,7 +18,6 @@ function signIn(req, res, next) {
     }
     res.render('auth/signIn', { userId: userId });
 }
-
 function checkUser(req, res, next) {
     var special_pattern = /[` ~!@#$%^&*|\\\'\";:\/?]/gi;
     if (special_pattern.test(req.body.inputID) ||
@@ -32,11 +32,17 @@ function checkUser(req, res, next) {
         }
         authDAO.checkUser(parameters).then(
             (db_data) => {
+                console.log(db_data[0])
+                if(db_data[0].role==5){
+                    console.log(1)
+                    return res.send("<script>alert('You do not have permission');location.href='/auth/logout';</script>");
+                }
                 if (db_data[0] != undefined) {
                     var userData = {
                         userId: db_data[0].userId,
                         userName: db_data[0].userName,
                         userEmail: db_data[0].userEmail,
+                        userRole: db_data[0].role,
                     }
                     jwtmiddle.jwtCreate(userData).then(
                         (token) => {
@@ -61,15 +67,32 @@ function checkUser(req, res, next) {
 
 function revise_check(req, res, next) {
     let token = req.cookies.user;
-    jwtmiddle.jwtCerti(token).then(
-        (permission) => {
-            res.render('auth/revise_check', { permission });
-        }
+    var queryPage = req.query.page;
+    var parameters = {
+        "page": queryPage,
+        "name": 'vistors'
+    }
+    counterDAO.findCount(parameters).then(
+        (count_data) => {
+            jwtmiddle.jwtCerti(token).then(
+                (permission) => {
+                    res.render('auth/revise_check', { permission,count_data });
+                }
+            )
+    }
     ).catch(err => res.send("<script>alert('jwt err');</script>"));
 }
 
 function revise_check_post(req, res, next) {
     let token = req.cookies.user;
+
+    var queryPage = req.query.page;
+    var parameters = {
+        "page": queryPage,
+        "name": 'vistors'
+    }
+    counterDAO.findCount(parameters).then(
+        (count_data) => {
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
             if (permission != false) {
@@ -80,13 +103,14 @@ function revise_check_post(req, res, next) {
                 authDAO.checkUser(parameters).then(
                     (db_data) => {
                         console.log(db_data)
-                        res.render('auth/revise', { db_data, permission });
+                        res.render('auth/revise', { db_data, permission,count_data });
                     }
                 ).catch(err => res.send("<script>alert('" + err + "');location.href='/auth/revise_check';</script>"))
             }
             else
                 res.send("<script>alert('세션이 만료되었습니다.'); location.href='/'; </script>")
         }
+    )}
     ).catch(err => res.send("<script>alert('jwt err');</script>"));
 }
 
@@ -178,7 +202,7 @@ function androidLogin(req, res, next) {
     }
     var parameters = {
         "userId": req.body.userId,
-        "userPw":req.body.userPw,
+        "userPw": req.body.userPw,
     }
     var db_values = {};
     Promise.resolve(db_values)
@@ -210,7 +234,7 @@ function androidLogin(req, res, next) {
                     "userEmail": parameters.userEmail,
                     "userNameEN": parameters.userNameEN,
                     "userBelong": parameters.userBelong,
-                    "userDepartment" : parameters.userDepartment,
+                    "userDepartment": parameters.userDepartment,
                     "userPosition": parameters.userPosition,
                     "userAdd": parameters.userAdd,
                     "userPhone": parameters.userPhone,
@@ -227,26 +251,26 @@ function androidLogin(req, res, next) {
         )
         .then(
             () => {
-                 return authDAO.androidUser(parameters)
-                }
+                return authDAO.androidUser(parameters)
+            }
         )
-        .then(()=>{
+        .then(() => {
             res.json({
                 "userId": parameters.userId,
                 "userName": parameters.userName,
                 "userEmail": parameters.userEmail,
                 "userNameEN": parameters.userNameEN,
                 "userBelong": parameters.userBelong,
-                "userDepartment" : parameters.userDepartment,
+                "userDepartment": parameters.userDepartment,
                 "userPosition": parameters.userPosition,
                 "userAdd": parameters.userAdd,
                 "userPhone": parameters.userPhone,
                 "userImg": parameters.userImg,
-                "Token" : parameters.Token,
-                "message" : "정상적으로 로그인 되었습니다."
+                "Token": parameters.Token,
+                "message": "정상적으로 로그인 되었습니다."
             })
         })
-        .catch((err)=>{
+        .catch((err) => {
             res.status(200).json({
                 "userId": "",
                 "userName": "",
@@ -255,44 +279,44 @@ function androidLogin(req, res, next) {
                 "userAdd": "",
                 "userPhone": "",
                 "userImg": "",
-                "message" : err
+                "message": err
             })
         })
 }
-function checkToken(req, res, next){
-    if(req.body.token === undefined) {
-        res.json({"message" :"Parameter ERR."})
+function checkToken(req, res, next) {
+    if (req.body.token === undefined) {
+        res.json({ "message": "Parameter ERR." })
         return;
     }
     var queryToken = req.body.token;
     var parameters = {
-        "Token" : queryToken
+        "Token": queryToken
     }
     var db_values = {};
     Promise.resolve(db_values)
-    .then(
-        (db_values) =>{
-            return authDAO.checkUserToken(parameters).then(
-                (db_data)=>{
-                    db_values.Token = db_data
-                }
-            )
-        }
-    )
-    .then(
-        ()=>{
-            return jwtmiddle.jwtCerti(db_values.Token)
-        }
-    )
-    .then(()=>{
-        res.json({"message":"성공"})
-    })
-    .catch(err=>{
-        if(err) //존재하지 않을 때
-            res.status(500).json({"message" :"토큰이 존재하지 않습니다."})
-        else
-            res.status(403).json({"message" :"토큰이 만료되었습니다."})
-    })
+        .then(
+            (db_values) => {
+                return authDAO.checkUserToken(parameters).then(
+                    (db_data) => {
+                        db_values.Token = db_data
+                    }
+                )
+            }
+        )
+        .then(
+            () => {
+                return jwtmiddle.jwtCerti(db_values.Token)
+            }
+        )
+        .then(() => {
+            res.json({ "message": "성공" })
+        })
+        .catch(err => {
+            if (err) //존재하지 않을 때
+                res.status(500).json({ "message": "토큰이 존재하지 않습니다." })
+            else
+                res.status(403).json({ "message": "토큰이 만료되었습니다." })
+        })
 }
 
 module.exports = {
