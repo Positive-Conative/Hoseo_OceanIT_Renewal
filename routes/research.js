@@ -13,6 +13,7 @@ router.get('/android',androidController.Android);
 router.get('/android/fields', researchFieldsController.androidResearchFieldsAll);
 
 router.get('/fields/write', researchFieldsController.researcFieldhWrite)
+// router.post('/fields/write', researchFieldsController)
 
 //----------------------------------------------------------------------------------//
 //research results
