@@ -26,7 +26,6 @@ function researchFields_selectAll(parameters) {
     queryData += ` ORDER BY date_end desc`;
     if (!(parameters.limit == undefined)) queryData += ` LIMIT 0,${parameters.limit}`;
     return new Promise(function (resolve, reject) {
-        console.log(queryData)
         db.query(queryData, function (error, db_data) {
             if (error) {
                 logger.error(
@@ -126,11 +125,6 @@ function researchFields_insert(parameters){
     })
 }
 
-function researchFields_search(parameters){
-    return new Promise(function (resolve, reject) {
-        const queryData = `SELECT * FROM Research_Fields WHERE `
-    })
-}
 module.exports = {
     researchFields_selectAll,
     researchFields_selectDetail,
@@ -138,5 +132,4 @@ module.exports = {
     researchFields_selectDetailPhotos,
     researchFields_android_all,
     researchFields_insert,
-    researchFields_search
 }
