@@ -14,6 +14,15 @@
                     <%- include('../include/researchFieldsNav.ejs') %>
                 </div>
                 <div id="researchContent" class="col-10">
+                    <h3 class="mb-3" style="float:left;" ><b>연구 분야</b> (
+                        <%if(parameters.type == "progress"){%>
+                            진행 과제
+                        <%}else if(parameters.type == "finish") {%>
+                            완료 과제
+                        <%}else{%>
+                            전체
+                        <%}%>)
+                    </h3>
                     <form id="searchBOX" class="form-inline my-2 my-lg-0" style="float:right;" method="get" action="/research/fields?">
                         <input id="type" name="type" type="hidden" value="<%=parameters.type%>">
                         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="schKeyword">
