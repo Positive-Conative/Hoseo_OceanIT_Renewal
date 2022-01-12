@@ -8,12 +8,13 @@ var counterDAO = require('../model/counterDAO')
 function researchFields(req, res, next) {
     var queryType = req.query.type;
     var queryPage = req.query.page;
+    var querySearch = req.query.schKeyword;
     var parameters = {
         "type": queryType,
         "page": queryPage,
+        "search": querySearch,
         "name": 'vistors',
     };
-
     researcFieldsDAO.researchFields_selectAll(parameters).then(
         (db_data) => {
             counterDAO.findCount(parameters).then(
@@ -67,7 +68,6 @@ function researchFieldsDetail(req, res, next) {
                         let token = req.cookies.user;
                         jwtmiddle.jwtCerti(token).then(
                             (permission) => {
-                                console.log(db_values["detailData"])
                                 res.render('research_fields/researchFieldsDetail', {
                                     dayjs, permission,
                                     detailData: db_values["detailData"],
@@ -87,7 +87,6 @@ function researchFieldsDetail(req, res, next) {
 function androidResearchFieldsAll(req, res, next) {
     var querys = req.query.classify
     var sql = ""
-
     var parameters = {
         "querys": querys,
     };
@@ -98,7 +97,7 @@ function androidResearchFieldsAll(req, res, next) {
         }
     ).catch(err => res.send("DBDRR", err))
 }
-async function researcFieldhWrite(req, res, next){
+async function researchFieldhWrite(req, res, next){
     let token = req.cookies.user;
     var queryNum = req.query.num;
     var parameters = {
@@ -113,10 +112,28 @@ async function researcFieldhWrite(req, res, next){
         res.send("<scripte>alert('" + error + "');history.back();")
     }
 }
+async function researchFieldhWriteP(req, res, next){
+
+    try {
+        const insertData = await researcFieldsDAO.researchFields_insert();
+    } catch (error) {
+        
+    }
+}
+async function researchFieldsSearch(req, res, next){
+
+    try {
+        const search_data = await researcFieldsDAO.researchFields_search()
+    } catch (error) {
+        
+    }
+}
 
 module.exports = {
     researchFields,
     researchFieldsDetail,
     androidResearchFieldsAll,
-    researcFieldhWrite,
+    researchFieldhWrite,
+    researchFieldhWriteP,
+    researchFieldsSearch,
 }
