@@ -99,9 +99,7 @@ function androidResearchFieldsAll(req, res, next) {
 }
 async function researchFieldhWrite(req, res, next){
     let token = req.cookies.user;
-    var queryNum = req.query.num;
     var parameters = {
-        "rrid": queryNum,
         "name": 'vistors'
     };
     try {
@@ -138,7 +136,6 @@ async function researchFieldhWriteP(req, res, next){
         const searchFields = await researcFieldsDAO.researchFields_check(parameters);
         if(searchFields[0]!== undefined) throw "이미 존재하는 과제명입니다.";
         const results = await researcFieldsDAO.researchFields_insert(parameters);
-        console.log(results)
         res.send("<script>alert('"+ results +"');location.href='/research/fields?type=all&schKeyword=&page=1';</script>")
     } catch (error) {
         res.send("<script>alert('" + error +"');history.go(-1);</script>")

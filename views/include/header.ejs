@@ -61,6 +61,12 @@
           <li class="nav-item active">
             <a class="nav-link" href="/gallery">Gallery</a>
           </li>
+          <% if(permission.userRole==0){%>
+            <li class="nav-item active">
+              <a class="nav-link" href="/admin">Admin</a>
+            </li>
+          <%}%>
+          
          
         </ul>
 

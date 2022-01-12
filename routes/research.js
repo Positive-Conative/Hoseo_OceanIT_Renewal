@@ -24,7 +24,6 @@ router.get('/results/write', researchResultsController.researcResultWrite);
 
 //----------------------------------------------------------------------------------//
 //research fields POST
-
 router.post('/fields/write', researchFieldsController.researchFieldhWriteP);
 
 module.exports = router;
