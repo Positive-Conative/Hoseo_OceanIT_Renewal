@@ -107,15 +107,42 @@ async function researchFieldhWrite(req, res, next){
     try {
         const count_data = await counterDAO.findCount(parameters);
         const permission = await jwtmiddle.jwtCerti(token);
-        return res.render('research_fields/researchFieldsWrite',{count_data, permission});
+        console.log(permission)
+        if(permission.userRole<5)
+            return res.render('research_fields/researchFieldsWrite',{count_data, permission});
+        else throw "권한이없습니다.";
     } catch (error) {
-        res.send("<scripte>alert('" + error + "');history.back();")
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
     }
 }
 
-function researchFieldhWriteP(req, res, next){
-    console.log(1)
-    console.log(req.body)
+async function researchFieldhWriteP(req, res, next){
+    let body = req.body
+    let parameters ={
+        classify_ko:body.classify_ko,
+        research_name_ko:body.research_name_ko,
+        business_name_ko: body.business_name_ko,
+        department_name_ko: body.department_name_ko,
+        subjectivity_agency_ko: body.subjectivity_agency_ko,
+        support_agency_ko: body.support_agency_ko,
+        participation_agency_ko: body.participation_agency_ko,
+        research_goal_ko: body.research_goal_ko,
+        research_content_ko: body.research_content_ko,
+        expectation_result_ko: body.expectation_result_ko,
+        research_manager_ko: body.research_manager_ko,
+        research_belong_ko: body.research_belong_ko,
+        date_start: body.date_start,
+        date_end: body.date_end,
+    }
+    try {
+        const searchFields = await researcFieldsDAO.researchFields_check(parameters);
+        if(searchFields[0]!== undefined) throw "이미 존재하는 과제명입니다.";
+        const results = await researcFieldsDAO.researchFields_insert(parameters);
+        console.log(results)
+        res.send("<script>alert('"+ results +"');location.href='/research/fields?type=all&schKeyword=&page=1';</script>")
+    } catch (error) {
+        res.send("<script>alert('" + error +"');history.go(-1);</script>")
+    }
 }
 
 module.exports = {

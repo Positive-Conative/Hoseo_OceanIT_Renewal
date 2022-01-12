@@ -117,11 +117,47 @@ function researchFields_android_all(parameters) {
 }
 function researchFields_insert(parameters){
     return new Promise(function (resolve, reject) {
-        const queryData = `INSERT INTO Research_Fields (classify_ko, research_name_ko,
-            business_name_ko, department_name_ko, subjectivity_agency_ko, 
-            support_agency_ko, participation_agency_ko, research_goal_ko,
-            research_content_ko, expectation_result_ko, research_manager_ko,
-            research_belong_ko, date_start, date_end)`
+        // const queryData = `INSERT INTO Research_Fields (classify_ko, research_name_ko,
+        //     business_name_ko, department_name_ko, subjectivity_agency_ko, 
+        //     support_agency_ko, participation_agency_ko, research_goal_ko,
+        //     research_content_ko, expectation_result_ko, research_manager_ko,
+        //     research_belong_ko, date_start, date_end)
+        //     VALUES ("${parameters.classify_ko}", "${parameters.research_name_ko}", "${parameters.business_name_ko}", 
+        //     "${parameters.department_name_ko}", "${parameters.subjectivity_agency_ko}", "${parameters.support_agency_ko}", 
+        //     "${parameters.participation_agency_ko}", "${parameters.research_goal_ko}", "${parameters.research_content_ko}", 
+        //     "${parameters.expectation_result_ko}" ,"${parameters.research_manager_ko}", "${parameters.research_belong_ko}," 
+        //     '${parameters.date_start}', '${parameters.date_end}')`;
+
+        console.log(parameters)
+        const queryData = `INSERT Research_Fields SET classify_ko=?, research_name_ko=?, business_name_ko=?, 
+        department_name_ko=?, subjectivity_agency_ko=?, support_agency_ko=?, participation_agency_ko=?, research_goal_ko=?, research_content_ko=?, expectation_result_ko=?, research_manager_ko=?, research_belong_ko=?, date_start=?, date_end=?`;
+        db.query(queryData,[parameters.classify_ko, parameters.research_name_ko, parameters.business_name_ko, parameters.department_name_ko, parameters.subjectivity_agency_ko, parameters.support_agency_ko, parameters.participation_agency_ko, parameters.research_goal_ko, parameters.research_content_ko, parameters.expectation_result_ko, parameters.research_manager_ko, parameters.research_belong_ko, parameters.date_start, parameters.date_end], function (error, db_data) {
+            if(error){
+                logger.error(
+                    "DB error [Research_Fields]"+
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+            }
+            resolve('데이터 추가 완료');
+        })
+    })
+}
+function researchFields_check(parameters) {
+    var queryData = `SELECT * FROM Research_Fields where research_name_ko="${parameters.research_name_ko}"`;
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data) {
+            console.log(db_data)
+            if (error) {
+                logger.error(
+                    "DB error [Research_Fields]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+                //throw error;
+            }
+            resolve(db_data);
+        });
     })
 }
 
@@ -132,4 +168,5 @@ module.exports = {
     researchFields_selectDetailPhotos,
     researchFields_android_all,
     researchFields_insert,
+    researchFields_check,
 }
