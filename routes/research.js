@@ -11,10 +11,7 @@ router.get('/fields/detail', researchFieldsController.researchFieldsDetail);
 //android
 router.get('/android',androidController.Android);
 router.get('/android/fields', researchFieldsController.androidResearchFieldsAll);
-
-router.get('/fields/write', researchFieldsController.researchFieldhWrite)
-router.post('/fields/write', researchFieldsController.researchFieldhWriteP)
-router.get('/fields/search', researchFieldsController.researchFieldsSearch)
+router.get('/fields/write', researchFieldsController.researchFieldhWrite);
 
 //----------------------------------------------------------------------------------//
 //research results
@@ -24,5 +21,10 @@ router.get('/results/detail', researchResultsController.researchResultsDetail);
 router.get('/android/results', researchResultsController.androidResearchResultsAll);
 
 router.get('/results/write', researchResultsController.researcResultWrite);
+
+//----------------------------------------------------------------------------------//
+//research fields POST
+
+router.post('/fields/write', researchFieldsController.researchFieldhWriteP);
 
 module.exports = router;

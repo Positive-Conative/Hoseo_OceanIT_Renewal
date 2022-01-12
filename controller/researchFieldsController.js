@@ -112,21 +112,10 @@ async function researchFieldhWrite(req, res, next){
         res.send("<scripte>alert('" + error + "');history.back();")
     }
 }
-async function researchFieldhWriteP(req, res, next){
 
-    try {
-        const insertData = await researcFieldsDAO.researchFields_insert();
-    } catch (error) {
-        
-    }
-}
-async function researchFieldsSearch(req, res, next){
-
-    try {
-        const search_data = await researcFieldsDAO.researchFields_search()
-    } catch (error) {
-        
-    }
+function researchFieldhWriteP(req, res, next){
+    console.log(1)
+    console.log(req.body)
 }
 
 module.exports = {
@@ -135,5 +124,4 @@ module.exports = {
     androidResearchFieldsAll,
     researchFieldhWrite,
     researchFieldhWriteP,
-    researchFieldsSearch,
 }
