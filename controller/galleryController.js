@@ -13,7 +13,7 @@ function galleryMain(req, res, next) {
         (db_data) => {
             counterDAO.findCount(parameters).then(
                 (count_data) => {
-                    let token = req.cookies.user;
+                    let token = req.session.user;
                     jwtmiddle.jwtCerti(token).then(
                         (permission) => {
                             res.render('gallery/galleryMain', { db_data, permission, count_data });
@@ -36,7 +36,7 @@ function galleryDetail(req, res, next) {
         (db_data) => {
             counterDAO.findCount(parameters).then(
                 (count_data) => {
-                    let token = req.cookies.user;
+                    let token = req.session.user;
                     jwtmiddle.jwtCerti(token).then(
                         (permission) => {
                             res.render('gallery/galleryDetail', { db_data, permission,count_data });

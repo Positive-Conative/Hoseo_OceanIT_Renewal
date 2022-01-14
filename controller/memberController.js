@@ -15,7 +15,7 @@ function memberMain(req, res, next) {
         ()=>{
     counterDAO.findCount(parameters).then(
         (count_data) => {
-            let token = req.cookies.user;
+            let token = req.session.user;
             jwtmiddle.jwtCerti(token).then(
                 (permission)=>{
                     res.render('member/memberMain', { db_data, permission,count_data });

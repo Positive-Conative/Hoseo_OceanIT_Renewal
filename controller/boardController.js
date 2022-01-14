@@ -18,7 +18,7 @@ function noticeMain(req, res, next) {
         (db_data) => {
             counterDAO.findCount(parameters).then(
                 (count_data) => {
-                    let token = req.cookies.user;
+                    let token = req.session.user;
                     jwtmiddle.jwtCerti(token).then(
                         (permission) => {
                             res.render('board/notice/noticeMain', { db_data, dayjs, permission, parameters, count_data })
@@ -30,7 +30,7 @@ function noticeMain(req, res, next) {
     ).catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
 }
 function noticeWrite(req, res, next) {
-    let token = req.cookies.user;
+    let token = req.session.user;
     var parameters = {
         "name": 'vistors'
     }
@@ -66,7 +66,7 @@ function noticeDetail(req, res, next) {
             () => {
                 counterDAO.findCount(parameters).then(
                     (count_data) => {
-                        let token = req.cookies.user;
+                        let token = req.session.user;
                         jwtmiddle.jwtCerti(token).then(
                             (permission) => {
                                 res.render('board/notice/noticeDetail', {
@@ -99,7 +99,7 @@ function noticeModify(req, res, next) {
             () => {
                 counterDAO.findCount(parameters).then(
                     (count_data) => {
-                        let token = req.cookies.user;
+                        let token = req.session.user;
                         jwtmiddle.jwtCerti(token).then(
                             (permission) => {
                                 if (permission.userId == db_values["detailData"][0].userId) {
@@ -124,7 +124,7 @@ function noticeModifyPost(req, res, next) {
     var parameters = {
         "qid": queryNum,
     };
-    let token = req.cookies.user;
+    let token = req.session.user;
     if (req.body.title == "") res.send("<script>alert('제목을입력하세요.');history.back();</script>")
     else if (req.body.content == "") res.send("<script>alert('내용을입력하세요.');history.back();</script>")
     else {
@@ -151,7 +151,7 @@ function noticeModifyPost(req, res, next) {
 function noticeWritePost(req, res, next) {
     var content = req.body.content;
     var title = req.body.title;
-    let token = req.cookies.user;
+    let token = req.session.user;
     console.log(req.body)
     if (title == "") res.send("<script>alert('제목을입력하세요.');history.back();</script>")
     else if (content == "") res.send("<script>alert('내용을입력하세요.');history.back();</script>")
@@ -182,7 +182,7 @@ function noticeDelete(req, res, next) {
     var parameters = {
         "qid": queryNum
     };
-    let token = req.cookies.user;
+    let token = req.session.user;
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
             console.log(permission)
@@ -215,7 +215,7 @@ function inquiryMain(req, res, next) {
         (db_data) => {
             counterDAO.findCount(parameters).then(
                 (count_data) => {
-                    let token = req.cookies.user;
+                    let token = req.session.user;
                     jwtmiddle.jwtCerti(token).then(
                         (permission) => {
                             res.render('board/inquiry/inquiryMain', { db_data, dayjs, permission, parameters, count_data })
@@ -227,7 +227,7 @@ function inquiryMain(req, res, next) {
     ).catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
 }
 function inquiryWrite(req, res, next) {
-    let token = req.cookies.user;
+    let token = req.session.user;
 
     var parameters = {
         "name": 'vistors'
@@ -275,7 +275,7 @@ function inquiryDetail(req, res, next) {
             () => {
                 counterDAO.findCount(parameters).then(
                     (count_data) => {
-                        let token = req.cookies.user;
+                        let token = req.session.user;
                         jwtmiddle.jwtCerti(token).then(
                             (permission) => {
                                 console.log(db_values["commentData"])
@@ -300,7 +300,7 @@ function inquiryComment(req, res, next) {
     var comment = req.body.comment;
     if (comment == "") res.send("<script>alert('댓글을 입력하세요.');history.back();</script>")
     else {
-        let token = req.cookies.user;
+        let token = req.session.user;
         jwtmiddle.jwtCerti(token).then(
             (permission) => {
                 var date = new dayjs();
@@ -337,7 +337,7 @@ function inquiryModify(req, res, next) {
             () => {
                 counterDAO.findCount(parameters).then(
                     (count_data) => {
-                        let token = req.cookies.user;
+                        let token = req.session.user;
                         jwtmiddle.jwtCerti(token).then(
                             (permission) => {
                                 if (permission.userId == db_values["detailData"][0].userId) {
@@ -362,7 +362,7 @@ function inquiryModifyPost(req, res, next) {
     var parameters = {
         "qid": queryNum
     };
-    let token = req.cookies.user;
+    let token = req.session.user;
     if (req.body.title == "") res.send("<script>alert('제목을입력하세요.');history.back();</script>")
     else if (req.body.content == "") res.send("<script>alert('내용을입력하세요.');history.back();</script>")
     else {
@@ -389,7 +389,7 @@ function inquiryModifyPost(req, res, next) {
 function inquiryWritePost(req, res, next) {
     var content = req.body.content;
     var title = req.body.title;
-    let token = req.cookies.user;
+    let token = req.session.user;
     var file = req.file;
     if (title == "") res.send("<script>alert('제목을입력하세요.');history.back();</script>")
     else if (content == "") res.send("<script>alert('내용을입력하세요.');history.back();</script>")
@@ -424,7 +424,7 @@ function inquiryDelete(req, res, next) {
     var parameters = {
         "qid": queryNum
     };
-    let token = req.cookies.user;
+    let token = req.session.user;
     jwtmiddle.jwtCerti(token).then(
         async (permission) => {
             db.query(`DELETE FROM inquiryComment WHERE qid="${parameters.qid}"`)
@@ -457,7 +457,7 @@ function freeBoardMain(req, res, next) {
         (db_data) => {
             counterDAO.findCount(parameters).then(
                 (count_data) => {
-                    let token = req.cookies.user;
+                    let token = req.session.user;
                     jwtmiddle.jwtCerti(token).then(
                         (permission) => {
                             res.render('board/free/FreeBoardMain', { db_data, dayjs, permission, parameters, count_data })
@@ -471,7 +471,7 @@ function freeBoardMain(req, res, next) {
     ).catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
 }
 function freeBoardWrite(req, res, next) {
-    let token = req.cookies.user;
+    let token = req.session.user;
     var parameters = {
         "name": 'vistors'
     }
@@ -518,7 +518,7 @@ function freeBoardDetail(req, res, next) {
             () => {
                 counterDAO.findCount(parameters).then(
                     (count_data) => {
-                        let token = req.cookies.user;
+                        let token = req.session.user;
                         jwtmiddle.jwtCerti(token).then(
                             (permission) => {
                                 res.render('board/free/freeBoardDetail', {
@@ -542,7 +542,7 @@ function freeBoardComment(req, res, next) {
     var comment = req.body.comment;
     if (comment == "") res.send("<script>alert('댓글을 입력하세요.');history.back();</script>")
     else {
-        let token = req.cookies.user;
+        let token = req.session.user;
         jwtmiddle.jwtCerti(token).then(
             (permission) => {
                 var date = new dayjs();
@@ -579,7 +579,7 @@ function freeBoardModify(req, res, next) {
             () => {
                 counterDAO.findCount(parameters).then(
                     (count_data) => {
-                        let token = req.cookies.user;
+                        let token = req.session.user;
                         jwtmiddle.jwtCerti(token).then(
                             (permission) => {
                                 if (permission.userId == db_values["detailData"][0].userId) {
@@ -604,7 +604,7 @@ function freeBoardModifyPost(req, res, next) {
     var parameters = {
         "qid": queryNum
     };
-    let token = req.cookies.user;
+    let token = req.session.user;
     if (req.body.title == "") res.send("<script>alert('제목을입력하세요.');history.back();</script>")
     else if (req.body.content == "") res.send("<script>alert('내용을입력하세요.');history.back();</script>")
     else {
@@ -631,7 +631,7 @@ function freeBoardModifyPost(req, res, next) {
 function freeBoardWritePost(req, res, next) {
     var content = req.body.content;
     var title = req.body.title;
-    let token = req.cookies.user;
+    let token = req.session.user;
     if (title == "") res.send("<script>alert('제목을입력하세요.');history.back();</script>")
     else if (content == "") res.send("<script>alert('내용을입력하세요.');history.back();</script>")
     else {
@@ -660,7 +660,7 @@ async function freeBoardDelete(req, res, next) {
     var parameters = {
         "qid": queryNum
     };
-    let token = req.cookies.user;
+    let token = req.session.user;
     jwtmiddle.jwtCerti(token).then(
         async (permission) => {
             db.query(`DELETE FROM freeBoardComment WHERE qid="${parameters.qid}"`)

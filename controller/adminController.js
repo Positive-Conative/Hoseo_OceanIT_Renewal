@@ -30,7 +30,7 @@ var counterDAO = require('../model/counterDAO')
 //         )
 //         .then(
 //             () => {
-//                 let token = req.cookies.user;
+//                 let token = req.session.user;
 //                 jwtmiddle.jwtCerti(token).then(
 //                     (permission) => {
 //                         res.render('admin/adminMain', {
@@ -46,7 +46,7 @@ var counterDAO = require('../model/counterDAO')
 // }
 
 async function adminMain(req, res, next) {
-    let token = req.cookies.user;
+    let token = req.session.user;
     let parameters ={
         "name" : 'vistors'
     }

@@ -21,6 +21,14 @@ var adminRouter = require('./routes/admin');
 
 var app = express();
 
+//session
+app.use(session({
+  secret: '!#!#Conative#!#!',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 1000 * 60 * 30 },
+}))
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -44,13 +52,7 @@ app.use('/auth', authRouter);
 app.use('/board', boardRouter);
 app.use('/admin', adminRouter);
 
-//session
-app.use(session({
-  secret: '!#!#Conative#!#!',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { maxAge: 1000 * 60 * 60 * 24 },
-}))
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -7,7 +7,9 @@ var counterDAO = require('../model/counterDAO')
 const crypto = require('crypto');
 
 function signIn(req, res, next) {
-    let token = req.cookies.user;
+    console.log(req.session)
+    let token = req.session.user;
+    console.log(token)
     var userId = "";
     if (token !== undefined) {
         return res.send("<script>alert('접근할수 없습니다.'); location.href='/'; </script>")
@@ -32,9 +34,7 @@ function checkUser(req, res, next) {
         }
         authDAO.checkUser(parameters).then(
             (db_data) => {
-                console.log(db_data[0])
                 if(db_data[0].role==5){
-                    console.log(1)
                     return res.send("<script>alert('You do not have permission');location.href='/auth/logout';</script>");
                 }
                 if (db_data[0] != undefined) {
@@ -53,10 +53,11 @@ function checkUser(req, res, next) {
                                 console.log("아이디 저장 해제");
                                 res.clearCookie('loginId')
                             }
-                            res.cookie("user", token);
+                            req.session.user = token;
+                            console.log(req.session)
                             res.redirect("/")
                         }
-                    ).catch(err => res.send("<script>alert('jwt err');</script>"));
+                    ).catch(err => res.send("<script>alert('jwt err');history.go(-1);</script>"));
                 } else {
                     res.send("<script>alert('JWT is wrong...');history.go(-1);</script>")
                 }
@@ -66,7 +67,7 @@ function checkUser(req, res, next) {
 }
 
 function revise_check(req, res, next) {
-    let token = req.cookies.user;
+    let token = req.session.user;
     var queryPage = req.query.page;
     var parameters = {
         "page": queryPage,
@@ -84,7 +85,7 @@ function revise_check(req, res, next) {
 }
 
 function revise_check_post(req, res, next) {
-    let token = req.cookies.user;
+    let token = req.session.user;
 
     var queryPage = req.query.page;
     var parameters = {
@@ -155,7 +156,7 @@ function updateUser(req, res, next) {
 }
 
 function signUp(req, res, next) {
-    let token = req.cookies.user;
+    let token = req.session.user;
 
     if (token !== undefined) {
         return res.send("<script>alert('접근할수 없습니다.'); location.href='/'; </script>")
@@ -189,9 +190,11 @@ function signUpPost(req, res, next) {
 }
 
 function logOut(req, res, next) {
-    let token = req.cookies.user;
+    let token = req.session.user;
     res.clearCookie('user');
-    res.redirect('/');
+    req.session.destroy(function(){
+        res.redirect('/');
+    })
 }
 
 //안드로이드 로그인 && 자동로그인
