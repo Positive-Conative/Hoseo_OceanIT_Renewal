@@ -7,7 +7,7 @@ var researchResultsDAO = require('../model/researchResultsDAO');
 var counterDAO = require('../model/counterDAO')
 
 function indexMain(req, res, next) {
-  let token = req.cookies.user;
+  let token = req.session.user;
   jwtmiddle.jwtCerti(token).then(
     (permission) => {
        res.render('index', { permission });

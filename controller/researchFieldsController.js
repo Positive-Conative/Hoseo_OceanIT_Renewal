@@ -19,7 +19,7 @@ function researchFields(req, res, next) {
         (db_data) => {
             counterDAO.findCount(parameters).then(
                 (count_data) => {
-                    let token = req.cookies.user;
+                    let token = req.session.user;
                     jwtmiddle.jwtCerti(token).then(
                         (permission) => {
                             res.render('research_fields/researchFieldsMain', { db_data, dayjs, parameters, permission, count_data });
@@ -65,7 +65,7 @@ function researchFieldsDetail(req, res, next) {
             () => {
                 counterDAO.findCount(parameters).then(
                     (count_data) => {
-                        let token = req.cookies.user;
+                        let token = req.session.user;
                         jwtmiddle.jwtCerti(token).then(
                             (permission) => {
                                 res.render('research_fields/researchFieldsDetail', {
@@ -98,7 +98,7 @@ function androidResearchFieldsAll(req, res, next) {
     ).catch(err => res.send("DBDRR", err))
 }
 async function researchFieldhWrite(req, res, next){
-    let token = req.cookies.user;
+    let token = req.session.user;
     var parameters = {
         "name": 'vistors'
     };

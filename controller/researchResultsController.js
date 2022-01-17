@@ -17,7 +17,7 @@ function researchResults(req, res, next) {
         (db_data) => {
             counterDAO.findCount(parameters).then(
                 (count_data) => {
-                    let token = req.cookies.user;
+                    let token = req.session.user;
                     jwtmiddle.jwtCerti(token).then(
                         (permission) => {
                             res.render('research_results/researchResultsMain', { db_data, permission, parameters, dayjs, count_data });
@@ -39,7 +39,7 @@ function researchResultsDetail(req, res, next) {
         (db_data) => {
             counterDAO.findCount(parameters).then(
                 (count_data) => {
-                    let token = req.cookies.user;
+                    let token = req.session.user;
                     jwtmiddle.jwtCerti(token).then(
                         (permission) => {
                             res.render('research_results/researchResultsDetail', { db_data, permission, parameters, dayjs,count_data });
@@ -62,7 +62,7 @@ function androidResearchResultsAll(req, res, next) {
     ).catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
 }
 async function researcResultWrite(req, res, next){
-    let token = req.cookies.user;
+    let token = req.session.user;
     var queryNum = req.query.num;
     var parameters = {
         "rrid": queryNum,

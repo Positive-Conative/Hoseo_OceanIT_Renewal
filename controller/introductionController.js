@@ -12,7 +12,7 @@ function introductionMain(req, res, next) {
         (db_data) => {
             counterDAO.findCount(parameters).then(
                 (count_data) => {
-                    let token = req.cookies.user;
+                    let token = req.session.user;
                     jwtmiddle.jwtCerti(token).then(
                         (permission) => {
                             res.render('introduction/introductionMain', { db_data, permission,count_data });
