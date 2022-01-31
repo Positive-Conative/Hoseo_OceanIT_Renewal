@@ -16,6 +16,7 @@ const storageBoard = multer.diskStorage({ // 2
         cb(null, 'public/images/board');
     },
     filename(req, file, cb) {
+        console.log(file)
         cb(null, `${Date.now()}__${file.originalname}`);
     },
 });

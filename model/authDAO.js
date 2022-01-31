@@ -21,7 +21,7 @@ function insertUser(parameters) {
                     userEmail: parameters.userEmail,
                     userPosition: parameters.userPosition,
                     userBelong: parameters.userBelong,
-                    userDepartment:parameters.userDepartment,
+                    userDepartment: parameters.userDepartment,
                     createDate: datetime,
                 }
                 db.query(`INSERT INTO User SET ? `, userObj, function (error, user) {
@@ -49,11 +49,10 @@ function checkUser(parameters) {
                     "\n \t" + db_data +
                     "\n \t" + error);
                 reject('DB ERR');
-                console.log(db_data)
-                if (db_data.rows[0] !== undefined) resolve(db_data.rows)
-                else reject("아이디 혹은 비밀번호를 다시 확인하세요.")
+
             }
-            resolve(db_data);
+            if (db_data[0] !== undefined) resolve(db_data[0])
+            else reject("아이디 혹은 비밀번호를 다시 확인하세요.")
         })
     })
 }
@@ -79,7 +78,7 @@ function updateToUser(parameters) {
                 reject('DB ERR');
                 //throw error;
             }
-            resolve(user);
+            resolve('업데이트 완료');
         })
     })
 }
@@ -94,7 +93,7 @@ function androidUser(parameters) {
                     "\n \t" + error);
                 reject('DB ERR');
             }
-            resolve(db_data)
+            resolve('업데이트 완료')
         })
     })
 }

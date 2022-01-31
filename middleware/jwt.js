@@ -13,6 +13,7 @@ function jwtCreate(userData){
         expiresIn: '30m',
         issuer: 'Conative',
       },function(err,token){
+        console.log(token)
         if(err) reject(err)
         else resolve(token)
       });

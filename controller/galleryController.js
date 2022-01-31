@@ -4,50 +4,80 @@ var jwtmiddle = require('../middleware/jwt');
 var galleryDAO = require('../model/galleryDAO');
 var counterDAO = require('../model/counterDAO')
 
-function galleryMain(req, res, next) {
-    var parameters = {
-        "name": 'vistors'
+async function galleryMain(req, res, next){
+    let token = req.session.user;
+    let parameters = {
+        "name" : 'vistors'
     }
-
-    galleryDAO.gallery_selectAll().then(
-        (db_data) => {
-            counterDAO.findCount(parameters).then(
-                (count_data) => {
-                    let token = req.session.user;
-                    jwtmiddle.jwtCerti(token).then(
-                        (permission) => {
-                            res.render('gallery/galleryMain', { db_data, permission, count_data });
-                        }
-                    ).catch(err => res.send("<script>alert('jwt err');</script>"));
-                }
-            )
-        }
-    ).catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
+    try {
+        const permission = await jwtmiddle.jwtCerti(token);
+        const count_data = await counterDAO.findCount(parameters);
+        const db_data = await galleryDAO.gallery_selectAll();
+        console.log(req.baseUrl)
+        res.render('gallery/galleryMain',{db_data, permission, count_data});
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+async function galleryDetail(req, res, next) {
+    let token = req.session.user;
+    let queryNum = req.query.num
+    let parameters = {
+        "gid" : queryNum,
+        "name" : 'vistors'
+    }
+    try {
+        const permission = await jwtmiddle.jwtCerti(token)
+        const count_data = await counterDAO.findCount(parameters)
+        const db_data = await galleryDAO.gallery_selectOneDetail(parameters)
+        res.render('gallery/galleryDetail', { db_data, permission, count_data })
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+async function galleryMainApp(req, res, next){
+    let token = req.session.user;
+    let parameters = {
+        "name" : 'vistors'
+    }
+    try {
+        const permission = await jwtmiddle.jwtCerti(token);
+        const count_data = await counterDAO.findCount(parameters);
+        const db_data = await galleryDAO.gallery_selectAll();
+        res.json({
+            "count_data" :count_data,
+            "permission" : permission,
+            "db_data" : db_data
+        })
+    } catch (error) {
+        res.status(403).json({"message" : error})
+    }
 }
 
-function galleryDetail(req, res, next) {
-    var queryNum = req.query.num;
-    var parameters = {
-        "gid": queryNum,
-        "name": 'vistors'
-    };
-
-    galleryDAO.gallery_selectOneDetail(parameters).then(
-        (db_data) => {
-            counterDAO.findCount(parameters).then(
-                (count_data) => {
-                    let token = req.session.user;
-                    jwtmiddle.jwtCerti(token).then(
-                        (permission) => {
-                            res.render('gallery/galleryDetail', { db_data, permission,count_data });
-                        }
-                    ).catch(err => res.send("<script>alert('jwt err');</script>"));
-                }
-            ).catch(err => res.send("<script>alert('" + err + "');location.href='/'"))
-        }
-    ).catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
+async function galleryDetailApp(req, res, next) {
+    let token = req.session.user;
+    let queryNum = req.query.num
+    let parameters = {
+        "gid" : queryNum,
+        "name" : 'vistors'
+    }
+    try {
+        console.log(parameters)
+        const permission = await jwtmiddle.jwtCerti(token)
+        const count_data = await counterDAO.findCount(parameters)
+        const db_data = await galleryDAO.gallery_selectOneDetail(parameters)
+        res.json({
+            "count_data" :count_data,
+            "permission" : permission,
+            "db_data" : db_data
+        })
+    } catch (error) {
+        res.status(403).json({"message" : error})
+    }
 }
 module.exports = {
     galleryMain,
-    galleryDetail
+    galleryDetail,
+    galleryMainApp,
+    galleryDetailApp,
 }
