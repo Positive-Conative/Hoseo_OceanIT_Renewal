@@ -11,18 +11,18 @@
                 <div class="row">
                     <div class="col-6 col-md-4 mx-auto mb-5">
                         <div id="showImg">
-                            <% if(db_data[0].userImg){%>
+                            <% if(db_data.userImg){%>
 
-                                <img id="img_area" src="/images/users/<%= db_data[0].userImg%>" class="img" />
+                                <img id="img_area" src="/images/users/<%= db_data.userImg%>" class="img" />
                                 <%}else{%>
                                     <img id="img_area" src="/images/notImage.jpg" />
                                     <%}%>
                         </div>
                         <input type="hidden" id="attachment" name="attachment"
-                            value="<%= db_data[0].userImg?db_data[0].userImg:'' %>">
-                        <% if(db_data[0].userImg){ %>
+                            value="<%= db_data.userImg?db_data.userImg:'' %>">
+                        <% if(db_data.userImg){ %>
                             <div class="input-group mb-3" id="currentAttachemnt">
-                                <input type="text" class="form-control" value="<%= db_data[0].userImg %>" readonly />
+                                <input type="text" class="form-control" value="<%= db_data.userImg %>" readonly />
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button"
                                         onclick="$('#attachment').val('');$('#currentAttachemnt').hide();$('#newAttachment').removeClass('d-none');"
@@ -30,7 +30,7 @@
                                 </div>
                             </div>
                             <% } %>
-                                    <input type="file" accept="image/*" id="newAttachment" class="form-control-file <%= db_data[0].userImg?'d-none':'' %>" name="newFile">
+                                    <input type="file" accept="image/*" id="newAttachment" class="form-control-file <%= db_data.userImg?'d-none':'' %>" name="newFile">
                                 
                     </div>
                     <div class="col-md-8">
@@ -38,7 +38,7 @@
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="userId" class="form-label">ID<sup>*</sup></label>
-                                    <input type="text" class="form-control" id="userId" value="<%= db_data[0].userId%>"
+                                    <input type="text" class="form-control" id="userId" value="<%= db_data.userId%>"
                                         readonly>
                                 </div>
                             </div>
@@ -46,7 +46,7 @@
                                 <div class="mb-3">
                                     <label for="userEmail" class="form-label">Email<sup>*</sup></label>
                                     <input type="email" class="form-control" id="userEmail" name="userEmail"
-                                        value="<%= db_data[0].userEmail%>">
+                                        value="<%= db_data.userEmail%>">
                                 </div>
                             </div>
                         </div>
@@ -69,7 +69,7 @@
                                 <div class="mb-3">
                                     <label for="inputName" class="form-label">이름(KO)<sup>*</sup></label>
                                     <input type="text" class="form-control" id="inputName" name="inputName"
-                                        value="<%= db_data[0].userName%>">
+                                        value="<%= db_data.userName%>">
                                 </div>
                             </div>
 
@@ -77,7 +77,7 @@
                                 <div class="mb-3">
                                     <label for="inputNameEN" class="form-label">이름(EN)<sup>*</sup></label>
                                     <input type="text" class="form-control" id="inputNameEN" name="inputNameEN"
-                                        value="<%= db_data[0].userNameEN%>">
+                                        value="<%= db_data.userNameEN%>">
                                 </div>
                             </div>
                         </div>
@@ -86,35 +86,35 @@
                                 <div class="mb-3">
                                     <label for="inputPhone" class="form-label">전화번호</label>
                                     <input type="phone" class="form-control" id="inputPhone" name="inputPhone"
-                                        value="<%= db_data[0].userPhone%>">
+                                        value="<%= db_data.userPhone%>">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="inputAdd" class="form-label">주소</label>
                                     <input type="text" class="form-control" id="inputAdd" name="inputAdd"
-                                        value="<%= db_data[0].userAdd%>">
+                                        value="<%= db_data.userAdd%>">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="Belong" class="form-label">소속</label>
                                     <input type="text" class="form-control" id="Belong" name="Belong"
-                                        value="<%= db_data[0].userBelong%>">
+                                        value="<%= db_data.userBelong%>">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="Department" class="form-label">부서</label>
                                     <input type="text" class="form-control" id="Department" name="Department"
-                                        value="<%= db_data[0].userDepartment%>">
+                                        value="<%= db_data.userDepartment%>">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="Position" class="form-label">직책</label>
                                     <input type="text" class="form-control" id="Position" name="Position"
-                                        value="<%= db_data[0].userPosition%>">
+                                        value="<%= db_data.userPosition%>">
                                 </div>
                             </div>
                         </div>

@@ -21,7 +21,7 @@ function gallery_selectAll(parameters) {
 
 function gallery_selectOneDetail(parameters) {
     return new Promise(function (resolve, reject) {
-        var queryData = `SELECT * FROM Gallery where ${parameters.gid}`;
+        var queryData = `SELECT * FROM Gallery where gid = '${parameters.gid}'`;
         db.query(queryData, function (error, db_data) {
             if (error) {
                 logger.error(
@@ -31,6 +31,7 @@ function gallery_selectOneDetail(parameters) {
                 reject('DB ERR');
                 //throw error;
             }
+            // console.log(db_data)
             resolve(db_data);
         });
     })
