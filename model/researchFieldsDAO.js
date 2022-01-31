@@ -160,6 +160,23 @@ function researchFields_check(parameters) {
         });
     })
 }
+function researchFields_MainApp(){
+    let queryData = `SELECT * FROM Research_Fields ORDER BY date_end desc LIMIT 5`
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data) {
+            if (error) {
+                logger.error(
+                    "DB error [Research_Fields]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+                //throw error;
+            }
+            // console.log(db_data)
+            resolve(db_data);
+        })
+    })
+}
 
 module.exports = {
     researchFields_selectAll,
@@ -169,4 +186,5 @@ module.exports = {
     researchFields_android_all,
     researchFields_insert,
     researchFields_check,
+    researchFields_MainApp,
 }

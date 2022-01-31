@@ -130,6 +130,23 @@ function count_freeBoardComment(parameters){
         });
     })
 }
+function count_noticeBoardApp(parameters){
+    let queryData = `SELECT * FROM Notice_Board ORDER BY date desc LIMIT 1`;
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data) {
+            console.log(db_data);
+            if (error) {
+                logger.error(
+                    "DB error [Notice_Board]"+
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+                //throw error;
+            }
+            resolve(db_data);
+        })
+    })
+}
 module.exports = {
     count_questionBoard,
     count_questionBoardDetail,
@@ -138,5 +155,6 @@ module.exports = {
     count_noticeBoardDetail,
     count_freeBoard,
     count_freeBoardDetail,
-    count_freeBoardComment
+    count_freeBoardComment,
+    count_noticeBoardApp,
 }

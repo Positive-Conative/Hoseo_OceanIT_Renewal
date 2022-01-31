@@ -65,8 +65,25 @@ function researchResults_android_all(parameters) {
         });
     })
 }
+function researchResults_MainApp(){
+    let queryData = `SELECT * FROM Research_Results ORDER BY date desc LIMIT 5`;
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data){
+            if (error) {
+                logger.error(
+                    "DB error [Research_Results]"+
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+                //throw error;
+            }
+            resolve(db_data);
+        })
+    })
+}
 module.exports = {
     researchResults_selectAll,
     researchResults_selectDetail,
-    researchResults_android_all
+    researchResults_android_all,
+    researchResults_MainApp
 }
