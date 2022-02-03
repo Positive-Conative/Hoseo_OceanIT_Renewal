@@ -1,31 +1,51 @@
 <%- include('../include/header.ejs') %>
+<link rel="stylesheet" href="../../stylesheets/admin.css">
+<div id="indexbg" class="mb-5"></div>
+<div id="indexbg_text">
+    <h1 class="fs-1">관리자 페이지</h1>
+    <div>사용자들을 관리하는 페이지</div>
+</div>
 <div class="container">
-    <div class="row row-cols-1 row-cols-md-4 p-3 m-0">
-        <% for(var key in admin_list){%>
-            <div class="col mb-2">
-                <div class="card  border border-1">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <%= admin_list[key].userId %>
-                        </h5>
-                        <p class="card-text">
-                            <%= admin_list[key].userName %>
-                        </p>
+<table class="mt-5 table table-hover">
+    <tr>
+        <th>아이디</th>
+        <th>이름</th>
+        <th>이메일</th>
+        <th>소속</th>
+        <th>부서</th>
+        <th>직책</th>
+        <th>생성날짜</th>
+        <th>레벨</th>
+    </tr>
+    <tr>
+        <td>
+            dfsa
+        </td>
+        <td>
+            dfsa
+        </td>
+        <td>
+            dfsa
+        </td>
+        <td>
+            dfsa
+        </td>
+        <td>
+            dfsa
+        </td>
+        <td>
+            dfsa
+        </td>
+        <td>
+            dfsa
+        </td>
+        <td>
+            dfsa
+        </td>
+    </tr>
 
-                        <p class="card-text">
-                            <%= admin_list[key].userEmail %>
-                        </p>
 
-                        <p class="card-text">
-                            <%= admin_list[key].userAdd %>
-                        </p>
-                        <p class="card-text">
-                            <%= admin_list[key].role %>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <%}%>
-    </div>
+
+  </table>
 </div>
 <%- include('../include/footer.ejs') %>
