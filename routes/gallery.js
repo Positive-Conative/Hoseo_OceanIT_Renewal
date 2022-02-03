@@ -12,7 +12,7 @@ router.get('/', galleryController.galleryMain);
 router.get('/detail', galleryController.galleryDetail);
 
 // App Gallery
-router.get('/app/', galleryController.galleryMainApp);
+router.get('/app', galleryController.galleryMainApp);
 
 // App Gallery Detail
 router.get('/app/detail', galleryController.galleryDetailApp);

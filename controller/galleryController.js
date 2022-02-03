@@ -36,7 +36,8 @@ async function galleryDetail(req, res, next) {
     }
 }
 async function galleryMainApp(req, res, next){
-    let token = req.session.user;
+    let token = req.get('token')
+
     let parameters = {
         "name" : 'vistors'
     }
@@ -55,7 +56,7 @@ async function galleryMainApp(req, res, next){
 }
 
 async function galleryDetailApp(req, res, next) {
-    let token = req.session.user;
+    let token = req.get('token')
     let queryNum = req.query.num
     let parameters = {
         "gid" : queryNum,

@@ -10,11 +10,12 @@ var memberController = require('../controller/memberController');
 router.get('/', memberController.memberMain);
 
 router.post('/android/memberALL', (req, res)=>{
+    let token = req.get('token')
     db.query('select * from Member', (error, result)=>{
         if(error){
             throw error;
         }else{
-            res.send(result);
+            res.json({result});
         }
     })
 })

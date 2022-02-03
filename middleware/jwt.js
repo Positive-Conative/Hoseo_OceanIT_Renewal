@@ -26,7 +26,7 @@ function jwtCreateANDROID(userData){
         userName: userData.userName,
         userEmail: userData.userEmail
       }, process.env.JWT_SECRET, {
-        expiresIn: '7d',
+        expiresIn: '14d',
         issuer: 'Conative',
       },function(err,token){
         if(err) reject(err)
