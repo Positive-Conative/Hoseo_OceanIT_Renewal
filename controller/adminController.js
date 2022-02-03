@@ -3,6 +3,7 @@
 var jwtmiddle = require('../middleware/jwt');
 var boardDAO = require('../model/boardDAO');
 var counterDAO = require('../model/counterDAO')
+const adminDAO = require('../model/adminDAO')
 
 // function adminMain(req, res, next) {
 //     var queryType = req.query.type;
@@ -51,15 +52,22 @@ async function adminMain(req, res, next) {
         "name" : 'vistors'
     }
     try {
-        const count_data = await counterDAO.findCount(parameters);
         const permission = await jwtmiddle.jwtCerti(token);
-        if(permission.userRole==0) return res.render('admin/adminMain',{count_data, permission});
-        else throw "권한이없습니다"
+        
+        if(permission.userRole >=5) throw "권한이없습니다"
+
+
+        parameters.role = permission.userRole
+        const count_data = await counterDAO.findCount(parameters);
+        const admin_list = await adminDAO.admin_list(parameters);
+
+        res.render('admin/adminMain',{count_data, permission, admin_list});
+
     } catch (error) {
         res.send("<script>alert('" + error + "');location.href='/';</script>")
     }
 }
 
 module.exports = {
-    adminMain
+    adminMain,
 }
