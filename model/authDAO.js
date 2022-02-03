@@ -98,6 +98,7 @@ function androidUser(parameters) {
     })
 }
 function checkUserToken(parameters) {
+    console.log(parameters.Token)
     return new Promise(function (resolve, reject) {
         var queryData = `SELECT Token FROM User WHERE Token="${parameters.Token}"`;
         db.query(queryData, function (error, db_data) {
@@ -108,9 +109,9 @@ function checkUserToken(parameters) {
                     "\n \t" + error);
                 reject('DB ERR');
             }
-            console.log(db_data[0].Token)
+            console.log(db_data[0])
             if (db_data[0] == undefined) reject(1) //토큰이 존재하지 않습니다
-            else resolve(db_data[0].Token);
+            // else resolve(db_data[0].Token);
         })
     })
 }

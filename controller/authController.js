@@ -239,17 +239,16 @@ async function androidLogin(req, res, next) {
     }
 }
 async function checkToken(req, res, next) {
-    if (req.body.token === undefined) {
-        res.json({ "message": "Parameter ERR." })
-        return;
-    }
-    var queryToken = req.body.token;
+    // console.log(req)
+    // var queryToken = req.body.token;
+    var queryToken = req.get('token')
     var parameters = {
         "Token": queryToken
     }
     try {
-        const db_data = await authDAO.checkUserToken(parameters);
-        const permission = await jwtmiddle.jwtCerti(db_data.Token)
+        if(queryToken == undefined) throw "Parameter ERR."
+        // const db_data = await authDAO.checkUserToken(parameters);
+        const permission = await jwtmiddle.jwtCerti(parameters.Token)
         res.json({ "message": "성공" })
     } catch (error) {
         if(error) res.status(500).json({ "message": "토큰이 존재하지 않습니다." })

@@ -60,7 +60,7 @@ async function androidResearchFieldsAll(req, res, next) {
 }
 
 async function researchFieldhWrite(req, res, next) {
-    let token = req.session.user;
+    let token = req.get('token')
     var parameters = {
         "name": 'vistors'
     };

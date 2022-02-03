@@ -16,7 +16,8 @@ function indexMain(req, res, next) {
   )
 }
 async function indexMainApp(req, res, next){
-  let token = req.session.user;
+  // console.log(req.headers)
+  let token = req.get('token')
   try {
     const permission = await jwtmiddle.jwtCerti(token)
     const fields_data = await researchFieldsDAO.researchFields_MainApp()
