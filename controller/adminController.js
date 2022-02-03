@@ -52,7 +52,9 @@ async function adminMain(req, res, next) {
         "name" : 'vistors'
     }
     try {
+        if(token == undefined) throw "사용자 정보가 없습니다."
         const permission = await jwtmiddle.jwtCerti(token);
+        console.log(permission.userRole);
         
         if(permission.userRole >=5) throw "권한이없습니다"
 
