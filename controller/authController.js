@@ -242,6 +242,7 @@ async function checkToken(req, res, next) {
     // console.log(req)
     // var queryToken = req.body.token;
     var queryToken = req.get('token')
+    
     var parameters = {
         "Token": queryToken
     }
