@@ -17,9 +17,9 @@ async function researchFields(req, res, next) {
     };
     let token = req.session.user;
     try {
-        const db_data = await researcFieldsDAO.researchFields_selectAll(parameters);
         const count_data = await counterDAO.findCount(parameters);
         const permission = await jwtmiddle.jwtCerti(token);
+        const db_data = await researcFieldsDAO.researchFields_selectAll(parameters);
         res.render('research_fields/researchFieldsMain', { db_data, permission, count_data, dayjs, parameters });
     } catch (error) {
         res.send("<script>alert('" + error + "');location.href='/';</script>")

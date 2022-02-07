@@ -9,11 +9,14 @@ async function researchResults(req, res, next){
     let token = req.session.user;
     var queryType = req.query.type;
     var queryPage = req.query.page;
+    var querySearch = req.query.schKeyword;
     var parameters = {
         "type": queryType,
         "page": queryPage,
+        "search":querySearch,
         "name": 'vistors'
     }
+    console.log(parameters);
     try {
         const permission = await jwtmiddle.jwtCerti(token);
         const count_data = await counterDAO.findCount(parameters);
