@@ -6,18 +6,18 @@
         <div>사용자들을 관리하는 페이지</div>
     </div>
     <div class="container">
-        <% for (var key in admin_list) {%>
-            <table class="mt-5 table table-hover">
-                <tr>
-                    <th>아이디</th>
-                    <th>이름</th>
-                    <th>이메일</th>
-                    <th>소속</th>
-                    <th>부서</th>
-                    <th>직책</th>
-                    <th>생성날짜</th>
-                    <th>레벨</th>
-                </tr>
+        <table class="mt-5 table table-hover">
+            <tr>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>소속</th>
+                <th>부서</th>
+                <th>직책</th>
+                <th>생성날짜</th>
+                <th>레벨</th>
+            </tr>
+            <% for (var key in admin_list) {%>
                 <tr>
                     <td>
                         <%= admin_list[key].userId %>
@@ -44,7 +44,8 @@
                         <%= admin_list[key].role %>
                     </td>
                 </tr>
-            </table>
-            <% }%>
+        
+        <% }%>
+    </table>
     </div>
     <%- include('../include/footer.ejs') %>

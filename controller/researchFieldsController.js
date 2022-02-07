@@ -60,14 +60,17 @@ async function androidResearchFieldsAll(req, res, next) {
 }
 
 async function researchFieldhWrite(req, res, next) {
-    let token = req.get('token')
     var parameters = {
         "name": 'vistors'
     };
     try {
         const count_data = await counterDAO.findCount(parameters);
-        const permission = await jwtmiddle.jwtCerti(token);
-        console.log(permission)
+
+        let queryToken = req.session.user;
+        if(queryToken == undefined) throw "Parameter ERR."
+        const permission = await jwtmiddle.jwtCerti(queryToken)
+        if (permission.userRole >= 5) throw "권한이없습니다."
+
         if (permission.userRole < 5)
             return res.render('research_fields/researchFieldsWrite', { count_data, permission });
         else throw "권한이없습니다.";
@@ -95,6 +98,10 @@ async function researchFieldhWriteP(req, res, next) {
         date_end: body.date_end,
     }
     try {
+        let queryToken = req.session.user;
+        if(queryToken == undefined) throw "Parameter ERR."
+        const permission = await jwtmiddle.jwtCerti(queryToken)
+        if (permission.userRole >= 5) throw "권한이없습니다."
         const searchFields = await researcFieldsDAO.researchFields_check(parameters);
         if (searchFields[0] !== undefined) throw "이미 존재하는 과제명입니다.";
         const results = await researcFieldsDAO.researchFields_insert(parameters);
