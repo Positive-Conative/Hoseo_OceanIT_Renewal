@@ -5,11 +5,20 @@ var logger = require('../config/logger');
 
 function researchResults_selectAll(parameters) {
     var queryData = `SELECT * FROM Research_Results`
-    if(parameters.type=="patent"){
+    if(parameters.search!==''){
+        queryData += ` WHERE (title_ko LIKE '%${parameters.search}%')`;
+    }
+    if(parameters.type=="patent" && parameters.search!=''){
+        queryData += ` AND classify_ko = "특허"`;
+    } else if(parameters.type=="patent" && parameters.search==''){
         queryData += ` WHERE classify_ko = "특허"`;
-    }else if(parameters.type=="treatise"){
+    } else if(parameters.type=="treatise" && parameters.search!=''){
+        queryData += ` AND classify_ko = "논문"`;
+    } else if(parameters.type=="treatise" && parameters.search==''){
         queryData += ` WHERE classify_ko = "논문"`;
-    }else if(parameters.type=="announcement"){
+    } else if(parameters.type=="announcement" && parameters.search!=''){
+        queryData += ` AND classify_ko = "발표"`;
+    } else if(parameters.type=="announcement" && parameters.search==''){
         queryData += ` WHERE classify_ko = "발표"`;
     }
 

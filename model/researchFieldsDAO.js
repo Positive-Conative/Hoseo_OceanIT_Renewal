@@ -16,11 +16,9 @@ function researchFields_selectAll(parameters) {
     else if(parameters.type == "progress" && parameters.search==''){
         queryData += ` WHERE date_end > NOW()`;
     } else if (parameters.type == "finish" && parameters.search!='') {
-        console.log(1)
         queryData += ` AND date_end < NOW()`;
     }
     else if(parameters.type == "finish" && parameters.search==''){
-        console.log(2)
         queryData += ` WHERE date_end < NOW()`;
     }
     queryData += ` ORDER BY date_end desc`;
