@@ -48,23 +48,41 @@ const adminDAO = require('../model/adminDAO')
 
 async function adminMain(req, res, next) {
     let token = req.session.user;
-    let parameters ={
-        "name" : 'vistors'
+    let parameters = {
+        "name": 'vistors'
     }
     try {
-        if(token == undefined) throw "사용자 정보가 없습니다."
+        if (token == undefined) throw "사용자 정보가 없습니다."
         const permission = await jwtmiddle.jwtCerti(token);
-        console.log(permission.userRole);
-        
-        if(permission.userRole >=5) throw "권한이없습니다"
 
+        if (permission.userRole != 0) throw "권한이없습니다"
 
         parameters.role = permission.userRole
         const count_data = await counterDAO.findCount(parameters);
         const admin_list = await adminDAO.admin_list(parameters);
+        console.log(admin_list)
+        res.render('admin/adminMain', { count_data, permission, admin_list });
 
-        res.render('admin/adminMain',{count_data, permission, admin_list});
+    } catch (error) {
+        console.log(error)
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+async function adminMainP(req, res, next) {
+    let token = req.session.user;
+    console.log(req.body.userId)
+    let parameters = {
+        "userId": req.body.userId
+    }
+    try {
+        if (token == undefined) throw "사용자 정보가 없습니다."
+        const permission = await jwtmiddle.jwtCerti(token)
+        if (permission.userRole >= 5) throw "권한이없습니다."
 
+        // parameters.role = permission.userRole;
+        const admin_update = await adminDAO.admin_update(parameters)
+        console.log(admin_update)
+        res.redirect("/admin")
     } catch (error) {
         res.send("<script>alert('" + error + "');location.href='/';</script>")
     }
@@ -72,4 +90,5 @@ async function adminMain(req, res, next) {
 
 module.exports = {
     adminMain,
+    adminMainP,
 }
