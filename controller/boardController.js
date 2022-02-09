@@ -152,7 +152,7 @@ function noticeWritePost(req, res, next) {
     var content = req.body.content;
     var title = req.body.title;
     let token = req.session.user;
-    console.log(req.body)
+
     if (title == "") res.send("<script>alert('제목을입력하세요.');history.back();</script>")
     else if (content == "") res.send("<script>alert('내용을입력하세요.');history.back();</script>")
     else {
@@ -162,8 +162,7 @@ function noticeWritePost(req, res, next) {
                 var datetime = date.format('YYYY-MM-DD HH:mm:ss');
                 var userId = permission.userId;
                 var userName = permission.userName
-                var datas = { userId: userId, title: title, content: content, date: datetime,userName:userName };
-                console.log(datas)
+                var datas = { userId: userId, title: title, content: content, date: datetime, userName: userName };
                 db.query('INSERT INTO Notice_Board SET ?', datas, function (error, row) {
                     if (error) {
                         logger.error(
@@ -185,8 +184,6 @@ function noticeDelete(req, res, next) {
     let token = req.session.user;
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
-            console.log(permission)
-            console.log(parameters)
             db.query(`DELETE FROM Notice_Board WHERE qid="${parameters.qid}" && userId="${permission.userId}"`, function (error, row) {
                 if (error) {
                     logger.error(
@@ -278,7 +275,6 @@ function inquiryDetail(req, res, next) {
                         let token = req.session.user;
                         jwtmiddle.jwtCerti(token).then(
                             (permission) => {
-                                console.log(db_values["commentData"])
                                 res.render('board/inquiry/inquiryDetail', {
                                     dayjs, permission,
                                     detailData: db_values["detailData"],
@@ -401,10 +397,10 @@ function inquiryWritePost(req, res, next) {
                 var userId = permission.userId;
                 var userName = permission.userName;
                 if (file != undefined) {
-                    var datas = { userId: userId, title: title, content: content, date: datetime, img: file.filename, userName:userName };
+                    var datas = { userId: userId, title: title, content: content, date: datetime, img: file.filename, userName: userName };
                 }
                 else {
-                    var datas = { userId: userId, title: title, content: content, date: datetime,userName:userName };
+                    var datas = { userId: userId, title: title, content: content, date: datetime, userName: userName };
                 }
                 db.query('INSERT INTO Inquiry_Board SET ?', datas, function (error, row) {
                     if (error) {
@@ -640,8 +636,8 @@ function freeBoardWritePost(req, res, next) {
                 var date = new dayjs();
                 var datetime = date.format('YYYY-MM-DD HH:mm:ss');
                 var userId = permission.userId;
-                var userName= permission.userName
-                var datas = { userId: userId, title: title, content: content, date: datetime ,userName:userName};
+                var userName = permission.userName
+                var datas = { userId: userId, title: title, content: content, date: datetime, userName: userName };
                 db.query('INSERT INTO Free_Board SET ?', datas, function (error, row) {
                     if (error) {
                         logger.error(
@@ -681,7 +677,28 @@ async function freeBoardDelete(req, res, next) {
         }
     ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
 }
+async function noticeMainApp(req, res, next) {
+    var queryToken = req.get('token')
+    try {
+        var parameters = {
+            "name": 'vistors'
+        }
+        let token = req.session.user;
+        const db_data = await boardDAO.count_noticeBoard(parameters)
+        const cout_data = await counterDAO.findCount(parameters)
+        const permission = await jwtmiddle.jwtCerti(queryToken)
+        res.json({
+            db_data
+        })
+    } catch (error) {
+        res.json({
+            "Message" : "실패하였습니다.",
+            "Error_Message": error
+        })
+    }
+}
 module.exports = {
+    noticeMainApp,
     noticeMain,
     noticeWrite,
     noticeDetail,

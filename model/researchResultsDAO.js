@@ -123,11 +123,27 @@ function researchResults_insert(parameters) {
         })
     })
 }
+function researchResults_delete(parameters) {
+    let queryData = `DELETE FROM Research_Results WHERE rrid = '${parameters.rrid}'`;
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data) {
+            if (error) {
+                logger.error(
+                    "DB error [Research_Results]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+            }
+            resolve('삭제가 완료되었습니다.')
+        })
+    })
+}
 module.exports = {
     researchResults_selectAll,
     researchResults_selectDetail,
     researchResults_android_all,
     researchResults_MainApp,
     researchResults_check,
-    researchResults_insert
+    researchResults_insert,
+    researchResults_delete
 }

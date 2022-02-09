@@ -11,13 +11,11 @@ function indexMain(req, res, next) {
   let token = req.session.user;
   jwtmiddle.jwtCerti(token).then(
     (permission) => {
-      console.log(permission)
        res.render('index', { permission });
     }
   )
 }
 async function indexMainApp(req, res, next){
-  // console.log(req.headers)
   let token = req.get('token')
   try {
     const permission = await jwtmiddle.jwtCerti(token)

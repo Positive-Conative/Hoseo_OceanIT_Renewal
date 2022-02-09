@@ -134,7 +134,22 @@ function count_noticeBoardApp(parameters){
     let queryData = `SELECT * FROM Notice_Board ORDER BY date desc LIMIT 1`;
     return new Promise(function (resolve, reject) {
         db.query(queryData, function (error, db_data) {
-            console.log(db_data);
+            if (error) {
+                logger.error(
+                    "DB error [Notice_Board]"+
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+                //throw error;
+            }
+            resolve(db_data);
+        })
+    })
+}
+function select_notcieBoardApp(parameters){
+    let queryData = `SELECT userName, title, content, date FROM Notice_Board ORDER BY date desc LIMIT 10`;
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data) {
             if (error) {
                 logger.error(
                     "DB error [Notice_Board]"+
@@ -157,4 +172,5 @@ module.exports = {
     count_freeBoardDetail,
     count_freeBoardComment,
     count_noticeBoardApp,
+    select_notcieBoardApp,
 }

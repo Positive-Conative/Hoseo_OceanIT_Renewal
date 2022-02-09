@@ -16,7 +16,6 @@ async function researchResults(req, res, next) {
         "search": querySearch,
         "name": 'vistors'
     }
-    console.log(parameters);
     try {
         const permission = await jwtmiddle.jwtCerti(token);
         const count_data = await counterDAO.findCount(parameters);
@@ -81,7 +80,6 @@ async function researcResultWriteP(req, res, next) {
         if(queryToken == undefined) throw "Parameter ERR."
         const permission = await jwtmiddle.jwtCerti(queryToken)
         if (permission.userRole >= 5) throw "권한이없습니다."
-        console.log(body)
         let parameters = {
             "group_id":body.group,
             "date":body.date,
@@ -94,13 +92,28 @@ async function researcResultWriteP(req, res, next) {
         const searchResults = await researchResultsDAO.researchResults_check(parameters)
         if(searchResults[0] !== undefined) throw "이미 존재하는 과제명입니다.";
         const results = await researchResultsDAO.researchResults_insert(parameters)
-        console.log(results)
+
         res.send("<script>alert('" + results + "');location.href='/research/results?type=all&schKeyword=&page=1';</script>")
     } catch (error) {
         res.send("<script>alert('" + error + "');history.go(-1);</script>")
     }
 }
-
+async function researchResultDelete(req, res, next){
+    let rrid = req.query.num
+    let parameters = {
+        "rrid": rrid,
+    }
+    try {
+        let queryToken = req.session.user;
+        if(queryToken == undefined) throw "Parameter ERR."
+        const permission = await jwtmiddle.jwtCerti(queryToken)
+        if(permission.userRole >= 5) throw "권한이없습니다."
+        const delete_results = await researchResultsDAO.researchResults_delete(parameters)
+        res.send("<script>alert('" + delete_results + "');location.href='/research/results?type=all&schKeyword=&page=1';</script>")
+    } catch (error) {
+        res.send("<script>alert('" + error + "');history.go(-1);</script>")
+    }
+}
 
 module.exports = {
     researchResults,
@@ -108,4 +121,5 @@ module.exports = {
     androidResearchResultsAll,
     researcResultWrite,
     researcResultWriteP,
+    researchResultDelete,
 }

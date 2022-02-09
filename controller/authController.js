@@ -43,11 +43,8 @@ async function checkUser(req, res, next) {
             userRole: db_data.role,
         }
         const token = await jwtmiddle.jwtCreate(userData)
-        console.log(token)
 
         req.session.user = token;
-
-        console.log(req.session)
 
         if (req.body.rememberId == "checked") res.cookie('loginId', req.body.inputID);
         else res.clearCookie('loginId')
@@ -88,7 +85,7 @@ async function revise_check_post(req, res, next) {
         parameters.userPw = req.body.inputPW
 
         const db_data = await authDAO.checkUser(parameters);
-        console.log(db_data)
+
         res.render('auth/revise', { db_data, permission, count_data });
     } catch (error) {
         res.send("<script>alert('" + error + "');location.href='/';</script>")
@@ -98,7 +95,7 @@ async function revise_check_post(req, res, next) {
 async function updateUser(req, res, next) {
     let token = req.cookies.user
     var file = req.file;
-    console.log(req.body)
+
     if (req.body.inputPw.length < 6) {
         return res.send("<script>alert('비밀번호를 6자 이상 입력해주세요.'); history.go(-1);</script>")
     }
@@ -239,7 +236,7 @@ async function androidLogin(req, res, next) {
     }
 }
 async function checkToken(req, res, next) {
-    // console.log(req)
+
     // var queryToken = req.body.token;
     var queryToken = req.get('token')
     
