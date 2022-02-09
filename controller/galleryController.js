@@ -13,7 +13,6 @@ async function galleryMain(req, res, next){
         const permission = await jwtmiddle.jwtCerti(token);
         const count_data = await counterDAO.findCount(parameters);
         const db_data = await galleryDAO.gallery_selectAll();
-        console.log(req.baseUrl)
         res.render('gallery/galleryMain',{db_data, permission, count_data});
     } catch (error) {
         res.send("<script>alert('" + error + "');location.href='/';</script>")
@@ -63,7 +62,6 @@ async function galleryDetailApp(req, res, next) {
         "name" : 'vistors'
     }
     try {
-        console.log(parameters)
         const permission = await jwtmiddle.jwtCerti(token)
         const count_data = await counterDAO.findCount(parameters)
         const db_data = await galleryDAO.gallery_selectOneDetail(parameters)

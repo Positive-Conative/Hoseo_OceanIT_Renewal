@@ -60,17 +60,17 @@ async function adminMain(req, res, next) {
         parameters.role = permission.userRole
         const count_data = await counterDAO.findCount(parameters);
         const admin_list = await adminDAO.admin_list(parameters);
-        console.log(admin_list)
+
         res.render('admin/adminMain', { count_data, permission, admin_list });
 
     } catch (error) {
-        console.log(error)
+
         res.send("<script>alert('" + error + "');location.href='/';</script>")
     }
 }
 async function adminMainP(req, res, next) {
     let token = req.session.user;
-    console.log(req.body.userId)
+
     let parameters = {
         "userId": req.body.userId
     }
@@ -81,7 +81,7 @@ async function adminMainP(req, res, next) {
 
         // parameters.role = permission.userRole;
         const admin_update = await adminDAO.admin_update(parameters)
-        console.log(admin_update)
+
         res.redirect("/admin")
     } catch (error) {
         res.send("<script>alert('" + error + "');location.href='/';</script>")

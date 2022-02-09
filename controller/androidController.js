@@ -9,8 +9,7 @@ function Android(req, res, next) {
         .then(
             (db_values) => {
                 return androidDAO.androidDetail()
-                    .then((detailData) => { db_values.detailData = detailData; 
-                        console.log(detailData)})
+                    .then((detailData) => { db_values.detailData = detailData; })
                     .then(() => { return db_values })
                     .catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
             }
@@ -18,7 +17,7 @@ function Android(req, res, next) {
         .then(
             (db_values) => {
                 return androidDAO.androidPhoto(db_values["detailData"].rfid)
-                    .then((photoData) => { db_values.photoData = photoData; console.log(photoData) })
+                    .then((photoData) => { db_values.photoData = photoData; })
                     .then(() => { return db_values })
                     .catch(err => res.send("<script>alert('" + err + "');location.href='/';</script>"))
             }

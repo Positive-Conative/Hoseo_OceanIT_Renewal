@@ -175,7 +175,55 @@ function researchFields_MainApp(){
         })
     })
 }
-
+function researchFields_delete_links(parameters){
+    console.log(parameters);
+    let queryData = `DELETE FROM Research_Fields_Links WHERE rfid = '${parameters.rfid}';`;
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data){
+            if (error) {
+                logger.error(
+                    "DB error [Research_Fields_Links]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+                //throw error;
+            }
+            resolve('삭제가 완료되었습니다.')
+        })
+    })
+}
+function researchFields_delete_photos(parameters){
+    let queryData = `DELETE FROM Research_Fields_Photos WHERE rfid = '${parameters.rfid}'`;
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data) {
+            if (error) {
+                logger.error(
+                    "DB error [Research_Fields_Photos]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+                //throw error;
+            }
+            resolve('삭제가 완료되었습니다.')
+        })
+    })
+}
+function researchFields_delete(parameters){
+    let queryData = `DELETE FROM Research_Fields WHERE rfid = '${parameters.rfid}'`;
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data) {
+            if (error) {
+                logger.error(
+                    "DB error [Research_Fields]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+                //throw error;
+            }
+            resolve('삭제가 완료되었습니다.')
+        })
+    })
+}
 module.exports = {
     researchFields_selectAll,
     researchFields_selectDetail,
@@ -185,4 +233,7 @@ module.exports = {
     researchFields_insert,
     researchFields_check,
     researchFields_MainApp,
+    researchFields_delete_links,
+    researchFields_delete_photos,
+    researchFields_delete,
 }

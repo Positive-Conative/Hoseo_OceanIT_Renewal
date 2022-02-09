@@ -2,7 +2,7 @@
 
 var dayjs = require('dayjs');
 var jwtmiddle = require('../middleware/jwt');
-var researcFieldsDAO = require('../model/researchFieldsDAO');
+var researchFieldsDAO = require('../model/researchFieldsDAO');
 var counterDAO = require('../model/counterDAO')
 
 async function researchFields(req, res, next) {
@@ -19,7 +19,7 @@ async function researchFields(req, res, next) {
     try {
         const count_data = await counterDAO.findCount(parameters);
         const permission = await jwtmiddle.jwtCerti(token);
-        const db_data = await researcFieldsDAO.researchFields_selectAll(parameters);
+        const db_data = await researchFieldsDAO.researchFields_selectAll(parameters);
         res.render('research_fields/researchFieldsMain', { db_data, permission, count_data, dayjs, parameters });
     } catch (error) {
         res.send("<script>alert('" + error + "');location.href='/';</script>")
@@ -34,9 +34,9 @@ async function researchFieldsDetail(req, res, next) {
     };
     let token = req.session.user;
     try {
-        const detailData = await researcFieldsDAO.researchFields_selectDetail(parameters);
-        const linkData = await researcFieldsDAO.researchFields_selectDetailLinks(parameters);
-        const photoData = await researcFieldsDAO.researchFields_selectDetailPhotos(parameters);
+        const detailData = await researchFieldsDAO.researchFields_selectDetail(parameters);
+        const linkData = await researchFieldsDAO.researchFields_selectDetailLinks(parameters);
+        const photoData = await researchFieldsDAO.researchFields_selectDetailPhotos(parameters);
         const count_data = await counterDAO.findCount(parameters);
         const permission = await jwtmiddle.jwtCerti(token);
         res.render('research_fields/researchFieldsDetail', { dayjs, permission, detailData, linkData, photoData, count_data });
@@ -52,7 +52,7 @@ async function androidResearchFieldsAll(req, res, next) {
         "querys": querys,
     };
     try {
-        const db_data = await researcFieldsDAO.researchFields_android_all(parameters)
+        const db_data = await researchFieldsDAO.researchFields_android_all(parameters)
         res.json(db_data)
     } catch (error) {
         res.send("DBDRR", err)
@@ -102,19 +102,37 @@ async function researchFieldhWriteP(req, res, next) {
         if(queryToken == undefined) throw "Parameter ERR."
         const permission = await jwtmiddle.jwtCerti(queryToken)
         if (permission.userRole >= 5) throw "권한이없습니다."
-        const searchFields = await researcFieldsDAO.researchFields_check(parameters);
+        const searchFields = await researchFieldsDAO.researchFields_check(parameters);
         if (searchFields[0] !== undefined) throw "이미 존재하는 과제명입니다.";
-        const results = await researcFieldsDAO.researchFields_insert(parameters);
+        const results = await researchFieldsDAO.researchFields_insert(parameters);
         res.send("<script>alert('" + results + "');location.href='/research/fields?type=all&schKeyword=&page=1';</script>")
     } catch (error) {
         res.send("<script>alert('" + error + "');history.go(-1);</script>")
     }
 }
-
+async function researchFieldhDelete(req, res, next){
+    let rfid = req.query.num;
+    let parameters = {
+        "rfid":rfid,
+    }
+    try {
+        let queryToken = req.session.user;
+        if(queryToken == undefined) throw "Parameter ERR."
+        const permission = await jwtmiddle.jwtCerti(queryToken)
+        if (permission.userRole >= 5) throw "권한이없습니다."
+        const delete_fields_links = await researchFieldsDAO.researchFields_delete_links(parameters)
+        const delete_fields_photos = await researchFieldsDAO.researchFields_delete_photos(parameters)
+        const delete_fields = await researchFieldsDAO.researchFields_delete(parameters)
+        res.send("<script>alert('" + delete_fields + "');location.href='/research/fields?type=all&schKeyword=&page=1';</script>")
+    } catch (error) {
+        res.send("<script>alert('" + error + "');history.go(-1);</script>")
+    }
+}
 module.exports = {
     researchFields,
     researchFieldsDetail,
     androidResearchFieldsAll,
     researchFieldhWrite,
     researchFieldhWriteP,
+    researchFieldhDelete,
 }

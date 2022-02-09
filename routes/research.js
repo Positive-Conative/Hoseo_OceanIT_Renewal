@@ -23,8 +23,14 @@ router.get('/android/results', researchResultsController.androidResearchResultsA
 router.get('/results/write', researchResultsController.researcResultWrite);
 
 //----------------------------------------------------------------------------------//
-//research fields POST
+//research POST
 router.post('/fields/write', researchFieldsController.researchFieldhWriteP);
 router.post('/results/write', researchResultsController.researcResultWriteP);
+
+//----------------------------------------------------------------------------------//
+//research DELETE
+
+router.post('/fields/delete', researchFieldsController.researchFieldhDelete)
+router.post('/results/delete',researchResultsController.researchResultDelete)
 
 module.exports = router;

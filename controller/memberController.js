@@ -18,7 +18,6 @@ function memberMain(req, res, next) {
             let token = req.session.user;
             jwtmiddle.jwtCerti(token).then(
                 (permission)=>{
-                    console.log(db_data)
                     res.render('member/memberMain', { db_data, permission,count_data });
                 }
             ).catch(err=>res.send("<script>alert('jwt err');</script>"));

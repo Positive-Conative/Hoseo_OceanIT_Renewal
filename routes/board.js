@@ -7,6 +7,7 @@ var multer = require('./multer')
 
 //공지사항 게시판
 router.get('/notice', boardController.noticeMain);
+router.get('/app-notice', boardController.noticeMainApp);
 router.get('/notice/noticeWrite', boardController.noticeWrite);
 router.get('/notice/noticeDetail', boardController.noticeDetail);
 router.get('/notice/noticeModify', boardController.noticeModify);
