@@ -26,7 +26,6 @@ app.use(session({
   secret: '!#!#Conative#!#!',
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 1000 * 60 * 30 },
 }))
 
 // view engine setup
@@ -51,8 +50,6 @@ app.use('/gallery', galleryRouter);
 app.use('/auth', authRouter);
 app.use('/board', boardRouter);
 app.use('/admin', adminRouter);
-
-
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
