@@ -16,3 +16,20 @@
     filter: brightness(100%);
     transform: translate(-50%, -50%);
 }
+.list_header{
+    list-style-type: none;
+    display:flex;
+}
+.list_header li{
+    padding:15 0;
+    margin:2%;
+}
+.list_body{
+    list-style-type: none;
+    display:flex;
+}
+.list_body li{
+    padding:15 0;
+    margin:2%;
+
+}
