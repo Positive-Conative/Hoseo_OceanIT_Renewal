@@ -41,11 +41,18 @@
                         <%= admin_list[key].createDate %>
                     </td>
                     <td>
-                        <%= admin_list[key].role %>
+        
+                            <select>
+                                <option>
+                                    <%= admin_list[key].role %>
+                                </option>
+                            </select>
+                 
+
                     </td>
                 </tr>
-        
-        <% }%>
-    </table>
+
+                <% }%>
+        </table>
     </div>
     <%- include('../include/footer.ejs') %>
