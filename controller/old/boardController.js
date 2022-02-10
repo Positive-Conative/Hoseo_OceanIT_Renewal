@@ -176,22 +176,6 @@ function noticeWritePost(req, res, next) {
         ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
     }
 }
-async function noticeDelete(req, res, next) {
-    var queryNum = req.query.num;
-    var parameters = {
-        "qid": queryNum
-    };
-    try {
-        let queryToken = req.session.user;
-        if(queryToken == undefined) throw "Parameter ERR."
-        const permission = await jwtmiddle.jwtCerti(queryToken)
-        if (permission.userRole >= 5) throw "권한이없습니다."
-        const delete_notice = await boardDAO.delete_notice(parameters)
-        
-    } catch (error) {
-        
-    }
-}
 function noticeDelete(req, res, next) {
     var queryNum = req.query.num;
     var parameters = {
@@ -200,23 +184,20 @@ function noticeDelete(req, res, next) {
     let token = req.session.user;
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
-            if(permission.userRole<5){
-                db.query(`DELETE FROM Notice_Board WHERE qid="${parameters.qid}" && userId="${permission.userId}"`, function (error, row) {
-                    if (error) {
-                        logger.error(
-                            "DB error [Notice_Board]" +
-                            "\n \t" + error);
-                        reject('DB ERR');
-                    }
-                    if (row.affectedRows == 0) {
-                        res.send("<script>alert('You do not have permission');history.back();</script>");
-                    }
-                    else {
-                        res.redirect("/board/notice?page=1")
-                    }
-                })
-            }
-            else throw "권한이 없습니다."
+            db.query(`DELETE FROM Notice_Board WHERE qid="${parameters.qid}" && userId="${permission.userId}"`, function (error, row) {
+                if (error) {
+                    logger.error(
+                        "DB error [Notice_Board]" +
+                        "\n \t" + error);
+                    reject('DB ERR');
+                }
+                if (row.affectedRows == 0) {
+                    res.send("<script>alert('You do not have permission');history.back();</script>");
+                }
+                else {
+                    res.redirect("/board/notice?page=1")
+                }
+            })
         }
     ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
 }
@@ -442,6 +423,7 @@ function inquiryDelete(req, res, next) {
     let token = req.session.user;
     jwtmiddle.jwtCerti(token).then(
         async (permission) => {
+            db.query(`DELETE FROM inquiryComment WHERE qid="${parameters.qid}"`)
             db.query(`DELETE FROM Inquiry_Board WHERE qid="${parameters.qid}" && userId="${permission.userId}"`, function (error, row) {
                 if (error) {
                     logger.error(
