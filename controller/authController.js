@@ -85,6 +85,7 @@ async function revise_check_post(req, res, next) {
         parameters.userPw = req.body.inputPW
 
         const db_data = await authDAO.checkUser(parameters);
+        console.log(db_data)
 
         res.render('auth/revise', { db_data, permission, count_data });
     } catch (error) {
@@ -239,18 +240,74 @@ async function checkToken(req, res, next) {
 
     // var queryToken = req.body.token;
     var queryToken = req.get('token')
-    
+
     var parameters = {
         "Token": queryToken
     }
     try {
-        if(queryToken == undefined) throw "Parameter ERR."
+        if (queryToken == undefined) throw "Parameter ERR."
         // const db_data = await authDAO.checkUserToken(parameters);
         const permission = await jwtmiddle.jwtCerti(parameters.Token)
         res.json({ "message": "성공" })
     } catch (error) {
-        if(error) res.status(500).json({ "message": "토큰이 존재하지 않습니다." })
+        if (error) res.status(500).json({ "message": "토큰이 존재하지 않습니다." })
         else res.status(403).json({ "message": "토큰이 만료되었습니다." })
+    }
+}
+async function updateUserApp(req, res, next){
+    // let token = req.cookies.user
+    let token = req.get('toekn')
+    var file = req.file;
+
+    if (req.body.inputPw.length < 6) {
+        return res.send("<script>alert('비밀번호를 6자 이상 입력해주세요.'); history.go(-1);</script>")
+    }
+    if (req.body.inputPw !== req.body.checkPw) {
+        return res.send("<script>alert('비밀번호가 일치하지 않습니다.'); history.go(-1);</script>")
+    }
+    try {
+        const permission = await jwtmiddle.jwtCerti(token);
+        let parameters = {
+            userId: permission.userId,
+            userPw: req.body.inputPw,
+            userName: req.body.inputName,
+            userPosition: req.body.Position,
+            userBelong: req.body.Belong,
+            userDepartment: req.body.Department,
+            userEmail: req.body.userEmail,
+            userNameEN: req.body.inputNameEN,
+            userPhone: req.body.inputPhone,
+            userAdd: req.body.inputAdd,
+            userImg: null
+        }
+
+        const db_data = await authDAO.updateToUser(parameters);
+        res.json({
+            "Message" : "회원정보 변경이 성공하였습니다."
+        })
+    } catch (error) {
+        res.json({
+            "Message" : "회원정보 변경이 실패하였습니다.",
+            "Error_Message": error,
+        })
+    }
+}
+async function Apprevise_check_post(req, res, next) {
+    let token = req.get('toekn')
+    let parameters = {
+    }
+    try {
+        const permission = await jwtmiddle.jwtCerti(token);
+
+        parameters.userId = permission.userId
+        parameters.userPw = req.body.inputPW
+
+        const db_data = await authDAO.checkUser(parameters);
+        console.log(db_data)
+
+        res.json({"Message":"성공하였습니다."})
+    } catch (error) {
+        res.json({"Message":"실패하였습니다."})
     }
 }
 
@@ -265,4 +322,6 @@ module.exports = {
     logOut,
     androidLogin,
     checkToken,
+    updateUserApp,
+    Apprevise_check_post,
 }

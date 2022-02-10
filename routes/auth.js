@@ -33,6 +33,9 @@ router.get('/logout', authController.logOut);
 router.post('/android/login',authController.androidLogin)
 // 토큰 확인
 router.post('/android/check', authController.checkToken)
-
+// 회원정보 확인
+router.post('/android/revise_check', authController.Apprevise_check_post);
+// 회원정보 수정
+router.post('/android/revise', authController.updateUserApp);
 
 module.exports = router;
