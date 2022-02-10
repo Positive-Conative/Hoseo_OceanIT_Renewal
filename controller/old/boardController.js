@@ -176,22 +176,6 @@ function noticeWritePost(req, res, next) {
         ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
     }
 }
-async function noticeDelete(req, res, next) {
-    var queryNum = req.query.num;
-    var parameters = {
-        "qid": queryNum
-    };
-    try {
-        let queryToken = req.session.user;
-        if(queryToken == undefined) throw "Parameter ERR."
-        const permission = await jwtmiddle.jwtCerti(queryToken)
-        if (permission.userRole >= 5) throw "권한이없습니다."
-        const delete_notice = await boardDAO.delete_notice(parameters)
-        
-    } catch (error) {
-        
-    }
-}
 function noticeDelete(req, res, next) {
     var queryNum = req.query.num;
     var parameters = {

@@ -162,6 +162,9 @@ function select_notcieBoardApp(parameters){
         })
     })
 }
+function delete_notice(parameters){
+    
+}
 module.exports = {
     count_questionBoard,
     count_questionBoardDetail,
@@ -173,4 +176,5 @@ module.exports = {
     count_freeBoardComment,
     count_noticeBoardApp,
     select_notcieBoardApp,
+    delete_notice,
 }
