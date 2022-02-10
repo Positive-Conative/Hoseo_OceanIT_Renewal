@@ -184,20 +184,23 @@ function noticeDelete(req, res, next) {
     let token = req.session.user;
     jwtmiddle.jwtCerti(token).then(
         (permission) => {
-            db.query(`DELETE FROM Notice_Board WHERE qid="${parameters.qid}" && userId="${permission.userId}"`, function (error, row) {
-                if (error) {
-                    logger.error(
-                        "DB error [Notice_Board]" +
-                        "\n \t" + error);
-                    reject('DB ERR');
-                }
-                if (row.affectedRows == 0) {
-                    res.send("<script>alert('You do not have permission');history.back();</script>");
-                }
-                else {
-                    res.redirect("/board/notice?page=1")
-                }
-            })
+            if(permission.userRole<5){
+                db.query(`DELETE FROM Notice_Board WHERE qid="${parameters.qid}" && userId="${permission.userId}"`, function (error, row) {
+                    if (error) {
+                        logger.error(
+                            "DB error [Notice_Board]" +
+                            "\n \t" + error);
+                        reject('DB ERR');
+                    }
+                    if (row.affectedRows == 0) {
+                        res.send("<script>alert('You do not have permission');history.back();</script>");
+                    }
+                    else {
+                        res.redirect("/board/notice?page=1")
+                    }
+                })
+            }
+            else throw "권한이 없습니다."
         }
     ).catch(err => res.send("<script>alert('jwt err');history.back();</script>"));
 }
@@ -423,7 +426,6 @@ function inquiryDelete(req, res, next) {
     let token = req.session.user;
     jwtmiddle.jwtCerti(token).then(
         async (permission) => {
-            db.query(`DELETE FROM inquiryComment WHERE qid="${parameters.qid}"`)
             db.query(`DELETE FROM Inquiry_Board WHERE qid="${parameters.qid}" && userId="${permission.userId}"`, function (error, row) {
                 if (error) {
                     logger.error(

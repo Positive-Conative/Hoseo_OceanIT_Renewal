@@ -53,6 +53,7 @@ async function androidResearchFieldsAll(req, res, next) {
     };
     try {
         const db_data = await researchFieldsDAO.researchFields_android_all(parameters)
+        console.log(db_data);
         res.json(db_data)
     } catch (error) {
         res.send("DBDRR", err)

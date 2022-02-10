@@ -47,10 +47,10 @@ async function androidResearchResultsAll(req, res, next) {
         "querys": req.query.classify
     };
     try {
-        const db_data = await researcFieldsDAO.researchResults_android_all(parameters);
+        const db_data = await researchResultsDAO.researchResults_android_all(parameters);
         res.json(db_data);
     } catch (error) {
-        res.send("<script>alert('" + err + "');location.href='/';</script>")
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
     }
 }
 async function researcResultWrite(req, res, next) {
