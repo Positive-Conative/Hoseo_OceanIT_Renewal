@@ -256,16 +256,12 @@ async function checkToken(req, res, next) {
 }
 async function updateUserApp(req, res, next){
     // let token = req.cookies.user
-    let token = req.get('toekn')
-    var file = req.file;
-
-    if (req.body.inputPw.length < 6) {
-        return res.send("<script>alert('비밀번호를 6자 이상 입력해주세요.'); history.go(-1);</script>")
-    }
-    if (req.body.inputPw !== req.body.checkPw) {
-        return res.send("<script>alert('비밀번호가 일치하지 않습니다.'); history.go(-1);</script>")
-    }
+    let token = req.get('token')
     try {
+        if(token == undefined) throw "Parameter ERR."
+        if (req.body.inputPw.length < 6) throw "비밀번호를 6자 이상 입력해주세요."
+        if (req.body.inputPw !== req.body.checkPw) throw "비밀번호가 일치하지 않습니다."
+
         const permission = await jwtmiddle.jwtCerti(token);
         let parameters = {
             userId: permission.userId,
@@ -293,7 +289,7 @@ async function updateUserApp(req, res, next){
     }
 }
 async function Apprevise_check_post(req, res, next) {
-    let token = req.get('toekn')
+    let token = req.get('token')
     let parameters = {
     }
     try {
@@ -301,7 +297,7 @@ async function Apprevise_check_post(req, res, next) {
 
         parameters.userId = permission.userId
         parameters.userPw = req.body.inputPW
-
+        console.log(parameters)
         const db_data = await authDAO.checkUser(parameters);
         console.log(db_data)
 

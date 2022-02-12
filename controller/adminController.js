@@ -1,7 +1,6 @@
 'use strict';
 
 var jwtmiddle = require('../middleware/jwt');
-var boardDAO = require('../model/boardDAO');
 var counterDAO = require('../model/counterDAO')
 const adminDAO = require('../model/adminDAO')
 
