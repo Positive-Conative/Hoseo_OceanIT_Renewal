@@ -1,5 +1,5 @@
 'use strict';
-//test
+
 var db = require("../config/kyjdb");
 var logger = require('../config/logger');
 
@@ -51,130 +51,91 @@ function count_questionBoardComment(parameters){
         });
     })
 }
-function count_noticeBoard(parameters) {
+function insert_inquiryComment(parameters){
+    let queryData = `INSERT inquiryComment SET qid=?, comment=?, date=?, userId=?, userName=?`;
     return new Promise(function (resolve, reject) {
-        let queryData = `SELECT * From Notice_Board ORDER BY date desc`;
-        db.query(queryData, function (error, db_data) {
+        db.query(queryData,[parameters.qid, parameters.comment, parameters.date, parameters.userId, parameters.userName], function (error, db_data){
             if (error) {
                 logger.error(
-                    "DB error [Notice_Board]" +
+                    "DB error [inquiryComment]"+
                     "\n \t" + queryData +
                     "\n \t" + error);
                 reject('DB ERR');
                 //throw error;
             }
-            resolve(db_data);
+            resolve('댓글 데이터 추가 완료');
         })
     })
 }
-function count_noticeBoardDetail(parameters){
-    var queryData = `SELECT * FROM Notice_Board where qid="${parameters.qid}"`;
+function update_inquiry(parameters){
+    let queryData = `UPDATE Inquiry_Board SET title = ?, content = ?, date = ? WHERE qid="${parameters.qid}" AND userId = "${parameters.userId}"`;
     return new Promise(function (resolve, reject) {
-        db.query(queryData, function (error, db_data) {
+        db.query(queryData, [parameters.title, parameters.content, parameters.date], function (error, db_data){
             if (error) {
                 logger.error(
-                    "DB error [Notice_Board]"+
+                    "DB error [Inquiry_Board]" +
                     "\n \t" + queryData +
                     "\n \t" + error);
                 reject('DB ERR');
-                //throw error;
             }
-            resolve(db_data);
-        });
-    })
-}
-function count_freeBoard(parameters){
-    return new Promise(function(resolve,reject){
-        let queryData = `SELECT * FROM Free_Board ORDER BY date desc`;
-        db.query(queryData, function (error, db_data) {
-            if (error) {
-                logger.error(
-                    "DB error [Free_Board]" +
-                    "\n \t" + queryData +
-                    "\n \t" + error);
-                reject('DB ERR');
-                //throw error;
-            }
-            resolve(db_data);
-        })
-    })
-}function count_freeBoardDetail(parameters){
-    var queryData = `SELECT * FROM Free_Board where qid="${parameters.qid}"`;
-    return new Promise(function (resolve, reject) {
-        db.query(queryData, function (error, db_data) {
-            if (error) {
-                logger.error(
-                    "DB error [Free_Board]"+
-                    "\n \t" + queryData +
-                    "\n \t" + error);
-                reject('DB ERR');
-                //throw error;
-            }
-            resolve(db_data);
-        });
-    })
-}
-function count_freeBoardComment(parameters){
-    var queryData = `SELECT * FROM freeBoardComment where qid="${parameters.qid}"`;
-    return new Promise(function (resolve, reject) {
-        db.query(queryData, function (error, db_data) {
-            if (error) {
-                logger.error(
-                    "DB error [freeBoardComment]"+
-                    "\n \t" + queryData +
-                    "\n \t" + error);
-                reject('DB ERR');
-                //throw error;
-            }
-            resolve(db_data);
-        });
-    })
-}
-function count_noticeBoardApp(parameters){
-    let queryData = `SELECT * FROM Notice_Board ORDER BY date desc LIMIT 1`;
-    return new Promise(function (resolve, reject) {
-        db.query(queryData, function (error, db_data) {
-            if (error) {
-                logger.error(
-                    "DB error [Notice_Board]"+
-                    "\n \t" + queryData +
-                    "\n \t" + error);
-                reject('DB ERR');
-                //throw error;
-            }
-            resolve(db_data);
+            resolve('수정완료');
         })
     })
 }
-function select_notcieBoardApp(parameters){
-    let queryData = `SELECT userName, title, content, date FROM Notice_Board ORDER BY date desc LIMIT 10`;
+function insert_inquiry(parameters){
+    let queryData = `INSERT INTO Inquiry_Board SET ?`;
     return new Promise(function (resolve, reject) {
-        db.query(queryData, function (error, db_data) {
+        db.query(queryData, parameters, function (error, db_data) {
             if (error) {
                 logger.error(
-                    "DB error [Notice_Board]"+
+                    "DB error [Inquiry_Board]" +
                     "\n \t" + queryData +
                     "\n \t" + error);
                 reject('DB ERR');
-                //throw error;
             }
-            resolve(db_data);
+            resolve('데이터 추가 완료')
         })
     })
 }
-function delete_notice(parameters){
-    
+function delete_inquiry_admin(parameters){
+    let queryData = `DELETE FROM Inquiry_Board WHERE qid= '${parameters.qid}'`;
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data){
+            if (error) {
+                logger.error(
+                    "DB error [Inquiry_Board]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+            }
+            if(db_data.affectedRows == 0) reject('Permission ERR');
+            else resolve('삭제 성공하였습니다.')
+        })
+    })
+}
+function delete_inquiry_user(parameters){
+    let queryData = `DELETE FROM Inquiry_Board WHERE qid= '${parameters.qid}' AND userId = '${parameters.userId}'`;
+    return new Promise(function (resolve, reject) {
+        db.query(queryData,function (error, db_data){
+            if (error) {
+                logger.error(
+                    "DB error [Inquiry_Board]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+            }
+            if(db_data.affectedRows == 0) reject('Permission ERR');
+            else resolve('삭제 성공하였습니다.')
+        })
+    })
 }
 module.exports = {
     count_questionBoard,
     count_questionBoardDetail,
     count_questionBoardComment,
-    count_noticeBoard,
-    count_noticeBoardDetail,
-    count_freeBoard,
-    count_freeBoardDetail,
-    count_freeBoardComment,
-    count_noticeBoardApp,
-    select_notcieBoardApp,
-    delete_notice,
+    insert_inquiryComment,
+    update_inquiry,
+    insert_inquiry,
+    delete_inquiry_admin,
+    delete_inquiry_user
 }
