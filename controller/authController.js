@@ -290,13 +290,14 @@ async function updateUserApp(req, res, next){
 }
 async function Apprevise_check_post(req, res, next) {
     let token = req.get('token')
+    console.log(req.body)
     let parameters = {
     }
     try {
         const permission = await jwtmiddle.jwtCerti(token);
 
         parameters.userId = permission.userId
-        parameters.userPw = req.body.inputPW
+        parameters.userPw = req.body.userPW
         console.log(parameters)
         const db_data = await authDAO.checkUser(parameters);
         console.log(db_data)
