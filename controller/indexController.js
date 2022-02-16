@@ -7,6 +7,10 @@ var researchResultsDAO = require('../model/researchResultsDAO');
 var boardDAO = require('../model/noticeBoardDAO');
 var counterDAO = require('../model/counterDAO')
 
+var fs = require('fs');
+var path = require('path');
+var mime = require('mime')
+
 function indexMain(req, res, next) {
   let token = req.session.user;
   jwtmiddle.jwtCerti(token).then(
@@ -32,8 +36,22 @@ async function indexMainApp(req, res, next){
     res.status(403).json({"message" : error})
   } 
 }
+async function indexDownloadApp(req, res, next){
+  const file = __dirname + '/../public/downloads/Ocean_IT.apk';
+  const filename = path.basename(file);
+  // const mimetype = mime.lookup(file);
+  // const mimetype = mime.getType(file)
+  const mimetype = mime.getType(file)
+
+  res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+  res.setHeader('Content-type', mimetype);
+
+  const filestream = fs.createReadStream(file);
+  filestream.pipe(res);
+}
 
 module.exports = {
   indexMain,
-  indexMainApp
+  indexMainApp,
+  indexDownloadApp
 }
