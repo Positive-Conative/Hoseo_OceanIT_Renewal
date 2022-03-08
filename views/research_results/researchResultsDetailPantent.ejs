@@ -23,31 +23,41 @@
                                     <td>
                                         <%=db_data[0].group_id%>
                                     </td>
-                                    <th class="align-middle">날짜</th>
+                                    <th class="align-middle">국명</th>
                                     <td>
-                                        <%=db_data[0].date%>
+                                      <%=db_data[0].announe_nation_ko%>        
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>발표명</th>
-                                    <td>
+                                    <th>지식 재산권등 명칭</th>
+                                    <td class="text-left"colspan="3">
                                         <%=db_data[0].title_ko%>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>저자명</th>
+                                    <th>출원번호</th>
                                     <td>
-                                        <%=db_data[0].writer_ko%>
+                                      
                                     </td>
-                                    <th>발표국가</th>
+                                    <th>출원일자</th>
                                     <td>
-                                        <%=db_data[0].announe_nation_ko%>
+                                        <%=db_data[0].date%>  
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th class="align-middle ">구분</th>
-                                    <td colspan=1>
-                                        <%=db_data[0].classify_ko%>
+                                    <th>등록번호</th>
+                                    <td>
+                                    </td>
+                                    <th>등록일자</th>
+                                    <td>
+                                      
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="align-middle ">출원인/등록인</th>
+                                    <td colspan=3>
+                                        <%=db_data[0].writer_ko%>    
+
                                     </td>
                                 </tr>
                             </tbody>
@@ -62,6 +72,7 @@
                   <a type="button" class="btn btn-outline-secondary" href="javascript:history.back();">목록</a> 
 
                   <button class="btn btn-outline-secondary">삭제</button>
+                  <button class="btn btn-outline-secondary">수정</button>
               </form>
             </div>
         </div>
