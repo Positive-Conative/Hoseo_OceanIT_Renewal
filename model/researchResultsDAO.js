@@ -4,25 +4,7 @@ var db = require("../config/kyjdb");
 var logger = require('../config/logger');
 
 function researchResults_selectAll(parameters) {
-    var queryData = `SELECT * FROM Research_Results`
-    if (parameters.search !== '') {
-        queryData += ` WHERE (title_ko LIKE '%${parameters.search}%')`;
-    }
-    if (parameters.type == "patent" && parameters.search != '') {
-        queryData += ` AND classify_ko = "특허"`;
-    } else if (parameters.type == "patent" && parameters.search == '') {
-        queryData += ` WHERE classify_ko = "특허"`;
-    } else if (parameters.type == "treatise" && parameters.search != '') {
-        queryData += ` AND classify_ko = "논문"`;
-    } else if (parameters.type == "treatise" && parameters.search == '') {
-        queryData += ` WHERE classify_ko = "논문"`;
-    } else if (parameters.type == "announcement" && parameters.search != '') {
-        queryData += ` AND classify_ko = "발표"`;
-    } else if (parameters.type == "announcement" && parameters.search == '') {
-        queryData += ` WHERE classify_ko = "발표"`;
-    }
-
-    queryData += ` ORDER BY date desc`;
+    let queryData = `SELECT * FROM `
     if (!(parameters.limit == undefined)) queryData += ` LIMIT 0,${parameters.limit}`;
     return new Promise(function (resolve, reject) {
         db.query(queryData, function (error, db_data) {
@@ -34,8 +16,10 @@ function researchResults_selectAll(parameters) {
                 reject('DB ERR');
                 //throw error;
             }
-            resolve(db_data);
         });
+        db.query(queryData, function (error, db_data) {
+
+        })
     })
 }
 
@@ -138,6 +122,119 @@ function researchResults_delete(parameters) {
         })
     })
 }
+function researchResults_selectDetailPatent(parameters) {
+    var queryData = `SELECT * FROM Research_Results_Patent where rrid="${parameters.rrid}"`;
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data) {
+            if (error) {
+                logger.error(
+                    "DB error [Research_Results]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+                //throw error;
+            }
+            resolve(db_data);
+        });
+    })
+}
+function researchResults_selectDetailTreatise(parameters) {
+    var queryData = `SELECT * FROM Research_Results_Treatise where rrid="${parameters.rrid}"`;
+
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data) {
+            if (error) {
+                logger.error(
+                    "DB error [Research_Results]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+                //throw error;
+            }
+            resolve(db_data);
+        });
+    })
+}
+function researchResults_selectDetailAnnouncement(parameters) {
+    var queryData = `SELECT * FROM Research_Results_Announcement where rrid="${parameters.rrid}"`;
+
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data) {
+            if (error) {
+                logger.error(
+                    "DB error [Research_Results]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+                //throw error;
+            }
+            resolve(db_data);
+        });
+    })
+}
+function researchResults_selectPatent(parameters) {
+    var queryData = `SELECT * FROM Research_Results_Patent`
+    if (parameters.search !== '') {
+        queryData += ` WHERE (title_ko LIKE '%${parameters.search}%')`;
+    }
+    queryData += ` ORDER BY date desc`;
+    if (!(parameters.limit == undefined)) queryData += ` LIMIT 0,${parameters.limit}`;
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data) {
+            if (error) {
+                logger.error(
+                    "DB error [Research_Results_Patent]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+                //throw error;
+            }
+            resolve(db_data);
+        });
+    })
+}
+function researchResults_selectTreatise(parameters) {
+    var queryData = `SELECT * FROM Research_Results_Treatise`
+    if (parameters.search !== '') {
+        queryData += ` WHERE (title_ko LIKE '%${parameters.search}%')`;
+    }
+    queryData += ` ORDER BY date desc`;
+    if (!(parameters.limit == undefined)) queryData += ` LIMIT 0,${parameters.limit}`;
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data) {
+            if (error) {
+                logger.error(
+                    "DB error [Research_Results_Treatise]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+                //throw error;
+            }
+            resolve(db_data);
+        });
+    })
+}
+function researchResults_selectAnnouncement(parameters) {
+    var queryData = `SELECT * FROM Research_Results_Announcement`
+    if (parameters.search !== '') {
+        queryData += ` WHERE (title_ko LIKE '%${parameters.search}%')`;
+    }
+    queryData += ` ORDER BY date desc`;
+    if (!(parameters.limit == undefined)) queryData += ` LIMIT 0,${parameters.limit}`;
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data) {
+            if (error) {
+                logger.error(
+                    "DB error [Research_Results_Announcement]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+                //throw error;
+            }
+            resolve(db_data);
+        });
+    })
+}
 module.exports = {
     researchResults_selectAll,
     researchResults_selectDetail,
@@ -145,5 +242,11 @@ module.exports = {
     researchResults_MainApp,
     researchResults_check,
     researchResults_insert,
-    researchResults_delete
+    researchResults_delete,
+    researchResults_selectDetailPatent,
+    researchResults_selectDetailTreatise,
+    researchResults_selectDetailAnnouncement,
+    researchResults_selectPatent,
+    researchResults_selectTreatise,
+    researchResults_selectAnnouncement
 }

@@ -39,8 +39,6 @@ async function indexMainApp(req, res, next){
 async function indexDownloadApp(req, res, next){
   const file = __dirname + '/../public/downloads/Ocean_IT.apk';
   const filename = path.basename(file);
-  // const mimetype = mime.lookup(file);
-  // const mimetype = mime.getType(file)
   const mimetype = mime.getType(file)
 
   res.setHeader('Content-disposition', 'attachment; filename=' + filename);
