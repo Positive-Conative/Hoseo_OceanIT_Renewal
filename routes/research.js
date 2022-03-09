@@ -16,8 +16,17 @@ router.get('/fields/write', researchFieldsController.researchFieldhWrite);
 //----------------------------------------------------------------------------------//
 //research results
 var researchResultsController = require('../controller/researchResultsController');
-router.get('/results', researchResultsController.researchResults);
-router.get('/results/detail', researchResultsController.researchResultsDetail);
+
+router.get('/results/patent', researchResultsController.researchResultsPatent);
+router.get('/results/patent/detail', researchResultsController.researchResultsPatentDetail);
+
+router.get('/results/treatise', researchResultsController.researchResultsTreatise);
+router.get('/results/treatise/detail', researchResultsController.researchResultsTreatiseDetail);
+
+router.get('/results/announcement', researchResultsController.researchResultsAnnouncement);
+router.get('/results/announcement/detail', researchResultsController.researchResultsAnnouncementDetail);
+
+// router.get('/results/detail', researchResultsController.researchResultsDetail);
 router.get('/android/results', researchResultsController.androidResearchResultsAll);
 
 router.get('/results/write', researchResultsController.researcResultWrite);

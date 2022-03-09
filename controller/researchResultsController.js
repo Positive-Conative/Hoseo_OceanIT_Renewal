@@ -19,7 +19,16 @@ async function researchResults(req, res, next) {
     try {
         const permission = await jwtmiddle.jwtCerti(token);
         const count_data = await counterDAO.findCount(parameters);
-        const db_data = await researchResultsDAO.researchResults_selectAll(parameters);
+        let db_data = []
+        if(parameters.type == 'patent'){
+            db_data += await researchResultsDAO.researchResults_selectPatent(parameters)
+        } else if(parameters.type == 'treatise'){
+            db_data += await researchResultsDAO.researchResults_selectTreatise(parameters)
+        } else if(parameters.type == 'announcement'){
+            db_data += await researchResultsDAO.researchResults_selectAnnouncement(parameters)
+        }
+        // const db_data = await researchResultsDAO.researchResults_selectAll(parameters);
+        console.log(db_data[0])
         res.render('research_results/researchResultsMain', { db_data, permission, parameters, dayjs, count_data });
     } catch (error) {
         res.send("<script>alert('" + error + "');location.href='/';</script>")
@@ -115,6 +124,113 @@ async function researchResultDelete(req, res, next){
     }
 }
 
+async function researchResultsPatentDetail(req, res, next) {
+    let token = req.session.user;
+    var queryNum = req.query.num;
+    var parameters = {
+        "rrid": queryNum,
+        "name": 'vistors'
+    };
+    try {
+        const permission = await jwtmiddle.jwtCerti(token);
+        const count_data = await counterDAO.findCount(parameters);
+        const db_data = await researchResultsDAO.researchResults_selectDetailPatent(parameters);
+        res.render('research_results/researchResultsDetailPatent', { db_data, permission, parameters, dayjs, count_data });
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+async function researchResultsTreatiseDetail(req, res, next) {
+    let token = req.session.user;
+    var queryNum = req.query.num;
+    var parameters = {
+        "rrid": queryNum,
+        "name": 'vistors'
+    };
+    try {
+        const permission = await jwtmiddle.jwtCerti(token);
+        const count_data = await counterDAO.findCount(parameters);
+        const db_data = await researchResultsDAO.researchResults_selectDetailTreatise(parameters);
+        res.render('research_results/researchResultsDetailTreatise', { db_data, permission, parameters, dayjs, count_data });
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+async function researchResultsAnnouncementDetail(req, res, next) {
+    let token = req.session.user;
+    var queryNum = req.query.num;
+    var parameters = {
+        "rrid": queryNum,
+        "name": 'vistors'
+    };
+    try {
+        const permission = await jwtmiddle.jwtCerti(token);
+        const count_data = await counterDAO.findCount(parameters);
+        const db_data = await researchResultsDAO.researchResults_selectDetailAnnouncement(parameters);
+        res.render('research_results/researchResultsDetailAnnouncement', { db_data, permission, parameters, dayjs, count_data });
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+async function researchResultsPatent(req, res, next) {
+    let token = req.session.user;
+    var queryPage = req.query.page;
+    var querySearch = req.query.schKeyword;
+    var parameters = {
+        "type": 'patent',
+        "page": queryPage,
+        "search": querySearch,
+        "name": 'vistors'
+    }
+    try {
+        console.log(parameters);
+        const permission = await jwtmiddle.jwtCerti(token);
+        const count_data = await counterDAO.findCount(parameters);
+        const db_data = await researchResultsDAO.researchResults_selectPatent(parameters)
+        res.render('research_results/researchResultsMain', { db_data, permission, parameters, dayjs, count_data });
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+async function researchResultsTreatise(req, res, next) {
+    let token = req.session.user;
+    var queryPage = req.query.page;
+    var querySearch = req.query.schKeyword;
+    var parameters = {
+        "type": 'treatise',
+        "page": queryPage,
+        "search": querySearch,
+        "name": 'vistors'
+    }
+    try {
+        const permission = await jwtmiddle.jwtCerti(token);
+        const count_data = await counterDAO.findCount(parameters);
+        const db_data = await researchResultsDAO.researchResults_selectTreatise(parameters)
+        res.render('research_results/researchResultsMain', { db_data, permission, parameters, dayjs, count_data });
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+async function researchResultsAnnouncement(req, res, next) {
+    let token = req.session.user;
+    var queryPage = req.query.page;
+    var querySearch = req.query.schKeyword;
+    var parameters = {
+        "type": 'announcement',
+        "page": queryPage,
+        "search": querySearch,
+        "name": 'vistors'
+    }
+    try {
+        const permission = await jwtmiddle.jwtCerti(token);
+        const count_data = await counterDAO.findCount(parameters);
+        const db_data = await researchResultsDAO.researchResults_selectAnnouncement(parameters)
+        res.render('research_results/researchResultsMain', { db_data, permission, parameters, dayjs, count_data });
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+
 module.exports = {
     researchResults,
     researchResultsDetail,
@@ -122,4 +238,10 @@ module.exports = {
     researcResultWrite,
     researcResultWriteP,
     researchResultDelete,
+    researchResultsPatentDetail,
+    researchResultsTreatiseDetail,
+    researchResultsAnnouncementDetail,
+    researchResultsPatent,
+    researchResultsTreatise,
+    researchResultsAnnouncement,
 }
