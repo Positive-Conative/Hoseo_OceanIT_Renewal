@@ -235,6 +235,51 @@ function researchResults_selectAnnouncement(parameters) {
         });
     })
 }
+function researchResults_DeletePatent(parameters){
+    let queryData = `DELETE FROM Research_Results_Patent WHERE rrid = '${parameters.rrid}'`;
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data) {
+            if (error) {
+                logger.error(
+                    "DB error [Research_Results_Patent]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+            }
+            resolve('삭제가 완료되었습니다.')
+        })
+    })
+}
+function researchResults_DeleteTreatise(parameters){
+    let queryData = `DELETE FROM Research_Results_Treatise WHERE rrid = '${parameters.rrid}'`;
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data) {
+            if (error) {
+                logger.error(
+                    "DB error [Research_Results_Treatise]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+            }
+            resolve('삭제가 완료되었습니다.')
+        })
+    })
+}
+function researchResults_DeleteAnnouncement(parameters){
+    let queryData = `DELETE FROM Research_Results_Announcement WHERE rrid = '${parameters.rrid}'`;
+    return new Promise(function (resolve, reject) {
+        db.query(queryData, function (error, db_data) {
+            if (error) {
+                logger.error(
+                    "DB error [Research_Results_Announcement]" +
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+            }
+            resolve('삭제가 완료되었습니다.')
+        })
+    })
+}
 module.exports = {
     researchResults_selectAll,
     researchResults_selectDetail,
@@ -248,5 +293,8 @@ module.exports = {
     researchResults_selectDetailAnnouncement,
     researchResults_selectPatent,
     researchResults_selectTreatise,
-    researchResults_selectAnnouncement
+    researchResults_selectAnnouncement,
+    researchResults_DeletePatent,
+    researchResults_DeleteTreatise,
+    researchResults_DeleteAnnouncement
 }
