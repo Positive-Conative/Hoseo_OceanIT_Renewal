@@ -20,8 +20,8 @@
                                 <tr>
                                     <th>논문명</th>
                                     <td colspan="3">
-                                             <%=db_data[0].title_ko%>
-                                    </td> 
+                                        <%=db_data[0].title_ko%>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>학술지명</th>
@@ -36,44 +36,44 @@
                                 <tr>
                                     <th>저자명</th>
                                     <td colspan="3">
-                                        <%=db_data[0].writer_ko%> 
+                                        <%=db_data[0].writer_ko%>
                                     </td>
-                                
+
                                 </tr>
                                 <tr>
                                     <th>SCI/비SCI 구분</th>
                                     <td>
-                                        <%=db_data[0].group_id%> 
+                                        <%=db_data[0].group_id%>
                                     </td>
                                     <th>Vol(NO)</th>
                                     <td>
-                                      ?
+                                        ?
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>게재일</th>
                                     <td>
-                                        <%=db_data[0].date%>  
+                                        <%=db_data[0].date%>
                                     </td>
                                     <th>국명</th>
                                     <td>
-                                        <%=db_data[0].announe_nation_ko%>  
+                                        <%=db_data[0].announe_nation_ko%>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
-                    
+
                     </article>
 
                 </div>
             </div>
             <div class="container">
-                <form method="POST" action="/research/results/delete?num=<%=db_data[0].rrid%>">
-                  <a type="button" class="btn btn-outline-secondary" href="javascript:history.back();">목록</a> 
+                <a type="button" class="btn btn-outline-secondary" href="javascript:history.back();">목록</a>
 
-                  <button class="btn btn-outline-secondary">삭제</button>
-                  <button class="btn btn-outline-secondary">수정</button>
-              </form>
+                <a type="button" class="btn btn-outline-secondary"
+                    href="/research/results/treatise/delete?num=<%=db_data[0].rrid%>">삭제</a>
+                <a type="button" class="btn btn-outline-secondary"
+                    href="/research/results/treatise/update?num=<%=db_data[0].rrid%>">수정</a>
             </div>
         </div>
     </section>

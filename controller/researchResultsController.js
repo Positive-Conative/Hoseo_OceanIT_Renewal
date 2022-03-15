@@ -20,11 +20,11 @@ async function researchResults(req, res, next) {
         const permission = await jwtmiddle.jwtCerti(token);
         const count_data = await counterDAO.findCount(parameters);
         let db_data = []
-        if(parameters.type == 'patent'){
+        if (parameters.type == 'patent') {
             db_data += await researchResultsDAO.researchResults_selectPatent(parameters)
-        } else if(parameters.type == 'treatise'){
+        } else if (parameters.type == 'treatise') {
             db_data += await researchResultsDAO.researchResults_selectTreatise(parameters)
-        } else if(parameters.type == 'announcement'){
+        } else if (parameters.type == 'announcement') {
             db_data += await researchResultsDAO.researchResults_selectAnnouncement(parameters)
         }
         // const db_data = await researchResultsDAO.researchResults_selectAll(parameters);
@@ -70,7 +70,7 @@ async function researcResultWrite(req, res, next) {
     };
     try {
         let queryToken = req.session.user;
-        if(queryToken == undefined) throw "Parameter ERR."
+        if (queryToken == undefined) throw "Parameter ERR."
 
         const count_data = await counterDAO.findCount(parameters);
         const permission = await jwtmiddle.jwtCerti(queryToken);
@@ -86,20 +86,20 @@ async function researcResultWriteP(req, res, next) {
     let body = req.body
     try {
         let queryToken = req.session.user;
-        if(queryToken == undefined) throw "Parameter ERR."
+        if (queryToken == undefined) throw "Parameter ERR."
         const permission = await jwtmiddle.jwtCerti(queryToken)
         if (permission.userRole >= 5) throw "권한이없습니다."
         let parameters = {
-            "group_id":body.group,
-            "date":body.date,
-            "title_ko":body.title_ko,
-            "writer_ko":body.writer_ko,
-            "announe_nation_ko":body.announe_nation_ko,
-            "classify_ko":body.classify_ko,
-            "application_num" : body.application_num
+            "group_id": body.group,
+            "date": body.date,
+            "title_ko": body.title_ko,
+            "writer_ko": body.writer_ko,
+            "announe_nation_ko": body.announe_nation_ko,
+            "classify_ko": body.classify_ko,
+            "application_num": body.application_num
         }
         const searchResults = await researchResultsDAO.researchResults_check(parameters)
-        if(searchResults[0] !== undefined) throw "이미 존재하는 과제명입니다.";
+        if (searchResults[0] !== undefined) throw "이미 존재하는 과제명입니다.";
         const results = await researchResultsDAO.researchResults_insert(parameters)
 
         res.send("<script>alert('" + results + "');location.href='/research/results?type=all&schKeyword=&page=1';</script>")
@@ -107,16 +107,16 @@ async function researcResultWriteP(req, res, next) {
         res.send("<script>alert('" + error + "');history.go(-1);</script>")
     }
 }
-async function researchResultDelete(req, res, next){
+async function researchResultDelete(req, res, next) {
     let rrid = req.query.num
     let parameters = {
         "rrid": rrid,
     }
     try {
         let queryToken = req.session.user;
-        if(queryToken == undefined) throw "Parameter ERR."
+        if (queryToken == undefined) throw "Parameter ERR."
         const permission = await jwtmiddle.jwtCerti(queryToken)
-        if(permission.userRole >= 5) throw "권한이없습니다."
+        if (permission.userRole >= 5) throw "권한이없습니다."
         const delete_results = await researchResultsDAO.researchResults_delete(parameters)
         res.send("<script>alert('" + delete_results + "');location.href='/research/results?type=all&schKeyword=&page=1';</script>")
     } catch (error) {
@@ -124,54 +124,7 @@ async function researchResultDelete(req, res, next){
     }
 }
 
-async function researchResultsPatentDetail(req, res, next) {
-    let token = req.session.user;
-    var queryNum = req.query.num;
-    var parameters = {
-        "rrid": queryNum,
-        "name": 'vistors'
-    };
-    try {
-        const permission = await jwtmiddle.jwtCerti(token);
-        const count_data = await counterDAO.findCount(parameters);
-        const db_data = await researchResultsDAO.researchResults_selectDetailPatent(parameters);
-        res.render('research_results/researchResultsDetailPatent', { db_data, permission, parameters, dayjs, count_data });
-    } catch (error) {
-        res.send("<script>alert('" + error + "');location.href='/';</script>")
-    }
-}
-async function researchResultsTreatiseDetail(req, res, next) {
-    let token = req.session.user;
-    var queryNum = req.query.num;
-    var parameters = {
-        "rrid": queryNum,
-        "name": 'vistors'
-    };
-    try {
-        const permission = await jwtmiddle.jwtCerti(token);
-        const count_data = await counterDAO.findCount(parameters);
-        const db_data = await researchResultsDAO.researchResults_selectDetailTreatise(parameters);
-        res.render('research_results/researchResultsDetailTreatise', { db_data, permission, parameters, dayjs, count_data });
-    } catch (error) {
-        res.send("<script>alert('" + error + "');location.href='/';</script>")
-    }
-}
-async function researchResultsAnnouncementDetail(req, res, next) {
-    let token = req.session.user;
-    var queryNum = req.query.num;
-    var parameters = {
-        "rrid": queryNum,
-        "name": 'vistors'
-    };
-    try {
-        const permission = await jwtmiddle.jwtCerti(token);
-        const count_data = await counterDAO.findCount(parameters);
-        const db_data = await researchResultsDAO.researchResults_selectDetailAnnouncement(parameters);
-        res.render('research_results/researchResultsDetailAnnouncement', { db_data, permission, parameters, dayjs, count_data });
-    } catch (error) {
-        res.send("<script>alert('" + error + "');location.href='/';</script>")
-    }
-}
+// Patent
 async function researchResultsPatent(req, res, next) {
     let token = req.session.user;
     var queryPage = req.query.page;
@@ -192,6 +145,60 @@ async function researchResultsPatent(req, res, next) {
         res.send("<script>alert('" + error + "');location.href='/';</script>")
     }
 }
+async function researchResultsPatentDetail(req, res, next) {
+    let token = req.session.user;
+    var queryNum = req.query.num;
+    var parameters = {
+        "rrid": queryNum,
+        "name": 'vistors'
+    };
+    try {
+        const permission = await jwtmiddle.jwtCerti(token);
+        const count_data = await counterDAO.findCount(parameters);
+        const db_data = await researchResultsDAO.researchResults_selectDetailPatent(parameters);
+        res.render('research_results/researchResultsDetailPatent', { db_data, permission, parameters, dayjs, count_data });
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+async function researchResultsPatentUpdate(req, res, next) {
+    try {
+        let token = req.session.user
+        let queryNum = req.query.num;
+        let parameters = {
+            "rrid": queryNum,
+            "name": 'vistors'
+        }
+        if (token == undefined) throw "Parameter ERR."
+        const permission = await jwtmiddle.jwtCerti(token)
+        if (permission.userRole >= 5) throw "권한이없습니다."
+        const count_data = await counterDAO.findCount(parameters);
+        const db_data = await researchResultsDAO.researchResults_selectDetailPatent(parameters);
+        console.log(db_data)
+        res.render('research_results/researchResultsModifyPantent', { db_data, count_data, permission })
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+async function researchResultsPatentDelete(req, res, next){
+    try {
+        let token = req.session.user
+        let queryNum = req.query.num;
+        let parameters = {
+            "rrid": queryNum,
+        }
+        if (token == undefined) throw "Parameter ERR."
+        const permission = await jwtmiddle.jwtCerti(token)
+        if (permission.userRole >= 5) throw "권한이없습니다."
+        const db_data = await researchResultsDAO.researchResults_DeletePatent(parameters);
+        res.redirect('/research/results/patent?schKeyword=&page=1');
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+
+
+// Treatise
 async function researchResultsTreatise(req, res, next) {
     let token = req.session.user;
     var queryPage = req.query.page;
@@ -211,6 +218,59 @@ async function researchResultsTreatise(req, res, next) {
         res.send("<script>alert('" + error + "');location.href='/';</script>")
     }
 }
+async function researchResultsTreatiseDetail(req, res, next) {
+    let token = req.session.user;
+    var queryNum = req.query.num;
+    var parameters = {
+        "rrid": queryNum,
+        "name": 'vistors'
+    };
+    try {
+        const permission = await jwtmiddle.jwtCerti(token);
+        const count_data = await counterDAO.findCount(parameters);
+        const db_data = await researchResultsDAO.researchResults_selectDetailTreatise(parameters);
+        res.render('research_results/researchResultsDetailTreatise', { db_data, permission, parameters, dayjs, count_data });
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+async function researchResultsTreatiseUpdate(req, res, next) {
+    try {
+        let token = req.session.user
+        let queryNum = req.query.num;
+        let parameters = {
+            "rrid": queryNum,
+            "name": 'vistors'
+        }
+        if (token == undefined) throw "Parameter ERR."
+        const permission = await jwtmiddle.jwtCerti(token)
+        if (permission.userRole >= 5) throw "권한이없습니다."
+        const count_data = await counterDAO.findCount(parameters);
+        const db_data = await researchResultsDAO.researchResults_selectDetailTreatise(parameters);
+        console.log(db_data)
+        res.render('research_results/researchResultsModifyTreatise', { db_data, count_data, permission })
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+async function researchResultsTreatiseDelete(req, res, next){
+    try {
+        let token = req.session.user
+        let queryNum = req.query.num;
+        let parameters = {
+            "rrid": queryNum,
+        }
+        if (token == undefined) throw "Parameter ERR."
+        const permission = await jwtmiddle.jwtCerti(token)
+        if (permission.userRole >= 5) throw "권한이없습니다."
+        const db_data = await researchResultsDAO.researchResults_DeleteTreatise(parameters);
+        res.redirect('/research/results/treatise?schKeyword=&page=1');
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+
+// Announcement
 async function researchResultsAnnouncement(req, res, next) {
     let token = req.session.user;
     var queryPage = req.query.page;
@@ -230,6 +290,57 @@ async function researchResultsAnnouncement(req, res, next) {
         res.send("<script>alert('" + error + "');location.href='/';</script>")
     }
 }
+async function researchResultsAnnouncementDetail(req, res, next) {
+    let token = req.session.user;
+    var queryNum = req.query.num;
+    var parameters = {
+        "rrid": queryNum,
+        "name": 'vistors'
+    };
+    try {
+        const permission = await jwtmiddle.jwtCerti(token);
+        const count_data = await counterDAO.findCount(parameters);
+        const db_data = await researchResultsDAO.researchResults_selectDetailAnnouncement(parameters);
+        res.render('research_results/researchResultsDetailAnnouncement', { db_data, permission, parameters, dayjs, count_data });
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+async function researchResultsAnnouncementUpdate(req, res, next) {
+    try {
+        let token = req.session.user
+        let queryNum = req.query.num;
+        let parameters = {
+            "rrid": queryNum,
+            "name": 'vistors'
+        }
+        if (token == undefined) throw "Parameter ERR."
+        const permission = await jwtmiddle.jwtCerti(token)
+        if (permission.userRole >= 5) throw "권한이없습니다."
+        const count_data = await counterDAO.findCount(parameters);
+        const db_data = await researchResultsDAO.researchResults_selectDetailAnnouncement(parameters);
+        console.log(db_data)
+        res.render('research_results/researchResultsModifyAnnouncement', { db_data, count_data, permission })
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+async function researchResultsAnnouncementDelete(req, res, next){
+    try {
+        let token = req.session.user
+        let queryNum = req.query.num;
+        let parameters = {
+            "rrid": queryNum,
+        }
+        if (token == undefined) throw "Parameter ERR."
+        const permission = await jwtmiddle.jwtCerti(token)
+        if (permission.userRole >= 5) throw "권한이없습니다."
+        const db_data = await researchResultsDAO.researchResults_DeleteAnnouncement(parameters);
+        res.redirect('/research/results/announcement?schKeyword=&page=1');
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
 
 module.exports = {
     researchResults,
@@ -237,11 +348,21 @@ module.exports = {
     androidResearchResultsAll,
     researcResultWrite,
     researcResultWriteP,
-    researchResultDelete,
-    researchResultsPatentDetail,
-    researchResultsTreatiseDetail,
-    researchResultsAnnouncementDetail,
+    // researchResultDelete,
+
     researchResultsPatent,
+    researchResultsPatentDetail,
+    researchResultsPatentUpdate,
+    researchResultsPatentDelete,
+
     researchResultsTreatise,
+    researchResultsTreatiseDetail,
+    researchResultsTreatiseUpdate,
+    researchResultsTreatiseDelete,
+
     researchResultsAnnouncement,
+    researchResultsAnnouncementDetail,
+    researchResultsAnnouncementUpdate,
+    researchResultsAnnouncementDelete,
+
 }

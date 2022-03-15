@@ -19,12 +19,18 @@ var researchResultsController = require('../controller/researchResultsController
 
 router.get('/results/patent', researchResultsController.researchResultsPatent);
 router.get('/results/patent/detail', researchResultsController.researchResultsPatentDetail);
+router.get('/results/patent/update', researchResultsController.researchResultsPatentUpdate)
+router.get('/results/patent/delete', researchResultsController.researchResultsPatentDelete)
 
 router.get('/results/treatise', researchResultsController.researchResultsTreatise);
 router.get('/results/treatise/detail', researchResultsController.researchResultsTreatiseDetail);
+router.get('/results/treatise/update', researchResultsController.researchResultsTreatiseUpdate)
+router.get('/results/treatise/delete', researchResultsController.researchResultsTreatiseDelete)
 
 router.get('/results/announcement', researchResultsController.researchResultsAnnouncement);
 router.get('/results/announcement/detail', researchResultsController.researchResultsAnnouncementDetail);
+router.get('/results/announcement/update', researchResultsController.researchResultsAnnouncementUpdate)
+router.get('/results/announcement/delete', researchResultsController.researchResultsAnnouncementDelete)
 
 // router.get('/results/detail', researchResultsController.researchResultsDetail);
 router.get('/android/results', researchResultsController.androidResearchResultsAll);
@@ -40,6 +46,6 @@ router.post('/results/write', researchResultsController.researcResultWriteP);
 //research DELETE
 
 router.post('/fields/delete', researchFieldsController.researchFieldhDelete)
-router.post('/results/delete',researchResultsController.researchResultDelete)
+// router.post('/results/delete',researchResultsController.researchResultDelete)
 
 module.exports = router;
