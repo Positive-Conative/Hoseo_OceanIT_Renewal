@@ -14,24 +14,40 @@ router.get('/android/fields', researchFieldsController.androidResearchFieldsAll)
 router.get('/fields/write', researchFieldsController.researchFieldhWrite);
 
 //----------------------------------------------------------------------------------//
-//research results
+//research results Patent
 var researchResultsController = require('../controller/researchResultsController');
+var resultsPatentController = require('../controller/results/resultsPatentController')
 
-router.get('/results/patent', researchResultsController.researchResultsPatent);
-router.get('/results/patent/detail', researchResultsController.researchResultsPatentDetail);
-router.get('/results/patent/update', researchResultsController.researchResultsPatentUpdate)
-router.get('/results/patent/delete', researchResultsController.researchResultsPatentDelete)
+router.get('/results/patent', resultsPatentController.researchResultsPatent);
+router.get('/results/patent/write', resultsPatentController.researchResultsPatentWrite)
+router.get('/results/patent/detail', resultsPatentController.researchResultsPatentDetail);
+router.get('/results/patent/update', resultsPatentController.researchResultsPatentUpdate);
+router.get('/results/patent/delete', resultsPatentController.researchResultsPatentDelete);
+// router.post('/results/patent/write', resultsPatentController.researchResultsPatentWriteP)
 
-router.get('/results/treatise', researchResultsController.researchResultsTreatise);
-router.get('/results/treatise/detail', researchResultsController.researchResultsTreatiseDetail);
-router.get('/results/treatise/update', researchResultsController.researchResultsTreatiseUpdate)
-router.get('/results/treatise/delete', researchResultsController.researchResultsTreatiseDelete)
+//----------------------------------------------------------------------------------//
+//research results Treatise
+var resultsTreatiseController = require('../controller/results/resultsTreatiseController ')
 
-router.get('/results/announcement', researchResultsController.researchResultsAnnouncement);
-router.get('/results/announcement/detail', researchResultsController.researchResultsAnnouncementDetail);
-router.get('/results/announcement/update', researchResultsController.researchResultsAnnouncementUpdate)
-router.get('/results/announcement/delete', researchResultsController.researchResultsAnnouncementDelete)
+router.get('/results/treatise', resultsTreatiseController.researchResultsTreatise);
+router.get('/results/treatise/write', resultsTreatiseController.researchResultsTreatiseWrite);
+router.get('/results/treatise/detail', resultsTreatiseController.researchResultsTreatiseDetail);
+router.get('/results/treatise/update', resultsTreatiseController.researchResultsTreatiseUpdate)
+router.get('/results/treatise/delete', resultsTreatiseController.researchResultsTreatiseDelete)
+// router.post('/results/treatise/write', resultsTreatiseController.researchResultsTreatiseWriteP);
 
+//----------------------------------------------------------------------------------//
+//research results Treatise
+var resultsAnnouncementController = require('../controller/results/resultsAnnouncementController')
+
+router.get('/results/announcement', resultsAnnouncementController.researchResultsAnnouncement);
+router.get('/results/announcement/write', resultsAnnouncementController.researchResultsAnnouncementWrite)
+router.get('/results/announcement/detail', resultsAnnouncementController.researchResultsAnnouncementDetail);
+router.get('/results/announcement/update', resultsAnnouncementController.researchResultsAnnouncementUpdate)
+router.get('/results/announcement/delete', resultsAnnouncementController.researchResultsAnnouncementDelete)
+// router.post('/results/announcement/write', resultsAnnouncementController.researchResultsAnnouncementWriteP)
+
+//----------------------------------------------------------------------------------//
 // router.get('/results/detail', researchResultsController.researchResultsDetail);
 router.get('/android/results', researchResultsController.androidResearchResultsAll);
 
