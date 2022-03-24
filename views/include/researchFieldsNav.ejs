@@ -54,20 +54,45 @@
                 <th>완료 과제</th>
             </tr>
         `)
-    }else if(location.pathname == '/research/results'){
+    }else if(location.pathname == '/research/results/patent'){
         $('#researchFieldNav tbody').html(`
-            <tr onclick="addquery('all')">
-                <th>전체</th>
-            </tr>
-            <tr onclick="addquery('patent')">
+            <tr onclick="location.href='/research/results/patent?schKeyword=&page=1'">
                 <th>특허</th>
             </tr>
-            <tr onclick="addquery('treatise')">
+            <tr onclick="location.href='/research/results/treatise?schKeyword=&page=1'" >
                 <th>논문</th>
             </tr>
-            <tr onclick="addquery('announcement')">
+            <tr onclick="location.href='/research/results/announcement?schKeyword=&page=1'">
                 <th>발표</th>
             </tr>
         `)
     }
+    else if(location.pathname == '/research/results/treatise'){
+        $('#researchFieldNav tbody').html(`
+            <tr onclick="location.href='/research/results/patent?schKeyword=&page=1'">
+                <th>특허</th>
+            </tr>
+            <tr onclick="location.href='/research/results/treatise?schKeyword=&page=1'" >
+                <th>논문</th>
+            </tr>
+            <tr onclick="location.href='/research/results/announcement?schKeyword=&page=1'">
+                <th>발표</th>
+            </tr>
+        `)
+    }
+
+    else if(location.pathname == '/research/results/announcement'){
+        $('#researchFieldNav tbody').html(`
+            <tr onclick="location.href='/research/results/patent?schKeyword=&page=1'">
+                <th>특허</th>
+            </tr>
+            <tr onclick="location.href='/research/results/treatise?schKeyword=&page=1'" >
+                <th>논문</th>
+            </tr>
+            <tr onclick="location.href='/research/results/announcement?schKeyword=&page=1'">
+                <th>발표</th>
+            </tr>
+        `)
+    }
+
 </script>
