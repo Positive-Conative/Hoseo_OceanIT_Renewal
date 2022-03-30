@@ -2,7 +2,7 @@
 
 var dayjs = require('dayjs');
 var jwtmiddle = require('../../middleware/jwt');
-var researchResultsDAO = require('../../model/researchResultsDAO');
+var AnnouncementDAO = require('../../model/researchResult/AnnouncementDAO');
 var counterDAO = require('../../model/counterDAO')
 
 // Announcement
@@ -19,7 +19,7 @@ async function researchResultsAnnouncement(req, res, next) {
     try {
         const permission = await jwtmiddle.jwtCerti(token);
         const count_data = await counterDAO.findCount(parameters);
-        const db_data = await researchResultsDAO.researchResults_selectAnnouncement(parameters)
+        const db_data = await AnnouncementDAO.researchResults_selectAnnouncement(parameters)
         res.render('research_results/researchResultsMain', { db_data, permission, parameters, dayjs, count_data });
     } catch (error) {
         res.send("<script>alert('" + error + "');location.href='/';</script>")
@@ -50,27 +50,8 @@ async function researchResultsAnnouncementDetail(req, res, next) {
     try {
         const permission = await jwtmiddle.jwtCerti(token);
         const count_data = await counterDAO.findCount(parameters);
-        const db_data = await researchResultsDAO.researchResults_selectDetailAnnouncement(parameters);
+        const db_data = await AnnouncementDAO.researchResults_selectDetailAnnouncement(parameters);
         res.render('research_results/researchResultsDetailAnnouncement', { db_data, permission, parameters, dayjs, count_data });
-    } catch (error) {
-        res.send("<script>alert('" + error + "');location.href='/';</script>")
-    }
-}
-async function researchResultsAnnouncementUpdate(req, res, next) {
-    try {
-        let token = req.session.user
-        let queryNum = req.query.num;
-        let parameters = {
-            "rrid": queryNum,
-            "name": 'vistors'
-        }
-        if (token == undefined) throw "Parameter ERR."
-        const permission = await jwtmiddle.jwtCerti(token)
-        if (permission.userRole >= 5) throw "권한이없습니다."
-        const count_data = await counterDAO.findCount(parameters);
-        const db_data = await researchResultsDAO.researchResults_selectDetailAnnouncement(parameters);
-        console.log(db_data)
-        res.render('research_results/researchResultsModifyAnnouncement', { db_data, count_data, permission })
     } catch (error) {
         res.send("<script>alert('" + error + "');location.href='/';</script>")
     }
@@ -85,36 +66,79 @@ async function researchResultsAnnouncementDelete(req, res, next){
         if (token == undefined) throw "Parameter ERR."
         const permission = await jwtmiddle.jwtCerti(token)
         if (permission.userRole >= 5) throw "권한이없습니다."
-        const db_data = await researchResultsDAO.researchResults_DeleteAnnouncement(parameters);
+        const db_data = await AnnouncementDAO.researchResults_DeleteAnnouncement(parameters);
         res.redirect('/research/results/announcement?schKeyword=&page=1');
     } catch (error) {
         res.send("<script>alert('" + error + "');location.href='/';</script>")
     }
 }
-
 async function researchResultsAnnouncementWriteP(req,res,next){
     try {
         let parameters = {
-            "group_id":req.body.group,
             "announe_nation_ko":req.body.announe_nation_ko,
+            "classify_ko" : "발표",
             "title_ko": req.body.title_ko,
             "writer_ko": req.body.writer_ko,
-            // "할술대회명?": req.body.?,
-            "classify_ko":req.body.classify_ko,
+            "journal_ko": req.body.journal_ko,
+            "academic_ko":req.body.academic_ko,
         }
         let token = req.session.user;
         if (token == undefined) throw "Parameter ERR."
         const permission = await jwtmiddle.jwtCerti(token)
         if (permission.userRole >= 5) throw "권한이없습니다."
+        let insert_Announcement = AnnouncementDAO.researchResults_InsertAnnouncement(parameters)
+        res.redirect('/research/results/announcement?schKeyword=&page=1');
     } catch (error) {
-        
+        res.send("<script>alert('" + error + "');history.back();</script>")
     }
 }
+async function researchResultsAnnouncementModify(req, res, next) {
+    try {
+        let token = req.session.user
+        let queryNum = req.query.num;
+        let parameters = {
+            "rrid": queryNum,
+            "name": 'vistors'
+        }
+        if (token == undefined) throw "Parameter ERR."
+        const permission = await jwtmiddle.jwtCerti(token)
+        if (permission.userRole >= 5) throw "권한이없습니다."
+        const count_data = await counterDAO.findCount(parameters);
+        const db_data = await AnnouncementDAO.researchResults_selectDetailAnnouncement(parameters);
+        res.render('research_results/researchResultsModifyAnnouncement', { db_data, count_data, permission })
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+async function researchResultsAnnouncementModifyP(req, res, next){
+    try {
+        let queryNum = req.query.num;
+        let parameters = {
+            "rrid": queryNum,
+            "announe_nation_ko":req.body.announe_nation_ko,
+            "classify_ko" : "발표",
+            "title_ko": req.body.title_ko,
+            "writer_ko": req.body.writer_ko,
+            "journal_ko": req.body.journal_ko,
+            "academic_ko":req.body.academic_ko,
+        }
+        let token = req.session.user;
+        if (token == undefined) throw "Parameter ERR."
+        const permission = await jwtmiddle.jwtCerti(token)
+        if (permission.userRole >= 5) throw "권한이없습니다."
+        let modify_Announcement = await AnnouncementDAO.researchResults_ModifyAnnouncement(parameters)
+        res.redirect('/research/results/announcement?schKeyword=&page=1');
+    } catch (error) {
+        res.send("<script>alert('" + error + "');history.back();</script>")
+    }
+}
+
 module.exports = {
     researchResultsAnnouncement,
     researchResultsAnnouncementWrite,
     researchResultsAnnouncementDetail,
-    researchResultsAnnouncementUpdate,
     researchResultsAnnouncementDelete,
-    // researchResultsAnnouncementWriteP
+    researchResultsAnnouncementWriteP,
+    researchResultsAnnouncementModify,
+    researchResultsAnnouncementModifyP
 }

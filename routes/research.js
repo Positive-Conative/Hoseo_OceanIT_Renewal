@@ -30,9 +30,11 @@ router.get('/fields/write', FieldCtrl.researchFieldhWrite);
 router.get('/results/patent', PatentCtrl.researchResultsPatent);
 router.get('/results/patent/write', PatentCtrl.researchResultsPatentWrite)
 router.get('/results/patent/detail', PatentCtrl.researchResultsPatentDetail);
-router.get('/results/patent/update', PatentCtrl.researchResultsPatentUpdate);
 router.get('/results/patent/delete', PatentCtrl.researchResultsPatentDelete);
-// router.post('/results/patent/write', PatentCtrl.researchResultsPatentWriteP)
+router.get('/results/patent/modify', PatentCtrl.researchResultsPatentModify)
+router.post('/results/patent/write', PatentCtrl.researchResultsPatentWriteP);
+router.post('/results/patent/modify', PatentCtrl.researchResultsPatentModifyP);
+
 
 //----------------------------------------------------------------------------------//
 
@@ -40,19 +42,21 @@ router.get('/results/patent/delete', PatentCtrl.researchResultsPatentDelete);
 router.get('/results/treatise', TreatiseCtrl.researchResultsTreatise);
 router.get('/results/treatise/write', TreatiseCtrl.researchResultsTreatiseWrite);
 router.get('/results/treatise/detail', TreatiseCtrl.researchResultsTreatiseDetail);
-router.get('/results/treatise/update', TreatiseCtrl.researchResultsTreatiseUpdate)
+router.get('/results/treatise/modify', TreatiseCtrl.researchResultsTreatiseModify)
 router.get('/results/treatise/delete', TreatiseCtrl.researchResultsTreatiseDelete)
-// router.post('/results/treatise/write', TreatiseCtrl.researchResultsTreatiseWriteP);
+router.post('/results/treatise/write', TreatiseCtrl.researchResultsTreatiseWriteP);
+router.post('/results/treatise/modify', TreatiseCtrl.researchResultsTreatiseModifyP)
 
 //----------------------------------------------------------------------------------//
 
-//research results Treatise
+//research results Announcement
 router.get('/results/announcement', AnnouncementCtrl.researchResultsAnnouncement);
 router.get('/results/announcement/write', AnnouncementCtrl.researchResultsAnnouncementWrite)
 router.get('/results/announcement/detail', AnnouncementCtrl.researchResultsAnnouncementDetail);
-router.get('/results/announcement/update', AnnouncementCtrl.researchResultsAnnouncementUpdate)
+router.get('/results/announcement/modify', AnnouncementCtrl.researchResultsAnnouncementModify)
 router.get('/results/announcement/delete', AnnouncementCtrl.researchResultsAnnouncementDelete)
-// router.post('/results/announcement/write', AnnouncementCtrl.researchResultsAnnouncementWriteP)
+router.post('/results/announcement/write', AnnouncementCtrl.researchResultsAnnouncementWriteP)
+router.post('/results/announcement/modify', AnnouncementCtrl.researchResultsAnnouncementModifyP)
 
 //----------------------------------------------------------------------------------//
 

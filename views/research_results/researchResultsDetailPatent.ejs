@@ -37,7 +37,7 @@
                                 <tr>
                                     <th>출원번호</th>
                                     <td>
-
+                                        <%=db_data[0].application_num %>
                                     </td>
                                     <th>출원일자</th>
                                     <td>
@@ -47,10 +47,11 @@
                                 <tr>
                                     <th>등록번호</th>
                                     <td>
+                                        <%=db_data[0].registration_num%>
                                     </td>
                                     <th>등록일자</th>
                                     <td>
-
+                                        <%=db_data[0].registration_date%>
                                     </td>
                                 </tr>
                                 <tr>
@@ -72,7 +73,7 @@
                 <a type="button" class="btn btn-outline-secondary"
                     href="/research/results/patent/delete?num=<%=db_data[0].rrid%>">삭제</a>
                 <a type="button" class="btn btn-outline-secondary"
-                    href="/research/results/patent/update?num=<%=db_data[0].rrid%>">수정</a>
+                    href="/research/results/patent/modify?num=<%=db_data[0].rrid%>">수정</a>
                     <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">
                         이미지
                      </button>
