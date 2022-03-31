@@ -57,9 +57,9 @@ function researchResults_DeleteTreatise(parameters){
     })
 }
 function researchResults_InsertTreatise(parameters){
-    let queryData = `INSERT Research_Results_Treatise SET title_ko=?, classify_ko=? ,academic_ko=?, media_ko=?, writer_ko=?, group_id=?, application_num=?, date=?, announe_nation_ko=?`;
+    let queryData = `INSERT Research_Results_Treatise SET title_ko=?, classify_ko=?, journal_ko=?, media_ko=?, writer_ko=?, group_id=?, application_num=?, application_date=?, announe_nation_ko=?`;
     return new Promise(function (resolve, reject) {
-        db.query(queryData, [parameters.title_ko,parameters.classify_ko ,parameters.academic_ko, parameters.media_ko, parameters.writer_ko, parameters.group_id, parameters.application_num, parameters.date,parameters.announe_nation_ko], function (error, db_data){
+        db.query(queryData, [parameters.title_ko,parameters.classify_ko, parameters.journal_ko , parameters.media_ko, parameters.writer_ko, parameters.group_id, parameters.application_num, parameters.application_date,parameters.announe_nation_ko], function (error, db_data){
             if (error) {
                 logger.error(
                     "DB error [Research_Results_Treatise]" +
@@ -72,9 +72,9 @@ function researchResults_InsertTreatise(parameters){
     })
 }
 function researchResults_ModifyTreatise(parameters){
-    let queryData = `UPDATE Research_Results_Treatise SET title_ko=?, classify_ko=? ,academic_ko=?, media_ko=?, writer_ko=?, group_id=?, application_num=?, date=?, announe_nation_ko=? WHERE rrid=?`;
+    let queryData = `UPDATE Research_Results_Treatise SET title_ko=?, classify_ko=?, journal_ko=?, media_ko=?, writer_ko=?, group_id=?, application_num=?, application_date=?, announe_nation_ko=? WHERE rrid=?`;
     return new Promise(function (resolve, reject) {
-        db.query(queryData, [parameters.title_ko,parameters.classify_ko ,parameters.academic_ko, parameters.media_ko, parameters.writer_ko, parameters.group_id, parameters.application_num, parameters.date,parameters.announe_nation_ko, parameters.rrid], function (error, db_data){
+        db.query(queryData, [parameters.title_ko,parameters.classify_ko, parameters.journal_ko , parameters.media_ko, parameters.writer_ko, parameters.group_id, parameters.application_num, parameters.application_date,parameters.announe_nation_ko, parameters.rrid], function (error, db_data){
             if (error) {
                 logger.error(
                     "DB error [Research_Results_Treatise]" +

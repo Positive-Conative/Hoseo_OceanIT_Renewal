@@ -57,9 +57,9 @@ function researchResults_DeleteAnnouncement(parameters) {
     })
 }
 function researchResults_InsertAnnouncement(parameters) {
-    let queryData = `INSERT Research_Results_Announcement SET title_ko=?,classify_ko=?,announe_nation_ko=?,writer_ko=?,journal_ko=?,academic_ko=?`;
+    let queryData = `INSERT Research_Results_Announcement SET title_ko=?,classify_ko=?,announe_nation_ko=?,writer_ko=?,application_date=?,academic_ko=?`;
     return new Promise(function (resolve, reject) {
-        db.query(queryData, [parameters.title_ko, parameters.classify_ko, parameters.announe_nation_ko, parameters.writer_ko, parameters.journal_ko, parameters.academic_ko], function (error, db_data) {
+        db.query(queryData, [parameters.title_ko, parameters.classify_ko, parameters.announe_nation_ko, parameters.writer_ko, parameters.application_date, parameters.academic_ko], function (error, db_data) {
             if (error) {
                 logger.error(
                     "DB error [Research_Results_Announcement]" +
@@ -72,9 +72,9 @@ function researchResults_InsertAnnouncement(parameters) {
     })
 }
 function researchResults_ModifyAnnouncement(parameters){
-    let queryData = `UPDATE Research_Results_Announcement SET title_ko=?,classify_ko=?,announe_nation_ko=?,writer_ko=?,journal_ko=?,academic_ko=? WHERE rrid=?`
+    let queryData = `UPDATE Research_Results_Announcement SET title_ko=?,classify_ko=?,announe_nation_ko=?,writer_ko=?,application_date=?,academic_ko=? WHERE rrid=?`
     return new Promise(function (resolve, reject) {
-        db.query(queryData, [parameters.title_ko, parameters.classify_ko, parameters.announe_nation_ko, parameters.writer_ko, parameters.journal_ko, parameters.academic_ko, parameters.rrid], function (error, db_data){
+        db.query(queryData, [parameters.title_ko, parameters.classify_ko, parameters.announe_nation_ko, parameters.writer_ko, parameters.application_date, parameters.academic_ko, parameters.rrid], function (error, db_data){
             if (error) {
                 logger.error(
                     "DB error [Research_Results_Announcement]" +

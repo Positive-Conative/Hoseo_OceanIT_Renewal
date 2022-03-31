@@ -83,7 +83,7 @@ async function researchResultsPatentWriteP(req, res, next) {
             "announe_nation_ko": req.body.announe_nation_ko,
             "registration_num": req.body.registration_num,
             "registration_date": req.body.registration_date,
-            "application_date": req.body.date,
+            "application_date": req.body.application_date,
             "application_num": req.body.application_num,
         }
         let token = req.session.user;
@@ -132,7 +132,7 @@ async function researchResultsPatentModifyP(req, res, next){
             "announe_nation_ko": req.body.announe_nation_ko,
             "registration_num": req.body.registration_num,
             "registration_date": req.body.registration_date,
-            "application_date": req.body.date,
+            "application_date": req.body.application_date,
             "application_num": req.body.application_num,
         }
         let token = req.session.user;
