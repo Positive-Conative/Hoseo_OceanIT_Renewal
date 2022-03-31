@@ -39,6 +39,7 @@ async function researchFieldsDetail(req, res, next) {
         const photoData = await researchFieldsDAO.researchFields_selectDetailPhotos(parameters);
         const count_data = await counterDAO.findCount(parameters);
         const permission = await jwtmiddle.jwtCerti(token);
+        console.log(detailData)
         res.render('research_fields/researchFieldsDetail', { dayjs, permission, detailData, linkData, photoData, count_data });
     } catch (error) {
         res.send("<script>alert('" + error + "');history.go(-1);</script>")
@@ -60,7 +61,7 @@ async function androidResearchFieldsAll(req, res, next) {
     }
 }
 
-async function researchFieldhWrite(req, res, next) {
+async function researchFieldsWrite(req, res, next) {
     var parameters = {
         "name": 'vistors'
     };
@@ -80,7 +81,7 @@ async function researchFieldhWrite(req, res, next) {
     }
 }
 
-async function researchFieldhWriteP(req, res, next) {
+async function researchFieldsWriteP(req, res, next) {
     let body = req.body
     let parameters = {
         classify_ko: body.classify_ko,
@@ -111,11 +112,12 @@ async function researchFieldhWriteP(req, res, next) {
         res.send("<script>alert('" + error + "');history.go(-1);</script>")
     }
 }
-async function researchFieldhDelete(req, res, next){
+async function researchFieldsDelete(req, res, next){
     let rfid = req.query.num;
     let parameters = {
         "rfid":rfid,
     }
+    console.log(parameters)
     try {
         let queryToken = req.session.user;
         if(queryToken == undefined) throw "Parameter ERR."
@@ -129,11 +131,65 @@ async function researchFieldhDelete(req, res, next){
         res.send("<script>alert('" + error + "');history.go(-1);</script>")
     }
 }
+async function researchFieldsModify(req, res, next){
+    let rfid = req.query.num;
+    var parameters = {
+        "name": 'vistors',
+        "rfid":rfid,
+    };
+    try {
+        const count_data = await counterDAO.findCount(parameters);
+        let queryToken = req.session.user;
+        if(queryToken == undefined) throw "Parameter ERR."
+        const permission = await jwtmiddle.jwtCerti(queryToken)
+        if (permission.userRole >= 5) throw "권한이없습니다."
+        const detailData = await researchFieldsDAO.researchFields_selectDetail(parameters);
+        console.log(detailData)
+        if (permission.userRole < 5)
+            return res.render('research_fields/researchFieldsModify', { count_data, permission, detailData });
+        else throw "권한이없습니다.";
+    } catch (error) {
+        res.send("<script>alert('" + error + "');location.href='/';</script>")
+    }
+}
+async function researchFieldsModifyP(req, res, next){
+    let body = req.body
+    let rfid = req.query.num;
+    let parameters = {
+        "rfid":rfid,
+        classify_ko: body.classify_ko,
+        research_name_ko: body.research_name_ko,
+        business_name_ko: body.business_name_ko,
+        department_name_ko: body.department_name_ko,
+        subjectivity_agency_ko: body.subjectivity_agency_ko,
+        support_agency_ko: body.support_agency_ko,
+        participation_agency_ko: body.participation_agency_ko,
+        research_goal_ko: body.research_goal_ko,
+        research_content_ko: body.research_content_ko,
+        expectation_result_ko: body.expectation_result_ko,
+        research_manager_ko: body.research_manager_ko,
+        research_belong_ko: body.research_belong_ko,
+        date_start: body.date_start,
+        date_end: body.date_end,
+    }
+    try {
+        let queryToken = req.session.user;
+        if(queryToken == undefined) throw "Parameter ERR."
+        const permission = await jwtmiddle.jwtCerti(queryToken)
+        if (permission.userRole >= 5) throw "권한이없습니다."
+        const results = await researchFieldsDAO.researchFields_update(parameters);
+        res.send("<script>alert('" + results + "');location.href='/research/fields?type=all&schKeyword=&page=1';</script>")
+    } catch (error) {
+        res.send("<script>alert('" + error + "');history.go(-1);</script>")
+    }
+}
 module.exports = {
     researchFields,
     researchFieldsDetail,
     androidResearchFieldsAll,
-    researchFieldhWrite,
-    researchFieldhWriteP,
-    researchFieldhDelete,
+    researchFieldsWrite,
+    researchFieldsWriteP,
+    researchFieldsDelete,
+    researchFieldsModify,
+    researchFieldsModifyP
 }

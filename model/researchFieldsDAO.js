@@ -224,6 +224,23 @@ function researchFields_delete(parameters){
         })
     })
 }
+function researchFields_update(parameters){
+    const queryData = `UPDATE Research_Fields SET classify_ko=?, research_name_ko=?, business_name_ko=?, 
+        department_name_ko=?, subjectivity_agency_ko=?, support_agency_ko=?, participation_agency_ko=?, research_goal_ko=?, research_content_ko=?, expectation_result_ko=?, research_manager_ko=?, research_belong_ko=?, date_start=?, date_end=? WHERE rfid=?`;
+    return new Promise(function (resolve, reject) {
+        db.query(queryData,[parameters.classify_ko, parameters.research_name_ko, parameters.business_name_ko, parameters.department_name_ko, parameters.subjectivity_agency_ko, parameters.support_agency_ko, parameters.participation_agency_ko, parameters.research_goal_ko, parameters.research_content_ko, parameters.expectation_result_ko, parameters.research_manager_ko, parameters.research_belong_ko, parameters.date_start, parameters.date_end,parameters.rfid], function (error, db_data) {
+            if(error){
+                logger.error(
+                    "DB error [Research_Fields]"+
+                    "\n \t" + queryData +
+                    "\n \t" + error);
+                reject('DB ERR');
+            }
+            resolve('데이터 수정 완료');
+        })
+    })
+}
+
 module.exports = {
     researchFields_selectAll,
     researchFields_selectDetail,
@@ -236,4 +253,5 @@ module.exports = {
     researchFields_delete_links,
     researchFields_delete_photos,
     researchFields_delete,
+    researchFields_update,
 }

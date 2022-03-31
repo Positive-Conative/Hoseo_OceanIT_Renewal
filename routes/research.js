@@ -16,6 +16,12 @@ var { uploadPatent, uploadTreatise, uploadAnnouncement, } = require('../middlewa
 
 router.get('/fields', FieldCtrl.researchFields);
 router.get('/fields/detail', FieldCtrl.researchFieldsDetail);
+router.get('/fields/write', FieldCtrl.researchFieldsWrite);
+router.get('/fields/modify', FieldCtrl.researchFieldsModify);
+router.post('/fields/write', FieldCtrl.researchFieldsWriteP);
+router.get('/fields/delete', FieldCtrl.researchFieldsDelete);
+router.post('/fields/modify', FieldCtrl.researchFieldsModifyP);
+
 
 //App
 //research fields
@@ -23,7 +29,7 @@ router.get('/fields/detail', FieldCtrl.researchFieldsDetail);
 
 router.get('/android', AppCtrl.Android);
 router.get('/android/fields', FieldCtrl.androidResearchFieldsAll);
-router.get('/fields/write', FieldCtrl.researchFieldhWrite);
+router.get('/android/results', ResultCtrl.androidResearchResultsAll);
 
 //----------------------------------------------------------------------------------//
 
@@ -62,20 +68,12 @@ router.post('/results/announcement/modify', AnnouncementCtrl.researchResultsAnno
 
 //----------------------------------------------------------------------------------//
 
-// router.get('/results/detail', ResultCtrl.researchResultsDetail);
-router.get('/android/results', ResultCtrl.androidResearchResultsAll);
 
-router.get('/results/write', ResultCtrl.researcResultWrite);
-
+// Old
 //----------------------------------------------------------------------------------//
-//research POST
-router.post('/fields/write', FieldCtrl.researchFieldhWriteP);
-router.post('/results/write', ResultCtrl.researcResultWriteP);
-
-//----------------------------------------------------------------------------------//
-//research DELETE
-
-router.post('/fields/delete', FieldCtrl.researchFieldhDelete)
 // router.post('/results/delete',ResultCtrl.researchResultDelete)
+// router.get('/results/write', ResultCtrl.researcResultWrite);
+// router.post('/results/write', ResultCtrl.researcResultWriteP);
+// router.get('/results/detail', ResultCtrl.researchResultsDetail);
 
 module.exports = router;
