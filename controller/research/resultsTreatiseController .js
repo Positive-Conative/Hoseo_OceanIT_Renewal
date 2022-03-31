@@ -82,12 +82,12 @@ async function researchResultsTreatiseWriteP(req, res, next) {
         let parameters = {
             "title_ko": req.body.title_ko,
             "classify_ko":'논문',
-            "academic_ko": req.body.academic_ko,
+            "journal_ko": req.body.academic_ko,
             "media_ko":req.body.media_ko,
             "writer_ko": req.body.writer_ko,
             "group_id": req.body.group_id,
             "application_num": req.body.application_num,
-            "date":req.body.date,
+            "application_date":req.body.date,
             "announe_nation_ko": req.body.announe_nation_ko,
         }
         let insert_Treatise = await TreatiseDAO.researchResults_InsertTreatise(parameters);
@@ -126,12 +126,12 @@ async function researchResultsTreatiseModifyP(req, res, next){
             "rrid": queryNum,
             "title_ko": req.body.title_ko,
             "classify_ko":'논문',
-            "academic_ko": req.body.academic_ko,
+            "journal_ko": req.body.academic_ko,
             "media_ko":req.body.media_ko,
             "writer_ko": req.body.writer_ko,
             "group_id": req.body.group_id,
             "application_num": req.body.application_num,
-            "date":req.body.date,
+            "application_date":req.body.date,
             "announe_nation_ko": req.body.announe_nation_ko,
         }
         console.log(parameters)

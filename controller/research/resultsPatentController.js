@@ -20,6 +20,7 @@ async function researchResultsPatent(req, res, next) {
         const permission = await jwtmiddle.jwtCerti(token);
         const count_data = await counterDAO.findCount(parameters);
         const db_data = await PatentDAO.researchResults_selectPatent(parameters)
+        
         res.render('research_results/researchResultsMain', { db_data, permission, parameters, dayjs, count_data });
     } catch (error) {
         res.send("<script>alert('" + error + "');location.href='/';</script>")
