@@ -57,9 +57,9 @@ function researchResults_DeletePatent(parameters) {
     })
 }
 function researchResults_InsertPatent(parameters) {
-    let queryData = `INSERT Research_Results_Patent SET group_id=?, classify_ko=?,title_ko=?,writer_ko=?,announe_nation_ko=?,registration_num=?,registration_date=?,date=?,application_num=?`;
+    let queryData = `INSERT Research_Results_Patent SET group_id=?, classify_ko=?,title_ko=?,writer_ko=?,announe_nation_ko=?,registration_num=?,registration_date=?,application_date=?,application_num=?`;
     return new Promise(function (resolve, reject) {
-        db.query(queryData, [parameters.group_id, parameters.classify_ko, parameters.title_ko, parameters.writer_ko, parameters.announe_nation_ko, parameters.registration_num, parameters.registration_date, parameters.date, parameters.application_num], function (error, db_data) {
+        db.query(queryData, [parameters.group_id, parameters.classify_ko, parameters.title_ko, parameters.writer_ko, parameters.announe_nation_ko, parameters.registration_num, parameters.registration_date, parameters.application_date, parameters.application_num], function (error, db_data) {
             if (error) {
                 logger.error(
                     "DB error [Research_Results_Patent]" +
@@ -73,9 +73,9 @@ function researchResults_InsertPatent(parameters) {
     })
 }
 function researchResults_ModifyPatent(parameters) {
-    let queryData = `UPDATE Research_Results_Patent SET group_id=?, classify_ko=?,title_ko=?,writer_ko=?,announe_nation_ko=?,registration_num=?,registration_date=?,date=?,application_num=? WHERE rrid=?`;
+    let queryData = `UPDATE Research_Results_Patent SET group_id=?, classify_ko=?,title_ko=?,writer_ko=?,announe_nation_ko=?,registration_num=?,registration_date=?,application_date=?,application_num=? WHERE rrid=?`;
     return new Promise(function (resolve, reject) {
-        db.query(queryData, [parameters.group_id, parameters.classify_ko, parameters.title_ko, parameters.writer_ko, parameters.announe_nation_ko, parameters.registration_num, parameters.registration_date, parameters.date, parameters.application_num, parameters.rrid], function (error, db_data) {
+        db.query(queryData, [parameters.group_id, parameters.classify_ko, parameters.title_ko, parameters.writer_ko, parameters.announe_nation_ko, parameters.registration_num, parameters.registration_date, parameters.application_date, parameters.application_num, parameters.rrid], function (error, db_data) {
             if (error) {
                 logger.error(
                     "DB error [Research_Results_Patent]" +

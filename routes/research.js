@@ -1,13 +1,14 @@
 'use strict';
 
-var express             = require('express');
-var router              = express.Router();
-var AppCtrl             = require('../controller/androidController')
-var ResultCtrl          = require('../controller/researchResultsController');
-var FieldCtrl           = require('../controller/researchFieldsController');
-var PatentCtrl          = require('../controller/research/resultsPatentController')
-var TreatiseCtrl        = require('../controller/research/resultsTreatiseController ')
-var AnnouncementCtrl    = require('../controller/research/resultsAnnouncementController')
+var express = require('express');
+var router = express.Router();
+var AppCtrl = require('../controller/androidController')
+var ResultCtrl = require('../controller/researchResultsController');
+var FieldCtrl = require('../controller/researchFieldsController');
+var PatentCtrl = require('../controller/research/resultsPatentController')
+var TreatiseCtrl = require('../controller/research/resultsTreatiseController ')
+var AnnouncementCtrl = require('../controller/research/resultsAnnouncementController')
+var { uploadPatent, uploadTreatise, uploadAnnouncement, } = require('../middleware/multer')
 
 //WEB
 //research fields
@@ -20,7 +21,7 @@ router.get('/fields/detail', FieldCtrl.researchFieldsDetail);
 //research fields
 //----------------------------------------------------------------------------------//
 
-router.get('/android',AppCtrl.Android);
+router.get('/android', AppCtrl.Android);
 router.get('/android/fields', FieldCtrl.androidResearchFieldsAll);
 router.get('/fields/write', FieldCtrl.researchFieldhWrite);
 
@@ -34,6 +35,7 @@ router.get('/results/patent/delete', PatentCtrl.researchResultsPatentDelete);
 router.get('/results/patent/modify', PatentCtrl.researchResultsPatentModify)
 router.post('/results/patent/write', PatentCtrl.researchResultsPatentWriteP);
 router.post('/results/patent/modify', PatentCtrl.researchResultsPatentModifyP);
+// router.post('/results/patent/img_uploads', uploadPatent, PatentCtrl.uploadImg);
 
 
 //----------------------------------------------------------------------------------//
