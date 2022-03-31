@@ -52,6 +52,7 @@ async function researchResultsTreatiseDetail(req, res, next) {
         const permission = await jwtmiddle.jwtCerti(token);
         const count_data = await counterDAO.findCount(parameters);
         const db_data = await TreatiseDAO.researchResults_selectDetailTreatise(parameters);
+        console.log(db_data)
         res.render('research_results/researchResultsDetailTreatise', { db_data, permission, parameters, dayjs, count_data });
     } catch (error) {
         res.send("<script>alert('" + error + "');location.href='/';</script>")
@@ -82,12 +83,12 @@ async function researchResultsTreatiseWriteP(req, res, next) {
         let parameters = {
             "title_ko": req.body.title_ko,
             "classify_ko":'논문',
-            "journal_ko": req.body.academic_ko,
+            "journal_ko": req.body.journal_ko,
             "media_ko":req.body.media_ko,
             "writer_ko": req.body.writer_ko,
             "group_id": req.body.group_id,
             "application_num": req.body.application_num,
-            "application_date":req.body.date,
+            "application_date":req.body.application_date,
             "announe_nation_ko": req.body.announe_nation_ko,
         }
         let insert_Treatise = await TreatiseDAO.researchResults_InsertTreatise(parameters);
@@ -126,12 +127,12 @@ async function researchResultsTreatiseModifyP(req, res, next){
             "rrid": queryNum,
             "title_ko": req.body.title_ko,
             "classify_ko":'논문',
-            "journal_ko": req.body.academic_ko,
+            "journal_ko": req.body.journal_ko,
             "media_ko":req.body.media_ko,
             "writer_ko": req.body.writer_ko,
             "group_id": req.body.group_id,
             "application_num": req.body.application_num,
-            "application_date":req.body.date,
+            "application_date":req.body.application_date,
             "announe_nation_ko": req.body.announe_nation_ko,
         }
         console.log(parameters)

@@ -79,7 +79,7 @@ async function researchResultsAnnouncementWriteP(req,res,next){
             "classify_ko" : "발표",
             "title_ko": req.body.title_ko,
             "writer_ko": req.body.writer_ko,
-            "journal_ko": req.body.journal_ko,
+            "application_date": req.body.application_date,
             "academic_ko":req.body.academic_ko,
         }
         let token = req.session.user;
@@ -119,7 +119,7 @@ async function researchResultsAnnouncementModifyP(req, res, next){
             "classify_ko" : "발표",
             "title_ko": req.body.title_ko,
             "writer_ko": req.body.writer_ko,
-            "journal_ko": req.body.journal_ko,
+            "application_date": req.body.application_date,
             "academic_ko":req.body.academic_ko,
         }
         let token = req.session.user;

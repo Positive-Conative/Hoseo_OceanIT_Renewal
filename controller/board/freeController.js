@@ -18,7 +18,8 @@ async function freeBoardMain(req, res, next) {
         const permission = await jwtmiddle.jwtCerti(token)
         const count_data = await counterDAO.findCount(parameters)
         const db_data = await freeBoardDAO.count_freeBoard(parameters)
-        res.render('board/free/FreeBoardMain', { db_data, permission, count_data })
+        console.log(db_data)
+        res.render('board/free/FreeBoardMain', { db_data, permission, count_data,parameters })
     } catch (error) {
         res.send("<script>alert('" + error + "');history.back();</script>")
     }
