@@ -25,7 +25,7 @@ function researchResults_selectAnnouncement(parameters) {
     if (parameters.search !== '') {
         queryData += ` WHERE (title_ko LIKE '%${parameters.search}%')`;
     }
-    queryData += ` ORDER BY date desc`;
+    queryData += ` ORDER BY application_date desc`;
     if (!(parameters.limit == undefined)) queryData += ` LIMIT 0,${parameters.limit}`;
     return new Promise(function (resolve, reject) {
         db.query(queryData, function (error, db_data) {
