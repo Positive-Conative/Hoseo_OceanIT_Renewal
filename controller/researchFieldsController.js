@@ -39,6 +39,8 @@ async function researchFieldsDetail(req, res, next) {
         const photoData = await researchFieldsDAO.researchFields_selectDetailPhotos(parameters);
         const count_data = await counterDAO.findCount(parameters);
         const permission = await jwtmiddle.jwtCerti(token);
+
+        console.log(photoData)
         res.render('research_fields/researchFieldsDetail', { dayjs, permission, detailData, linkData, photoData, count_data });
     } catch (error) {
         res.send("<script>alert('" + error + "');history.go(-1);</script>")
