@@ -19,31 +19,37 @@
                                     <tr>
                                         <th>발표명</th>
                                         <td colspan="3">
-                                            <input style="width: 100%; border: none;" type="text" name="title_ko" value="<%=db_data[0].title_ko%>">
+                                            <input style="width: 100%; border: none;" type="text" name="title_ko"
+                                                value="<%=db_data[0].title_ko%>">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>발표일</th>
                                         <td colspan="3">
-                                            <input style="width: 100%; border: none;" type="text" name="application_date" value="<%=db_data[0].application_date%>">
+                                            <input style="width: 100%; border: none;" type="text"
+                                                name="application_date" value="<%=db_data[0].application_date%>">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th>저자명</th>
                                         <td colspan="3">
-                                            <input style="width: 100%; border: none;" type="text" name="writer_ko" value="<%=db_data[0].writer_ko%>">
+                                            <input style="width: 100%; border: none;" type="text" name="writer_ko"
+                                                value="<%=db_data[0].writer_ko%>">
                                         </td>
+                                    </tr>
+                                    <tr>
                                         <th>학술대회명</th>
                                         <td colspan="3">
-                                            <input style="width: 100%; border: none;" type="text" name="academic_ko" value="<%=db_data[0].academic_ko%>">
+                                            <input style="width: 100%; border: none;" type="text" name="academic_ko"
+                                                value="<%=db_data[0].academic_ko%>">
                                         </td>
                                     </tr>
                                     <tr>
                                         <th class="align-middle ">국내외 구분</th>
                                         <td colspan="3">
-                                            <input style="width: 100%; border: none;" type="text" name="announe_nation_ko" value="<%=db_data[0].announe_nation_ko%>">
+                                            <input style="width: 100%; border: none;" type="text"
+                                                name="announe_nation_ko" value="<%=db_data[0].announe_nation_ko%>">
                                         </td>
-                                     
                                     </tr>
                                 </tbody>
                             </table>
@@ -59,6 +65,6 @@
     </section>
     <%- include('../include/footer.ejs') %>
 
-    <script>
-        flatpickr("input[type=datetime-local]", {});
-     </script>
+        <script>
+            flatpickr("input[type=datetime-local]", {});
+        </script>
