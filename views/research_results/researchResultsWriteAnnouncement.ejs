@@ -25,7 +25,8 @@
                                     <tr>
                                         <th>발표일</th>
                                         <td colspan="3">
-                                            <input class="form-control" type="datetime-local" style="width: 100%; border: none;" name="application_date">
+                                            <input class="form-control" type="datetime-local"
+                                                style="width: 100%; border: none;" name="application_date">
                                         </td>
                                     </tr>
                                     <tr>
@@ -33,6 +34,8 @@
                                         <td colspan="3">
                                             <input style="width: 100%; border: none;" type="text" name="writer_ko">
                                         </td>
+                                    </tr>
+                                    <tr>
                                         <th>학술대회명</th>
                                         <td colspan="3">
                                             <input style="width: 100%; border: none;" type="text" name="academic_ko">
@@ -41,9 +44,10 @@
                                     <tr>
                                         <th class="align-middle ">국내외 구분</th>
                                         <td colspan="3">
-                                            <input style="width: 100%; border: none;" type="text" name="announe_nation_ko">
+                                            <input style="width: 100%; border: none;" type="text"
+                                                name="announe_nation_ko">
                                         </td>
-                                     
+
                                     </tr>
                                 </tbody>
                             </table>
@@ -59,6 +63,6 @@
     </section>
     <%- include('../include/footer.ejs') %>
 
-    <script>
-        flatpickr("input[type=datetime-local]", {});
-     </script>
+        <script>
+            flatpickr("input[type=datetime-local]", {});
+        </script>
